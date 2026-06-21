@@ -3545,6 +3545,9 @@ async function exportVideoBurnIn() {
   if (!window.MediaRecorder) { showBanner('Video export not supported on this browser'); return; }
   if (!subtitles.length) { showBanner('No captions to burn in'); return; }
   if (exportRunning) return;
+  const _wrapElement = document.getElementById('video-wrap');
+  const capturedWidth  = _wrapElement ? _wrapElement.clientWidth : 0;
+  const capturedHeight = _wrapElement ? _wrapElement.clientHeight : 0;
   closeSheet(null, 'export-modal');
   exportRunning = true;
   try {
@@ -3590,9 +3593,8 @@ async function exportVideoBurnIn() {
       // Letterbox / pillarbox correction:
       // Overlay positions are % of video-wrap; canvas has no black bars.
       // Map wrap-space → video-content-space → canvas pixels.
-      const _wrap  = document.getElementById('video-wrap');
-      const wWrap  = Math.max(1, _wrap.clientWidth  || canvas.width);
-      const hWrap  = Math.max(1, _wrap.clientHeight || canvas.height);
+      const wWrap  = Math.max(1, capturedWidth  || canvas.width);
+      const hWrap  = Math.max(1, capturedHeight || canvas.height);
       const vAR    = (video.videoWidth  || canvas.width)  / (video.videoHeight || canvas.height);
       const wAR    = wWrap / hWrap;
       let vdW, vdH, vdX, vdY;
