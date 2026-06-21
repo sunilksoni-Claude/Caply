@@ -3662,15 +3662,44 @@ async function exportVideoBurnIn() {
             return lines.length ? lines : [''];
           };
 
-          const txt   = st.allCaps ? sub.text.toUpperCase() : sub.text;
-          const maxTW = canvas.width * 0.88;
+          const wrapWordsIntoLines = (words, maxW) => {
+            const lines = [];
+            let currentLine = [];
+            let currentLineText = '';
+            for (const w of words) {
+              const wText = st.allCaps ? w.text.toUpperCase() : w.text;
+              const testText = currentLineText ? currentLineText + ' ' + wText : wText;
+              if (ctx.measureText(testText).width <= maxW) {
+                currentLine.push(w);
+                currentLineText = testText;
+              } else {
+                if (currentLine.length) lines.push(currentLine);
+                if (ctx.measureText(wText).width > maxW) {
+                  lines.push([w]);
+                  currentLine = [];
+                  currentLineText = '';
+                } else {
+                  currentLine = [w];
+                  currentLineText = wText;
+                }
+              }
+            }
+            if (currentLine.length) lines.push(currentLine);
+            return lines;
+          };
 
-          // FIX 1: Letter spacing — scale CSS screen-px to canvas-px (matches preview letterSpacing)
-          if ('letterSpacing' in ctx) {
-            ctx.letterSpacing = (st.letterSpacing ? Math.round(st.letterSpacing * csX) : 0) + 'px';
+          let txt = st.allCaps ? sub.text.toUpperCase() : sub.text;
+          if (st.karaoke === 'none' && st.animation === 'typewriter') {
+            const frac = Math.min(1, Math.max(0, (t - sub.start) / 0.7));
+            const n = Math.ceil(txt.length * frac);
+            txt = txt.slice(0, n);
           }
 
-          const lines  = wrapLines(txt, maxTW);
+          const words = getWords(sub);
+          const lines = (st.karaoke !== 'none')
+            ? wrapWordsIntoLines(words, maxTW)
+            : wrapLines(txt, maxTW);
+
           const lineH  = scaledFs * 1.3;
           const totalH = lines.length * lineH;
 
@@ -3704,7 +3733,10 @@ async function exportVideoBurnIn() {
             const bgAlpha = isFrosted ? Math.min(st.bgOpacity, 0.4) : st.bgOpacity;
             ctx.fillStyle = `${hexToRgb(st.bgColor)},${bgAlpha})`;
             for (let li = 0; li < lines.length; li++) {
-              const lw = ctx.measureText(lines[li]).width;
+              const lineText = (st.karaoke !== 'none')
+                ? lines[li].map(w => st.allCaps ? w.text.toUpperCase() : w.text).join(' ')
+                : lines[li];
+              const lw = ctx.measureText(lineText).width;
               const lx = ctx.textAlign === 'center' ? cx - lw / 2
                        : ctx.textAlign === 'right'  ? cx - lw : cx;
               const rx = lx - padH, ry = cy + li * lineH - padV;
@@ -3741,16 +3773,124 @@ async function exportVideoBurnIn() {
           }
 
           // Draw each line (outline first, then fill on top)
-          for (let li = 0; li < lines.length; li++) {
-            const ly = cy + li * lineH;
-            if (st.outlineWidth > 0) {
-              ctx.strokeStyle = st.outlineColor || '#000000';
-              ctx.lineWidth   = st.outlineWidth * (scaledFs / 20);
-              ctx.lineJoin    = 'round';
-              ctx.strokeText(lines[li], cx, ly);
+          if (st.karaoke !== 'none') {
+            const spaceWidth = ctx.measureText(' ').width;
+            let activeWordIdx = -1;
+            for (let i = 0; i < words.length; i++) {
+              if (t >= words[i].start - 0.02) activeWordIdx = i; else break;
             }
-            ctx.fillStyle = st.color || '#ffffff';
-            ctx.fillText(lines[li], cx, ly);
+            let wordGlobalIdx = 0;
+
+            for (let li = 0; li < lines.length; li++) {
+              const ly = cy + li * lineH;
+              const lineWords = lines[li];
+              const lineText = lineWords.map(w => st.allCaps ? w.text.toUpperCase() : w.text).join(' ');
+              const totalLineWidth = ctx.measureText(lineText).width;
+
+              let startX;
+              if (ctx.textAlign === 'center') {
+                startX = cx - totalLineWidth / 2;
+              } else if (ctx.textAlign === 'right') {
+                startX = cx - totalLineWidth;
+              } else {
+                startX = cx;
+              }
+
+              const origAlign = ctx.textAlign;
+              ctx.textAlign = 'left';
+
+              let currentX = startX;
+              for (let wi = 0; wi < lineWords.length; wi++) {
+                const w = lineWords[wi];
+                const wText = st.allCaps ? w.text.toUpperCase() : w.text;
+                const i = wordGlobalIdx + wi;
+
+                ctx.save();
+
+                let isBounce = false;
+                if (st.karaoke === 'highlight') {
+                  if (i === activeWordIdx) {
+                    ctx.fillStyle = st.karaokeColor;
+                  } else {
+                    ctx.fillStyle = st.color || '#ffffff';
+                  }
+                } else if (st.karaoke === 'fill') {
+                  if (i <= activeWordIdx) {
+                    ctx.fillStyle = st.karaokeColor;
+                  } else {
+                    ctx.fillStyle = st.color || '#ffffff';
+                    ctx.globalAlpha = (ctx.globalAlpha || 1.0) * 0.55;
+                  }
+                } else if (st.karaoke === 'box') {
+                  if (i === activeWordIdx) {
+                    const wWidth = ctx.measureText(wText).width;
+                    const padH_word = Math.max(2, Math.round(5 * csX));
+                    const padV_word = Math.max(1, Math.round(2 * csY));
+
+                    ctx.shadowColor = 'transparent'; ctx.shadowBlur = 0; ctx.shadowOffsetX = 0; ctx.shadowOffsetY = 0;
+                    ctx.fillStyle = st.karaokeColor;
+                    ctx.fillRect(currentX - padH_word, ly - padV_word, wWidth + padH_word * 2, scaledFs + padV_word * 2);
+
+                    if (st.shadow === 'hard') {
+                      const sd = Math.max(1, Math.round(2 * csY));
+                      ctx.shadowColor = 'rgba(0,0,0,1)'; ctx.shadowOffsetX = sd; ctx.shadowOffsetY = sd; ctx.shadowBlur = 0;
+                    } else if (st.shadow === 'soft') {
+                      ctx.shadowColor    = 'rgba(0,0,0,0.8)';
+                      ctx.shadowBlur     = Math.max(1, Math.round(4 * csY));
+                      ctx.shadowOffsetX  = 0;
+                      ctx.shadowOffsetY  = Math.max(1, Math.round(csY));
+                    } else if (st.shadow === 'glow') {
+                      ctx.shadowColor    = st.color;
+                      ctx.shadowBlur     = Math.max(2, Math.round(18 * csY));
+                      ctx.shadowOffsetX  = 0; ctx.shadowOffsetY = 0;
+                    }
+
+                    ctx.fillStyle = '#000000';
+                  } else {
+                    ctx.fillStyle = st.color || '#ffffff';
+                  }
+                } else if (st.karaoke === 'bounce') {
+                  if (i === activeWordIdx) {
+                    isBounce = true;
+                    ctx.fillStyle = st.karaokeColor;
+                    const bouncedFs = Math.round(scaledFs * 1.22);
+                    ctx.font = `${st.italic ? 'italic ' : ''}${st.bold ? '800' : '400'} ${bouncedFs}px '${st.fontFamily}', sans-serif`;
+                  } else {
+                    ctx.fillStyle = st.color || '#ffffff';
+                  }
+                }
+
+                const wWidth = ctx.measureText(wText).width;
+
+                if (st.outlineWidth > 0 && !(st.karaoke === 'box' && i === activeWordIdx)) {
+                  ctx.strokeStyle = st.outlineColor || '#000000';
+                  ctx.lineWidth   = st.outlineWidth * ((isBounce ? scaledFs * 1.22 : scaledFs) / 20);
+                  ctx.lineJoin    = 'round';
+                  ctx.strokeText(wText, currentX, ly);
+                }
+
+                ctx.fillText(wText, currentX, ly);
+
+                ctx.restore();
+
+                currentX += wWidth + spaceWidth;
+              }
+
+              ctx.textAlign = origAlign;
+              wordGlobalIdx += lineWords.length;
+            }
+          } else {
+            for (let li = 0; li < lines.length; li++) {
+              const ly = cy + li * lineH;
+              if (st.outlineWidth > 0) {
+                ctx.strokeStyle = st.outlineColor || '#000000';
+                ctx.lineWidth   = st.outlineWidth * (scaledFs / 20);
+                ctx.lineJoin    = 'round';
+                ctx.strokeText(lines[li], cx, ly);
+              }
+              ctx.fillStyle = st.color || '#ffffff';
+              ctx.fillText(lines[li], cx, ly);
+            }
           }
           ctx.restore();
         }
