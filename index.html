@@ -3688,6 +3688,13 @@ async function exportVideoBurnIn() {
             return lines;
           };
 
+          const maxTW = canvas.width * 0.88;
+
+          // FIX 1: Letter spacing — scale CSS screen-px to canvas-px (matches preview letterSpacing)
+          if ('letterSpacing' in ctx) {
+            ctx.letterSpacing = (st.letterSpacing ? Math.round(st.letterSpacing * csX) : 0) + 'px';
+          }
+
           let txt = st.allCaps ? sub.text.toUpperCase() : sub.text;
           if (st.karaoke === 'none' && st.animation === 'typewriter') {
             const frac = Math.min(1, Math.max(0, (t - sub.start) / 0.7));
