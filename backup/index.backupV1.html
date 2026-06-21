@@ -1,0 +1,1822 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <title>Caply</title>
+
+  <!-- PWA / iPhone home screen -->
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+  <meta name="apple-mobile-web-app-title" content="Caply">
+  <meta name="mobile-web-app-capable" content="yes">
+  <meta name="theme-color" content="#0A0A0A">
+  <link rel="apple-touch-icon" href="Caply.png">
+  <link rel="icon" href="Caply.png">
+
+  <!-- Google Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Oswald:wght@400;600&family=Bebas+Neue&family=Montserrat:wght@400;700&family=Poppins:wght@400;700&family=Roboto+Condensed:wght@400;700&family=Anton&family=Playfair+Display:wght@400;700&family=Raleway:wght@400;700&family=Nunito:wght@400;700&family=Space+Mono&family=Permanent+Marker&family=Pacifico&family=Cinzel:wght@400;700&family=Exo+2:wght@400;700&family=Orbitron:wght@400;700&display=swap" rel="stylesheet">
+
+  <style>
+    /* ─── CSS Reset & Variables ─────────────────────────────── */
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --bg-primary:   #0A0A0A;
+      --bg-secondary: #141414;
+      --bg-card:      #1C1C1C;
+      --bg-elevated:  #242424;
+      --accent:       #00D4FF;
+      --accent-dim:   rgba(0,212,255,0.15);
+      --accent-glow:  0 0 20px rgba(0,212,255,0.4);
+      --text-primary: #F0F0F0;
+      --text-secondary:#888888;
+      --text-muted:   #444444;
+      --border:       #2A2A2A;
+      --danger:       #FF4757;
+      --success:      #2ED573;
+      --radius-sm:    6px;
+      --radius-md:    12px;
+      --radius-lg:    20px;
+      --font-ui:      'Inter', system-ui, sans-serif;
+      --transition:   0.2s cubic-bezier(0.4,0,0.2,1);
+      --safe-bottom:  env(safe-area-inset-bottom, 0px);
+      --safe-top:     env(safe-area-inset-top, 0px);
+    }
+
+    html, body {
+      height: 100%;
+      background: var(--bg-primary);
+      color: var(--text-primary);
+      font-family: var(--font-ui);
+      overflow: hidden;
+      -webkit-tap-highlight-color: transparent;
+      user-select: none;
+    }
+
+    /* ─── App Shell ─────────────────────────────────────────── */
+    #app {
+      display: flex;
+      flex-direction: column;
+      height: 100%;
+      padding-top: var(--safe-top);
+    }
+
+    /* ─── Top Bar ───────────────────────────────────────────── */
+    #topbar {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 10px 16px;
+      background: var(--bg-secondary);
+      border-bottom: 1px solid var(--border);
+      flex-shrink: 0;
+      z-index: 10;
+    }
+    #topbar .title {
+      font-size: 20px;
+      font-weight: 700;
+      color: var(--accent);
+      letter-spacing: -0.5px;
+    }
+    .btn-icon {
+      background: none;
+      border: none;
+      color: var(--text-secondary);
+      cursor: pointer;
+      padding: 8px;
+      border-radius: var(--radius-sm);
+      transition: color var(--transition), background var(--transition);
+      display: flex; align-items: center; justify-content: center;
+    }
+    .btn-icon:hover, .btn-icon:active { color: var(--accent); background: var(--accent-dim); }
+    .btn-icon svg { width: 22px; height: 22px; }
+
+    /* ─── Video Container ───────────────────────────────────── */
+    #video-wrap {
+      flex-shrink: 0;
+      position: relative;
+      background: #000;
+      width: 100%;
+      aspect-ratio: 16/9;
+      max-height: 36vh;
+      display: flex; align-items: center; justify-content: center;
+    }
+    #video-player {
+      width: 100%; height: 100%;
+      object-fit: contain;
+      display: none;
+    }
+    #upload-placeholder {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 12px;
+      color: var(--text-muted);
+      cursor: pointer;
+    }
+    #upload-placeholder svg { width: 48px; height: 48px; opacity: 0.5; }
+    #upload-placeholder span { font-size: 14px; }
+    #upload-placeholder .upload-hint { font-size: 12px; color: var(--text-muted); }
+    #file-input { display: none; }
+
+    /* Subtitle overlay */
+    #subtitle-overlay {
+      position: absolute;
+      bottom: 12%;
+      left: 0; right: 0;
+      text-align: center;
+      padding: 0 12px;
+      pointer-events: none;
+      z-index: 5;
+    }
+    #subtitle-text {
+      display: inline-block;
+      max-width: 90%;
+      padding: 4px 10px;
+      border-radius: 4px;
+    }
+
+    /* ─── Playback Controls ─────────────────────────────────── */
+    #controls {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      padding: 8px 12px;
+      background: var(--bg-secondary);
+      border-top: 1px solid var(--border);
+      flex-shrink: 0;
+    }
+    #ctrl-play {
+      background: none; border: none; cursor: pointer;
+      color: var(--text-primary); display: flex;
+    }
+    #ctrl-play svg { width: 28px; height: 28px; }
+    #scrub-bar {
+      flex: 1;
+      -webkit-appearance: none;
+      appearance: none;
+      height: 4px;
+      background: var(--border);
+      border-radius: 2px;
+      outline: none;
+      cursor: pointer;
+    }
+    #scrub-bar::-webkit-slider-thumb {
+      -webkit-appearance: none;
+      width: 14px; height: 14px;
+      border-radius: 50%;
+      background: var(--accent);
+      box-shadow: var(--accent-glow);
+      cursor: pointer;
+    }
+    #time-display {
+      font-size: 12px;
+      color: var(--text-secondary);
+      white-space: nowrap;
+      min-width: 72px;
+      text-align: right;
+    }
+
+    /* ─── Timeline ──────────────────────────────────────────── */
+    #timeline-wrap {
+      flex-shrink: 0;
+      background: var(--bg-secondary);
+      border-top: 1px solid var(--border);
+      padding: 8px 0;
+    }
+    #timeline-scroll {
+      overflow-x: auto;
+      overflow-y: hidden;
+      padding: 0 12px;
+      -webkit-overflow-scrolling: touch;
+    }
+    #timeline-scroll::-webkit-scrollbar { display: none; }
+    #timeline-inner {
+      position: relative;
+      height: 44px;
+      min-width: 100%;
+    }
+    /* playhead */
+    #playhead {
+      position: absolute;
+      top: 0; bottom: 0;
+      width: 2px;
+      background: var(--accent);
+      box-shadow: var(--accent-glow);
+      z-index: 5;
+      pointer-events: none;
+    }
+    /* subtitle block */
+    .tl-block {
+      position: absolute;
+      top: 6px; bottom: 6px;
+      border-radius: var(--radius-sm);
+      background: rgba(255,255,255,0.12);
+      border: 1.5px solid rgba(255,255,255,0.25);
+      cursor: pointer;
+      min-width: 24px;
+      transition: border-color var(--transition), background var(--transition);
+      overflow: hidden;
+      display: flex; align-items: center;
+    }
+    .tl-block span {
+      font-size: 10px;
+      color: var(--text-primary);
+      padding: 0 5px;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      pointer-events: none;
+    }
+    .tl-block.selected {
+      background: var(--accent-dim);
+      border-color: var(--accent);
+      box-shadow: var(--accent-glow);
+    }
+
+    /* ─── Action Buttons ────────────────────────────────────── */
+    #action-row {
+      display: flex;
+      gap: 10px;
+      padding: 10px 12px;
+      background: var(--bg-secondary);
+      border-top: 1px solid var(--border);
+      flex-shrink: 0;
+    }
+    .btn {
+      flex: 1;
+      padding: 10px 12px;
+      border-radius: var(--radius-lg);
+      border: 1.5px solid var(--border);
+      background: var(--bg-card);
+      color: var(--text-primary);
+      font-family: var(--font-ui);
+      font-size: 13px;
+      font-weight: 600;
+      cursor: pointer;
+      display: flex; align-items: center; justify-content: center; gap: 6px;
+      transition: all var(--transition);
+    }
+    .btn:active { transform: scale(0.97); }
+    .btn-accent {
+      background: var(--accent);
+      border-color: var(--accent);
+      color: #000;
+    }
+    .btn-accent:hover { box-shadow: var(--accent-glow); }
+    .btn svg { width: 16px; height: 16px; }
+
+    /* ─── Scrollable Bottom Area ────────────────────────────── */
+    #bottom-area {
+      flex: 1;
+      overflow-y: auto;
+      -webkit-overflow-scrolling: touch;
+      display: flex;
+      flex-direction: column;
+      gap: 0;
+      padding-bottom: calc(8px + var(--safe-bottom));
+    }
+    #bottom-area::-webkit-scrollbar { display: none; }
+
+    /* ─── Selected Subtitle Editor ──────────────────────────── */
+    #sub-editor {
+      background: var(--bg-card);
+      border-top: 1px solid var(--border);
+      padding: 12px;
+      display: none;
+      flex-direction: column;
+      gap: 10px;
+    }
+    #sub-editor.visible { display: flex; }
+    .sub-editor-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+    .sub-time-label {
+      font-size: 12px;
+      color: var(--accent);
+      font-weight: 600;
+    }
+    .sub-actions { display: flex; gap: 8px; }
+    .sub-text-input {
+      width: 100%;
+      background: var(--bg-elevated);
+      border: 1px solid var(--border);
+      border-radius: var(--radius-sm);
+      color: var(--text-primary);
+      font-family: var(--font-ui);
+      font-size: 14px;
+      padding: 8px 10px;
+      resize: none;
+      outline: none;
+      min-height: 56px;
+      transition: border-color var(--transition);
+      user-select: text;
+      -webkit-user-select: text;
+    }
+    .sub-text-input:focus { border-color: var(--accent); }
+    .time-inputs { display: flex; gap: 8px; align-items: center; }
+    .time-input-group { display: flex; flex-direction: column; gap: 4px; flex: 1; }
+    .time-input-group label { font-size: 10px; color: var(--text-secondary); text-transform: uppercase; letter-spacing: 0.5px; }
+    .time-inp {
+      background: var(--bg-elevated);
+      border: 1px solid var(--border);
+      border-radius: var(--radius-sm);
+      color: var(--text-primary);
+      font-family: var(--font-ui);
+      font-size: 13px;
+      padding: 6px 8px;
+      outline: none;
+      width: 100%;
+      user-select: text;
+      -webkit-user-select: text;
+    }
+    .time-inp:focus { border-color: var(--accent); }
+
+    /* Per-subtitle style toggle */
+    .sub-style-row {
+      display: flex; gap: 8px; align-items: center;
+      flex-wrap: wrap;
+    }
+    .sub-style-badge {
+      font-size: 10px;
+      background: var(--accent-dim);
+      color: var(--accent);
+      border-radius: 4px;
+      padding: 2px 6px;
+      display: none;
+    }
+    .sub-style-badge.visible { display: inline-block; }
+
+    /* ─── Global Style Panel ────────────────────────────────── */
+    #style-panel {
+      background: var(--bg-card);
+      border-top: 1px solid var(--border);
+      overflow: hidden;
+    }
+    #style-panel-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 12px 16px;
+      cursor: pointer;
+    }
+    #style-panel-header span {
+      font-size: 13px;
+      font-weight: 600;
+      color: var(--text-primary);
+      display: flex; align-items: center; gap: 6px;
+    }
+    #style-panel-header .chevron {
+      transition: transform var(--transition);
+      color: var(--text-secondary);
+    }
+    #style-panel-header.open .chevron { transform: rotate(180deg); }
+    #style-body {
+      padding: 0 16px 16px;
+      display: none;
+      flex-direction: column;
+      gap: 14px;
+    }
+    #style-body.open { display: flex; }
+
+    .style-row {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      flex-wrap: wrap;
+    }
+    .style-label {
+      font-size: 11px;
+      color: var(--text-secondary);
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+      min-width: 52px;
+    }
+
+    /* Select */
+    .style-select {
+      flex: 1;
+      background: var(--bg-elevated);
+      border: 1px solid var(--border);
+      border-radius: var(--radius-sm);
+      color: var(--text-primary);
+      font-family: var(--font-ui);
+      font-size: 13px;
+      padding: 6px 8px;
+      outline: none;
+      min-width: 0;
+      appearance: none;
+      -webkit-appearance: none;
+      cursor: pointer;
+    }
+    .style-select:focus { border-color: var(--accent); }
+
+    /* Slider */
+    .style-slider {
+      flex: 1;
+      -webkit-appearance: none;
+      appearance: none;
+      height: 4px;
+      background: var(--border);
+      border-radius: 2px;
+      outline: none;
+      cursor: pointer;
+    }
+    .style-slider::-webkit-slider-thumb {
+      -webkit-appearance: none;
+      width: 16px; height: 16px;
+      border-radius: 50%;
+      background: var(--accent);
+      box-shadow: var(--accent-glow);
+      cursor: pointer;
+    }
+    .slider-val {
+      font-size: 12px;
+      color: var(--accent);
+      min-width: 28px;
+      text-align: right;
+    }
+
+    /* Color picker */
+    .color-pick {
+      width: 32px; height: 32px;
+      border-radius: 50%;
+      border: 2px solid var(--border);
+      cursor: pointer;
+      padding: 0;
+      background: none;
+      overflow: hidden;
+    }
+    .color-pick::-webkit-color-swatch-wrapper { padding: 0; }
+    .color-pick::-webkit-color-swatch { border: none; border-radius: 50%; }
+
+    /* Toggle buttons */
+    .toggle-group { display: flex; gap: 4px; }
+    .toggle-btn {
+      background: var(--bg-elevated);
+      border: 1px solid var(--border);
+      border-radius: var(--radius-sm);
+      color: var(--text-secondary);
+      font-family: var(--font-ui);
+      font-size: 12px;
+      font-weight: 600;
+      padding: 5px 10px;
+      cursor: pointer;
+      transition: all var(--transition);
+    }
+    .toggle-btn.active {
+      background: var(--accent-dim);
+      border-color: var(--accent);
+      color: var(--accent);
+    }
+
+    /* ─── API Key Modal ──────────────────────────────────────── */
+    #api-modal {
+      display: none;
+      position: fixed; inset: 0;
+      background: rgba(0,0,0,0.7);
+      z-index: 100;
+      align-items: flex-end;
+      justify-content: center;
+    }
+    #api-modal.open { display: flex; }
+    #api-modal-inner {
+      background: var(--bg-card);
+      border-radius: var(--radius-lg) var(--radius-lg) 0 0;
+      padding: 24px 20px calc(24px + var(--safe-bottom));
+      width: 100%;
+      max-width: 480px;
+      display: flex; flex-direction: column; gap: 14px;
+    }
+    #api-modal-inner h3 { font-size: 17px; font-weight: 700; }
+    #api-modal-inner p { font-size: 13px; color: var(--text-secondary); }
+    .api-input {
+      width: 100%;
+      background: var(--bg-elevated);
+      border: 1px solid var(--border);
+      border-radius: var(--radius-sm);
+      color: var(--text-primary);
+      font-family: var(--font-ui);
+      font-size: 14px;
+      padding: 10px 12px;
+      outline: none;
+      user-select: text;
+      -webkit-user-select: text;
+    }
+    .api-input:focus { border-color: var(--accent); }
+    .modal-btns { display: flex; gap: 10px; }
+
+    /* ─── Banner ────────────────────────────────────────────── */
+    #banner {
+      position: fixed; top: calc(60px + var(--safe-top)); left: 12px; right: 12px;
+      background: var(--bg-elevated);
+      border: 1px solid var(--accent);
+      border-radius: var(--radius-md);
+      color: var(--accent);
+      font-size: 13px;
+      padding: 10px 14px;
+      z-index: 50;
+      display: none;
+      text-align: center;
+    }
+    #banner.show { display: block; }
+
+    /* ─── Loading Overlay ───────────────────────────────────── */
+    #loading-overlay {
+      display: none;
+      position: fixed; inset: 0;
+      background: rgba(0,0,0,0.6);
+      z-index: 90;
+      align-items: center;
+      justify-content: center;
+      flex-direction: column;
+      gap: 16px;
+    }
+    #loading-overlay.show { display: flex; }
+    .spinner {
+      width: 40px; height: 40px;
+      border: 3px solid var(--border);
+      border-top-color: var(--accent);
+      border-radius: 50%;
+      animation: spin 0.7s linear infinite;
+    }
+    @keyframes spin { to { transform: rotate(360deg); } }
+    #loading-overlay span { font-size: 14px; color: var(--text-secondary); }
+
+    /* ─── Export Modal ──────────────────────────────────────── */
+    #export-modal {
+      display: none;
+      position: fixed; inset: 0;
+      background: rgba(0,0,0,0.7);
+      z-index: 100;
+      align-items: flex-end;
+      justify-content: center;
+    }
+    #export-modal.open { display: flex; }
+    #export-modal-inner {
+      background: var(--bg-card);
+      border-radius: var(--radius-lg) var(--radius-lg) 0 0;
+      padding: 24px 20px calc(24px + var(--safe-bottom));
+      width: 100%; max-width: 480px;
+      display: flex; flex-direction: column; gap: 12px;
+    }
+    #export-modal-inner h3 { font-size: 17px; font-weight: 700; }
+
+    /* ─── Subtitle Animations ───────────────────────────────── */
+    @keyframes pulse {
+      0%, 100% { opacity: 1; transform: scale(1); }
+      50%       { opacity: 0.4; transform: scale(0.7); }
+    }
+
+    @keyframes subtitleFade {
+      from { opacity: 0; }
+      to   { opacity: 1; }
+    }
+    @keyframes subtitleSlideUp {
+      from { opacity: 0; transform: translateY(12px); }
+      to   { opacity: 1; transform: translateY(0); }
+    }
+    @keyframes subtitlePop {
+      from { opacity: 0; transform: scale(0.8); }
+      to   { opacity: 1; transform: scale(1); }
+    }
+
+    /* ─── Empty State ───────────────────────────────────────── */
+    .empty-timeline {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      height: 44px;
+      font-size: 12px;
+      color: var(--text-muted);
+    }
+
+    /* ─── Scrollbar for bottom area ─────────────────────────── */
+    #bottom-area { scrollbar-width: none; }
+  </style>
+</head>
+<body>
+<div id="app">
+
+  <!-- Top Bar -->
+  <div id="topbar">
+    <button class="btn-icon" onclick="openMenu()">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="3" y1="6" x2="21" y2="6"/><line x1="3" y1="12" x2="21" y2="12"/><line x1="3" y1="18" x2="21" y2="18"/></svg>
+    </button>
+    <span class="title">Caply</span>
+    <button class="btn-icon" onclick="openExportModal()" title="Export">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
+    </button>
+  </div>
+
+  <!-- Video Player -->
+  <div id="video-wrap" onclick="handleVideoWrapClick(event)">
+    <div id="upload-placeholder">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+        <rect x="2" y="2" width="20" height="20" rx="3"/>
+        <polygon points="10 8 16 12 10 16 10 8"/>
+      </svg>
+      <span>Tap to load video</span>
+      <span class="upload-hint">MP4, MOV, WebM supported</span>
+    </div>
+    <video id="video-player" playsinline webkit-playsinline></video>
+    <div id="subtitle-overlay"><span id="subtitle-text"></span></div>
+    <input type="file" id="file-input" accept="video/*" onchange="handleVideoFile(event)">
+  </div>
+
+  <!-- Playback Controls -->
+  <div id="controls">
+    <button id="ctrl-play" onclick="togglePlay()">
+      <svg id="ico-play" viewBox="0 0 24 24" fill="currentColor"><polygon points="5 3 19 12 5 21 5 3"/></svg>
+      <svg id="ico-pause" viewBox="0 0 24 24" fill="currentColor" style="display:none"><rect x="6" y="4" width="4" height="16"/><rect x="14" y="4" width="4" height="16"/></svg>
+    </button>
+    <input type="range" id="scrub-bar" min="0" max="1000" value="0" step="1"
+           oninput="scrubVideo(this.value)"
+           ontouchstart="scrubStart()" ontouchend="scrubEnd()">
+    <span id="time-display">0:00 / 0:00</span>
+  </div>
+
+  <!-- Timeline -->
+  <div id="timeline-wrap">
+    <div id="timeline-scroll">
+      <div id="timeline-inner">
+        <div id="playhead"></div>
+        <div class="empty-timeline" id="tl-empty">No subtitles yet</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Action Row -->
+  <div id="action-row">
+    <button class="btn btn-accent" onclick="startAutoGenerate()">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"/></svg>
+      Auto Generate
+    </button>
+    <button class="btn" onclick="addSubtitleNow()">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
+      Add
+    </button>
+    <button class="btn" onclick="openStylePanel()">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="3"/><path d="M19.07 4.93l-1.41 1.41M4.93 4.93l1.41 1.41M12 2v2M12 20v2M20 12h2M2 12h2M17.66 17.66l-1.41-1.41M6.34 17.66l1.41-1.41"/></svg>
+      Style
+    </button>
+  </div>
+
+  <!-- Scrollable Bottom Area -->
+  <div id="bottom-area">
+
+    <!-- Selected Subtitle Editor -->
+    <div id="sub-editor">
+      <div class="sub-editor-header">
+        <span class="sub-time-label" id="sub-time-label">0:00 → 0:00</span>
+        <div class="sub-actions">
+          <span class="sub-style-badge" id="sub-style-badge">Customized</span>
+          <button class="btn-icon" title="Reset style" onclick="resetSubStyle()">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="width:16px;height:16px"><path d="M3 12a9 9 0 1 0 9-9 9.75 9.75 0 0 0-6.74 2.74L3 8"/><path d="M3 3v5h5"/></svg>
+          </button>
+          <button class="btn-icon" title="Delete" onclick="deleteSelectedSub()" style="color:var(--danger)">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="width:16px;height:16px"><polyline points="3 6 5 6 21 6"/><path d="M19 6l-1 14H6L5 6"/><path d="M10 11v6M14 11v6"/><path d="M9 6V4h6v2"/></svg>
+          </button>
+        </div>
+      </div>
+      <textarea class="sub-text-input" id="sub-text-input" placeholder="Subtitle text..."
+                oninput="updateSubText(this.value)"></textarea>
+      <div class="time-inputs">
+        <div class="time-input-group">
+          <label>Start</label>
+          <input class="time-inp" id="sub-start-inp" type="text" placeholder="0.0"
+                 onchange="updateSubTime('start', this.value)">
+        </div>
+        <div class="time-input-group">
+          <label>End</label>
+          <input class="time-inp" id="sub-end-inp" type="text" placeholder="0.0"
+                 onchange="updateSubTime('end', this.value)">
+        </div>
+      </div>
+      <!-- Per-subtitle style overrides (mini version) -->
+      <div class="sub-style-row">
+        <span class="style-label" style="font-size:10px">Override</span>
+        <input type="color" class="color-pick" id="sub-color" value="#FFFFFF" title="Text color"
+               oninput="setSubStyle('color', this.value)" style="width:26px;height:26px">
+        <select class="style-select" id="sub-anim" style="flex:0;min-width:90px;font-size:11px"
+                onchange="setSubStyle('animation', this.value)">
+          <option value="">Anim (global)</option>
+          <option value="none">None</option>
+          <option value="fade">Fade</option>
+          <option value="slideUp">Slide Up</option>
+          <option value="pop">Pop</option>
+        </select>
+        <button class="toggle-btn" id="sub-bold" onclick="toggleSubStyle('bold')">B</button>
+        <button class="toggle-btn" id="sub-italic" onclick="toggleSubStyle('italic')" style="font-style:italic">I</button>
+      </div>
+    </div>
+
+    <!-- Global Style Panel -->
+    <div id="style-panel">
+      <div id="style-panel-header" onclick="toggleStylePanel()">
+        <span>
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="width:16px;height:16px"><circle cx="12" cy="12" r="3"/><path d="M19.07 4.93l-1.41 1.41M4.93 4.93l1.41 1.41M12 2v2M12 20v2M20 12h2M2 12h2M17.66 17.66l-1.41-1.41M6.34 17.66l1.41-1.41"/></svg>
+          Global Style
+        </span>
+        <svg class="chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="width:18px;height:18px"><polyline points="6 9 12 15 18 9"/></svg>
+      </div>
+      <div id="style-body">
+
+        <!-- Font Family -->
+        <div class="style-row">
+          <span class="style-label">Font</span>
+          <select class="style-select" id="gs-font" onchange="updateGlobalStyle('fontFamily', this.value)">
+            <option value="Oswald">Oswald</option>
+            <option value="Bebas Neue">Bebas Neue</option>
+            <option value="Montserrat">Montserrat</option>
+            <option value="Poppins">Poppins</option>
+            <option value="Roboto Condensed">Roboto Condensed</option>
+            <option value="Anton">Anton</option>
+            <option value="Playfair Display">Playfair Display</option>
+            <option value="Raleway">Raleway</option>
+            <option value="Nunito">Nunito</option>
+            <option value="Space Mono">Space Mono</option>
+            <option value="Permanent Marker">Permanent Marker</option>
+            <option value="Pacifico">Pacifico</option>
+            <option value="Cinzel">Cinzel</option>
+            <option value="Exo 2">Exo 2</option>
+            <option value="Orbitron">Orbitron</option>
+          </select>
+          <label class="btn-icon" title="Upload custom font" style="cursor:pointer">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="17 8 12 3 7 8"/><line x1="12" y1="3" x2="12" y2="15"/></svg>
+            <input type="file" accept=".ttf,.otf,.woff,.woff2" style="display:none" onchange="loadCustomFont(event)">
+          </label>
+        </div>
+
+        <!-- Font Size -->
+        <div class="style-row">
+          <span class="style-label">Size</span>
+          <input type="range" class="style-slider" id="gs-size" min="12" max="48" value="20"
+                 oninput="updateGlobalStyle('fontSize', +this.value); document.getElementById('gs-size-val').textContent=this.value">
+          <span class="slider-val" id="gs-size-val">20</span>
+        </div>
+
+        <!-- Colors -->
+        <div class="style-row">
+          <span class="style-label">Color</span>
+          <input type="color" class="color-pick" id="gs-color" value="#FFFFFF"
+                 oninput="updateGlobalStyle('color', this.value)">
+          <span class="style-label" style="margin-left:8px">BG</span>
+          <input type="color" class="color-pick" id="gs-bgcolor" value="#000000"
+                 oninput="updateGlobalStyle('bgColor', this.value)">
+          <span class="style-label" style="margin-left:8px">Opacity</span>
+          <input type="range" class="style-slider" id="gs-bgopacity" min="0" max="100" value="60"
+                 oninput="updateGlobalStyle('bgOpacity', this.value/100); document.getElementById('gs-bgo-val').textContent=this.value+'%'">
+          <span class="slider-val" id="gs-bgo-val">60%</span>
+        </div>
+
+        <!-- BG Style -->
+        <div class="style-row">
+          <span class="style-label">BG Style</span>
+          <select class="style-select" id="gs-bgstyle" onchange="updateGlobalStyle('bgStyle', this.value)">
+            <option value="none">None</option>
+            <option value="tight" selected>Tight Box</option>
+            <option value="fullbar">Full-width Bar</option>
+            <option value="frosted">Frosted Glass</option>
+          </select>
+        </div>
+
+        <!-- Alignment -->
+        <div class="style-row">
+          <span class="style-label">Align</span>
+          <div class="toggle-group">
+            <button class="toggle-btn" id="gs-align-left" onclick="setAlign('left')">⬅</button>
+            <button class="toggle-btn active" id="gs-align-center" onclick="setAlign('center')">↔</button>
+            <button class="toggle-btn" id="gs-align-right" onclick="setAlign('right')">➡</button>
+          </div>
+        </div>
+
+        <!-- Position -->
+        <div class="style-row">
+          <span class="style-label">Position</span>
+          <div class="toggle-group">
+            <button class="toggle-btn" id="gs-pos-top" onclick="setPosition('top')">Top</button>
+            <button class="toggle-btn" id="gs-pos-mid" onclick="setPosition('middle')">Mid</button>
+            <button class="toggle-btn active" id="gs-pos-bot" onclick="setPosition('bottom')">Bot</button>
+          </div>
+          <input type="range" class="style-slider" id="gs-posoffset" min="0" max="40" value="10"
+                 oninput="updateGlobalStyle('positionOffset', +this.value)">
+        </div>
+
+        <!-- Bold / Italic / Underline / AllCaps -->
+        <div class="style-row">
+          <span class="style-label">Style</span>
+          <div class="toggle-group">
+            <button class="toggle-btn" id="gs-bold" onclick="toggleGlobal('bold')" style="font-weight:700">B</button>
+            <button class="toggle-btn" id="gs-italic" onclick="toggleGlobal('italic')" style="font-style:italic">I</button>
+            <button class="toggle-btn" id="gs-underline" onclick="toggleGlobal('underline')" style="text-decoration:underline">U</button>
+            <button class="toggle-btn" id="gs-allcaps" onclick="toggleGlobal('allCaps')">AA</button>
+          </div>
+        </div>
+
+        <!-- Shadow -->
+        <div class="style-row">
+          <span class="style-label">Shadow</span>
+          <select class="style-select" id="gs-shadow" onchange="updateGlobalStyle('shadow', this.value)">
+            <option value="none">None</option>
+            <option value="soft" selected>Soft</option>
+            <option value="hard">Hard</option>
+            <option value="glow">Glow</option>
+          </select>
+        </div>
+
+        <!-- Letter Spacing -->
+        <div class="style-row">
+          <span class="style-label">Spacing</span>
+          <input type="range" class="style-slider" id="gs-spacing" min="-2" max="10" value="0" step="0.5"
+                 oninput="updateGlobalStyle('letterSpacing', +this.value); document.getElementById('gs-spacing-val').textContent=this.value">
+          <span class="slider-val" id="gs-spacing-val">0</span>
+        </div>
+
+        <!-- Animation -->
+        <div class="style-row">
+          <span class="style-label">Anim</span>
+          <select class="style-select" id="gs-anim" onchange="updateGlobalStyle('animation', this.value)">
+            <option value="none">None</option>
+            <option value="fade" selected>Fade</option>
+            <option value="slideUp">Slide Up</option>
+            <option value="pop">Pop</option>
+          </select>
+        </div>
+
+      </div><!-- end #style-body -->
+    </div><!-- end #style-panel -->
+
+  </div><!-- end #bottom-area -->
+</div><!-- end #app -->
+
+<!-- API Key Modal -->
+<div id="api-modal" onclick="closeApiModal(event)">
+  <div id="api-modal-inner">
+    <h3>OpenAI API Key</h3>
+    <p>Enter your API key to use Whisper for auto-generated subtitles. Stored locally, never sent anywhere else.</p>
+    <input type="password" class="api-input" id="api-key-inp" placeholder="sk-...">
+    <div class="modal-btns">
+      <button class="btn" style="flex:0;padding:10px 20px" onclick="closeApiModal()">Cancel</button>
+      <button class="btn btn-accent" onclick="saveApiKeyAndGenerate()">Generate Subtitles</button>
+    </div>
+    <button class="btn" onclick="closeApiModal(); openSpeechModal()">Use Web Speech (free)</button>
+  </div>
+</div>
+
+<!-- Export Modal -->
+<div id="export-modal" onclick="closeExportModal(event)">
+  <div id="export-modal-inner">
+    <h3>Export Subtitles</h3>
+    <button class="btn btn-accent" onclick="exportSRT()">Download SRT</button>
+    <button class="btn" onclick="exportVTT()">Download VTT</button>
+    <button class="btn" onclick="closeExportModal()" style="color:var(--text-secondary)">Cancel</button>
+  </div>
+</div>
+
+<!-- Speech Listening Indicator -->
+<div id="speech-bar" style="display:none;position:fixed;top:calc(56px + var(--safe-top));left:0;right:0;background:rgba(255,50,50,0.92);z-index:60;padding:8px 16px;display:none;align-items:center;justify-content:space-between;gap:10px">
+  <div style="display:flex;align-items:center;gap:8px">
+    <div id="speech-pulse" style="width:10px;height:10px;border-radius:50%;background:#fff;animation:pulse 1s ease-in-out infinite"></div>
+    <span style="font-size:13px;font-weight:600;color:#fff">Listening… play video with sound</span>
+  </div>
+  <button onclick="stopWebSpeech()" style="background:rgba(255,255,255,0.25);border:none;border-radius:20px;color:#fff;font-size:12px;font-weight:700;padding:4px 12px;cursor:pointer">Stop</button>
+</div>
+
+<!-- Web Speech Instructions Modal -->
+<div id="speech-modal" style="display:none;position:fixed;inset:0;background:rgba(0,0,0,0.75);z-index:100;align-items:flex-end;justify-content:center" onclick="closeSpeechModal(event)">
+  <div style="background:var(--bg-card);border-radius:var(--radius-lg) var(--radius-lg) 0 0;padding:24px 20px calc(24px + var(--safe-bottom));width:100%;max-width:480px;display:flex;flex-direction:column;gap:14px">
+    <h3 style="font-size:17px;font-weight:700">Web Speech Captioning</h3>
+    <p style="font-size:13px;color:var(--text-secondary);line-height:1.6">
+      Web Speech listens through your <strong style="color:var(--text-primary)">microphone</strong>. For best results:
+    </p>
+    <ul style="font-size:13px;color:var(--text-secondary);line-height:1.9;padding-left:18px">
+      <li>Turn up your device volume</li>
+      <li>Stay in a quiet room</li>
+      <li>Tap <strong style="color:var(--text-primary)">Start</strong> — the video will begin playing</li>
+      <li>Your mic captures the audio in real time</li>
+      <li>Tap <strong style="color:var(--text-primary)">Stop</strong> when done</li>
+    </ul>
+    <div style="display:flex;gap:10px">
+      <select id="speech-lang" class="style-select" style="flex:1">
+        <option value="en-US">English (US)</option>
+        <option value="en-GB">English (UK)</option>
+        <option value="es-ES">Spanish</option>
+        <option value="fr-FR">French</option>
+        <option value="de-DE">German</option>
+        <option value="hi-IN">Hindi</option>
+        <option value="ja-JP">Japanese</option>
+        <option value="zh-CN">Chinese (Simplified)</option>
+        <option value="pt-BR">Portuguese (BR)</option>
+        <option value="ar-SA">Arabic</option>
+      </select>
+    </div>
+    <button class="btn btn-accent" onclick="confirmStartWebSpeech()">Start Listening</button>
+    <button class="btn" onclick="closeSpeechModal()" style="color:var(--text-secondary)">Cancel</button>
+  </div>
+</div>
+
+<!-- Loading Overlay -->
+<div id="loading-overlay">
+  <div class="spinner"></div>
+  <span id="loading-text">Generating subtitles…</span>
+</div>
+
+<!-- Banner -->
+<div id="banner" id="banner"></div>
+
+<!-- Menu (simple slide-up, minimal) -->
+<div id="menu-overlay" style="display:none;position:fixed;inset:0;background:rgba(0,0,0,0.7);z-index:100;align-items:flex-end;justify-content:center" onclick="closeMenu(event)">
+  <div style="background:var(--bg-card);border-radius:var(--radius-lg) var(--radius-lg) 0 0;padding:20px;width:100%;max-width:480px;display:flex;flex-direction:column;gap:10px;padding-bottom:calc(20px + var(--safe-bottom))">
+    <div style="font-size:17px;font-weight:700;margin-bottom:4px">Caply</div>
+    <button class="btn" onclick="document.getElementById('file-input').click();closeMenu()">Load New Video</button>
+    <button class="btn" onclick="clearAll();closeMenu()">Clear All Subtitles</button>
+    <button class="btn" onclick="closeMenu()" style="color:var(--text-secondary)">Close</button>
+  </div>
+</div>
+
+<script>
+// ═══════════════════════════════════════════════════════════════
+//  STATE
+// ═══════════════════════════════════════════════════════════════
+let subtitles = [];   // [{id,start,end,text,style:{...}}]
+let selectedId = null;
+let videoDuration = 0;
+let isScrubbing = false;
+let rafId = null;
+let subIdCounter = 0;
+
+const TIMELINE_PX_PER_SEC = 80; // pixels per second on timeline
+const TIMELINE_MIN_WIDTH   = 320;
+
+const globalStyle = {
+  fontFamily:     'Oswald',
+  fontSize:       20,
+  color:          '#FFFFFF',
+  bgColor:        '#000000',
+  bgOpacity:      0.6,
+  bgStyle:        'tight',
+  alignment:      'center',
+  position:       'bottom',
+  positionOffset: 10,
+  bold:           false,
+  italic:         false,
+  underline:      false,
+  shadow:         'soft',
+  letterSpacing:  0,
+  allCaps:        false,
+  animation:      'fade'
+};
+
+// Load persisted API key
+const apiKey = () => localStorage.getItem('caply_api_key') || '';
+
+// ═══════════════════════════════════════════════════════════════
+//  VIDEO
+// ═══════════════════════════════════════════════════════════════
+const video = document.getElementById('video-player');
+const scrubBar = document.getElementById('scrub-bar');
+
+function handleVideoWrapClick(e) {
+  if (video.style.display === 'block') return;
+  document.getElementById('file-input').click();
+}
+
+function handleVideoFile(evt) {
+  const file = evt.target.files[0];
+  if (!file) return;
+  const url = URL.createObjectURL(file);
+  video.src = url;
+  video.style.display = 'block';
+  document.getElementById('upload-placeholder').style.display = 'none';
+  video.load();
+  video.addEventListener('loadedmetadata', () => {
+    videoDuration = video.duration;
+    updateTimeDisplay();
+    rebuildTimeline();
+  }, { once: true });
+  startRaf();
+}
+
+function togglePlay() {
+  if (!video.src) return;
+  if (video.paused) {
+    video.play();
+    document.getElementById('ico-play').style.display  = 'none';
+    document.getElementById('ico-pause').style.display = 'block';
+  } else {
+    video.pause();
+    document.getElementById('ico-play').style.display  = 'block';
+    document.getElementById('ico-pause').style.display = 'none';
+  }
+}
+
+video.addEventListener('ended', () => {
+  document.getElementById('ico-play').style.display  = 'block';
+  document.getElementById('ico-pause').style.display = 'none';
+});
+
+let scrubPaused = false;
+function scrubStart() { scrubPaused = !video.paused; if (!video.paused) video.pause(); }
+function scrubEnd()   { if (scrubPaused) video.play(); }
+
+function scrubVideo(val) {
+  if (!video.duration) return;
+  video.currentTime = (val / 1000) * video.duration;
+}
+
+function updateTimeDisplay() {
+  const cur = video.currentTime || 0;
+  const dur = video.duration || 0;
+  document.getElementById('time-display').textContent =
+    `${fmtTime(cur)} / ${fmtTime(dur)}`;
+  if (!isScrubbing) {
+    scrubBar.value = dur ? Math.round((cur / dur) * 1000) : 0;
+  }
+}
+
+function fmtTime(s) {
+  const m = Math.floor(s / 60), sec = Math.floor(s % 60);
+  return `${m}:${String(sec).padStart(2,'0')}`;
+}
+
+function fmtTimeFull(s) {
+  // For sub editor display
+  return s.toFixed(1);
+}
+
+// ═══════════════════════════════════════════════════════════════
+//  RAF LOOP — subtitle sync + timeline playhead
+// ═══════════════════════════════════════════════════════════════
+function startRaf() {
+  if (rafId) return;
+  function loop() {
+    updateTimeDisplay();
+    syncSubtitleOverlay();
+    syncPlayhead();
+    rafId = requestAnimationFrame(loop);
+  }
+  rafId = requestAnimationFrame(loop);
+}
+
+// ═══════════════════════════════════════════════════════════════
+//  SUBTITLE OVERLAY
+// ═══════════════════════════════════════════════════════════════
+let lastSubId = null;
+
+function syncSubtitleOverlay() {
+  const t = video.currentTime;
+  const active = subtitles.find(s => t >= s.start && t <= s.end);
+  const overlay = document.getElementById('subtitle-overlay');
+  const el = document.getElementById('subtitle-text');
+
+  if (!active) {
+    el.textContent = '';
+    el.style.background = 'transparent';
+    lastSubId = null;
+    return;
+  }
+
+  // Apply text
+  const gs = globalStyle;
+  const st = active.style || {};
+  const resolve = (key) => st[key] != null ? st[key] : gs[key];
+
+  const ff  = resolve('fontFamily');
+  const fs  = resolve('fontSize');
+  const col = resolve('color');
+  const bgC = resolve('bgColor');
+  const bgo = resolve('bgOpacity');
+  const bgs = resolve('bgStyle');
+  const bld = resolve('bold');
+  const itl = resolve('italic');
+  const und = resolve('underline');
+  const shd = resolve('shadow');
+  const lsp = resolve('letterSpacing');
+  const cap = resolve('allCaps');
+  const anim= resolve('animation');
+  const pos = resolve('position');
+  const off = resolve('positionOffset');
+  const aln = resolve('alignment');
+
+  // Position
+  overlay.style.top    = pos === 'top'    ? `${off}%`  : '';
+  overlay.style.bottom = pos === 'bottom' ? `${off}%`  : '';
+  overlay.style.top    = pos === 'middle' ? '45%'       : overlay.style.top;
+  overlay.style.textAlign = aln;
+
+  // Build text
+  let txt = active.text;
+  if (cap) txt = txt.toUpperCase();
+  el.textContent = txt;
+
+  // Typography
+  el.style.fontFamily     = `'${ff}', sans-serif`;
+  el.style.fontSize       = `${fs}px`;
+  el.style.color          = col;
+  el.style.fontWeight     = bld ? '700' : '400';
+  el.style.fontStyle      = itl ? 'italic' : 'normal';
+  el.style.textDecoration = und ? 'underline' : 'none';
+  el.style.letterSpacing  = `${lsp}px`;
+
+  // Shadow
+  const shadows = {
+    none:  'none',
+    soft:  '0 1px 4px rgba(0,0,0,0.8)',
+    hard:  '2px 2px 0 rgba(0,0,0,1)',
+    glow:  '0 0 12px rgba(255,255,255,0.9)'
+  };
+  el.style.textShadow = shadows[shd] || 'none';
+
+  // Background
+  const hexToRgb = h => {
+    const r = parseInt(h.slice(1,3),16), g = parseInt(h.slice(3,5),16), b = parseInt(h.slice(5,7),16);
+    return `${r},${g},${b}`;
+  };
+  if (bgs === 'none') {
+    el.style.background = 'transparent';
+    el.style.padding    = '0';
+    el.style.borderRadius = '0';
+    overlay.style.width = 'auto';
+  } else if (bgs === 'tight') {
+    el.style.background   = `rgba(${hexToRgb(bgC)},${bgo})`;
+    el.style.padding      = '4px 10px';
+    el.style.borderRadius = '4px';
+    overlay.style.width   = 'auto';
+  } else if (bgs === 'fullbar') {
+    el.style.background   = `rgba(${hexToRgb(bgC)},${bgo})`;
+    el.style.padding      = '6px 12px';
+    el.style.borderRadius = '0';
+    el.style.display      = 'block';
+    overlay.style.left    = '0';
+    overlay.style.right   = '0';
+  } else if (bgs === 'frosted') {
+    el.style.background        = `rgba(${hexToRgb(bgC)},${Math.min(bgo,0.4)})`;
+    el.style.backdropFilter    = 'blur(12px)';
+    el.style.webkitBackdropFilter = 'blur(12px)';
+    el.style.padding           = '5px 12px';
+    el.style.borderRadius      = '6px';
+  }
+
+  // Animate on sub change
+  if (lastSubId !== active.id) {
+    applySubtitleAnimation(el, anim);
+    lastSubId = active.id;
+  }
+}
+
+function applySubtitleAnimation(el, animation) {
+  el.style.animation = 'none';
+  void el.offsetHeight; // reflow
+  switch(animation) {
+    case 'fade':    el.style.animation = 'subtitleFade 0.3s ease'; break;
+    case 'slideUp': el.style.animation = 'subtitleSlideUp 0.3s ease'; break;
+    case 'pop':     el.style.animation = 'subtitlePop 0.25s cubic-bezier(0.34,1.56,0.64,1)'; break;
+    default:        el.style.animation = 'none';
+  }
+}
+
+// ═══════════════════════════════════════════════════════════════
+//  TIMELINE
+// ═══════════════════════════════════════════════════════════════
+function rebuildTimeline() {
+  const inner = document.getElementById('timeline-inner');
+  const empty = document.getElementById('tl-empty');
+  // Remove old blocks
+  inner.querySelectorAll('.tl-block').forEach(b => b.remove());
+
+  if (subtitles.length === 0) {
+    empty.style.display = 'flex';
+    inner.style.width = '';
+    return;
+  }
+  empty.style.display = 'none';
+
+  const totalDur = Math.max(videoDuration || 60, subtitles.reduce((m,s) => Math.max(m, s.end), 0));
+  const tlWidth  = Math.max(TIMELINE_MIN_WIDTH, totalDur * TIMELINE_PX_PER_SEC);
+  inner.style.width = tlWidth + 'px';
+  document.getElementById('playhead').style.height = '';
+
+  subtitles.forEach(sub => {
+    const block = document.createElement('div');
+    block.className = 'tl-block' + (sub.id === selectedId ? ' selected' : '');
+    block.dataset.id = sub.id;
+    block.style.left  = (sub.start * TIMELINE_PX_PER_SEC) + 'px';
+    block.style.width = Math.max(20, (sub.end - sub.start) * TIMELINE_PX_PER_SEC) + 'px';
+    const label = document.createElement('span');
+    label.textContent = sub.text || '…';
+    block.appendChild(label);
+    block.addEventListener('click', () => selectSub(sub.id));
+    // Touch drag to move
+    block.addEventListener('touchstart', tlBlockTouchStart, { passive: true });
+    inner.appendChild(block);
+  });
+}
+
+function syncPlayhead() {
+  const inner = document.getElementById('timeline-inner');
+  const ph    = document.getElementById('playhead');
+  const totalDur = Math.max(videoDuration || 1, 1);
+  const tlWidth  = parseInt(inner.style.width) || TIMELINE_MIN_WIDTH;
+  ph.style.left  = (video.currentTime / totalDur) * tlWidth + 'px';
+}
+
+// Timeline block drag (move subtitle start/end)
+let tlDragSub = null, tlDragStartX = 0, tlDragOrigStart = 0, tlDragOrigEnd = 0;
+
+function tlBlockTouchStart(e) {
+  const id = e.currentTarget.dataset.id;
+  const sub = subtitles.find(s => s.id === id);
+  if (!sub) return;
+  selectSub(id);
+  tlDragSub = sub;
+  tlDragStartX    = e.touches[0].clientX;
+  tlDragOrigStart = sub.start;
+  tlDragOrigEnd   = sub.end;
+  e.currentTarget.addEventListener('touchmove', tlBlockTouchMove, { passive: true });
+  e.currentTarget.addEventListener('touchend',  tlBlockTouchEnd,  { passive: true });
+}
+
+function tlBlockTouchMove(e) {
+  if (!tlDragSub) return;
+  const dx   = e.touches[0].clientX - tlDragStartX;
+  const dtSec = dx / TIMELINE_PX_PER_SEC;
+  const dur   = tlDragOrigEnd - tlDragOrigStart;
+  const newStart = Math.max(0, tlDragOrigStart + dtSec);
+  tlDragSub.start = newStart;
+  tlDragSub.end   = newStart + dur;
+  rebuildTimeline();
+  updateSubEditorUI();
+}
+
+function tlBlockTouchEnd(e) {
+  tlDragSub = null;
+  e.currentTarget.removeEventListener('touchmove', tlBlockTouchMove);
+  e.currentTarget.removeEventListener('touchend',  tlBlockTouchEnd);
+}
+
+// ═══════════════════════════════════════════════════════════════
+//  SUBTITLE MANAGEMENT
+// ═══════════════════════════════════════════════════════════════
+function makeSubtitle(start, end, text) {
+  return {
+    id: 'sub_' + (++subIdCounter).toString().padStart(3,'0'),
+    start, end, text,
+    style: {
+      fontFamily: null, fontSize: null, color: null,
+      bgColor: null, bgOpacity: null, bgStyle: null,
+      bold: null, italic: null, underline: null,
+      shadow: null, letterSpacing: null, allCaps: null,
+      animation: null, alignment: null,
+      position: null, positionOffset: null
+    }
+  };
+}
+
+function addSubtitleNow() {
+  const t = video.currentTime || 0;
+  const sub = makeSubtitle(t, Math.min(t + 3, (videoDuration || t + 3)), 'New subtitle');
+  subtitles.push(sub);
+  subtitles.sort((a,b) => a.start - b.start);
+  rebuildTimeline();
+  selectSub(sub.id);
+  showBanner('Subtitle added at ' + fmtTime(t));
+}
+
+function deleteSelectedSub() {
+  if (!selectedId) return;
+  subtitles = subtitles.filter(s => s.id !== selectedId);
+  selectedId = null;
+  document.getElementById('sub-editor').classList.remove('visible');
+  rebuildTimeline();
+}
+
+function selectSub(id) {
+  selectedId = id;
+  rebuildTimeline();
+  updateSubEditorUI();
+}
+
+function updateSubEditorUI() {
+  const sub = subtitles.find(s => s.id === selectedId);
+  const editor = document.getElementById('sub-editor');
+  if (!sub) { editor.classList.remove('visible'); return; }
+  editor.classList.add('visible');
+
+  document.getElementById('sub-time-label').textContent =
+    fmtTime(sub.start) + ' → ' + fmtTime(sub.end);
+  document.getElementById('sub-text-input').value = sub.text;
+  document.getElementById('sub-start-inp').value  = sub.start.toFixed(1);
+  document.getElementById('sub-end-inp').value    = sub.end.toFixed(1);
+
+  // Check if customized
+  const hasOverride = Object.values(sub.style).some(v => v != null);
+  const badge = document.getElementById('sub-style-badge');
+  badge.classList.toggle('visible', hasOverride);
+
+  // Per-sub controls
+  document.getElementById('sub-color').value = sub.style.color || globalStyle.color;
+  document.getElementById('sub-anim').value  = sub.style.animation || '';
+  document.getElementById('sub-bold').classList.toggle('active',
+    sub.style.bold != null ? sub.style.bold : globalStyle.bold);
+  document.getElementById('sub-italic').classList.toggle('active',
+    sub.style.italic != null ? sub.style.italic : globalStyle.italic);
+}
+
+function updateSubText(val) {
+  const sub = subtitles.find(s => s.id === selectedId);
+  if (!sub) return;
+  sub.text = val;
+  rebuildTimeline();
+}
+
+function updateSubTime(field, val) {
+  const sub = subtitles.find(s => s.id === selectedId);
+  if (!sub) return;
+  const n = parseFloat(val);
+  if (isNaN(n)) return;
+  sub[field] = Math.max(0, n);
+  if (field === 'start' && sub.end <= sub.start) sub.end = sub.start + 1;
+  if (field === 'end'   && sub.end <= sub.start) sub.end = sub.start + 1;
+  rebuildTimeline();
+  updateSubEditorUI();
+}
+
+function setSubStyle(key, val) {
+  const sub = subtitles.find(s => s.id === selectedId);
+  if (!sub) return;
+  sub.style[key] = val;
+  updateSubEditorUI();
+}
+
+function toggleSubStyle(key) {
+  const sub = subtitles.find(s => s.id === selectedId);
+  if (!sub) return;
+  const cur = sub.style[key] != null ? sub.style[key] : globalStyle[key];
+  sub.style[key] = !cur;
+  updateSubEditorUI();
+}
+
+function resetSubStyle() {
+  const sub = subtitles.find(s => s.id === selectedId);
+  if (!sub) return;
+  Object.keys(sub.style).forEach(k => sub.style[k] = null);
+  updateSubEditorUI();
+  showBanner('Style reset to global');
+}
+
+// ═══════════════════════════════════════════════════════════════
+//  GLOBAL STYLE
+// ═══════════════════════════════════════════════════════════════
+function updateGlobalStyle(key, val) {
+  globalStyle[key] = val;
+}
+
+function toggleGlobal(key) {
+  globalStyle[key] = !globalStyle[key];
+  const map = { bold: 'gs-bold', italic: 'gs-italic', underline: 'gs-underline', allCaps: 'gs-allcaps' };
+  document.getElementById(map[key])?.classList.toggle('active', globalStyle[key]);
+}
+
+function setAlign(val) {
+  globalStyle.alignment = val;
+  ['left','center','right'].forEach(a => {
+    document.getElementById('gs-align-'+a)?.classList.toggle('active', a === val);
+  });
+}
+
+function setPosition(val) {
+  globalStyle.position = val;
+  ['top','mid','bot'].forEach(p => {
+    const btn = document.getElementById('gs-pos-'+p);
+    const match = (p === 'mid' ? 'middle' : p);
+    btn?.classList.toggle('active', match === val);
+  });
+}
+
+function openStylePanel() {
+  const hdr = document.getElementById('style-panel-header');
+  const body = document.getElementById('style-body');
+  hdr.classList.add('open');
+  body.classList.add('open');
+  document.getElementById('bottom-area').scrollTop = 999;
+}
+
+function toggleStylePanel() {
+  const hdr  = document.getElementById('style-panel-header');
+  const body = document.getElementById('style-body');
+  hdr.classList.toggle('open');
+  body.classList.toggle('open');
+}
+
+// ═══════════════════════════════════════════════════════════════
+//  CUSTOM FONT
+// ═══════════════════════════════════════════════════════════════
+async function loadCustomFont(evt) {
+  const file = evt.target.files[0];
+  if (!file) return;
+  try {
+    const url  = URL.createObjectURL(file);
+    const name = file.name.replace(/\.[^.]+$/, '');
+    const font = new FontFace(name, `url(${url})`);
+    await font.load();
+    document.fonts.add(font);
+    // Add to font select
+    const sel = document.getElementById('gs-font');
+    const opt = document.createElement('option');
+    opt.value = name; opt.textContent = name + ' (custom)';
+    sel.appendChild(opt);
+    sel.value = name;
+    updateGlobalStyle('fontFamily', name);
+    showBanner(`Font "${name}" loaded`);
+  } catch(e) {
+    showBanner('Failed to load font');
+  }
+}
+
+// ═══════════════════════════════════════════════════════════════
+//  AUTO GENERATE
+// ═══════════════════════════════════════════════════════════════
+function startAutoGenerate() {
+  if (!video.src) { showBanner('Load a video first'); return; }
+  // Show API key modal
+  document.getElementById('api-key-inp').value = apiKey();
+  document.getElementById('api-modal').classList.add('open');
+}
+
+function saveApiKeyAndGenerate() {
+  const key = document.getElementById('api-key-inp').value.trim();
+  if (key) localStorage.setItem('caply_api_key', key);
+  closeApiModal();
+  generateSubtitles();
+}
+
+async function generateSubtitles() {
+  const key = apiKey();
+  if (key && key.length > 10) {
+    try {
+      await generateViaWhisper(key);
+    } catch(err) {
+      console.error('Whisper failed:', err);
+      showBanner('Whisper failed — tap Auto Generate → Web Speech to continue');
+    }
+  } else {
+    openSpeechModal();
+  }
+}
+
+async function generateViaWhisper(key) {
+  showLoading('Extracting audio…');
+  const audioBlob = await extractAudioBlob();
+  showLoading('Generating subtitles via Whisper…');
+
+  const formData = new FormData();
+  formData.append('file', audioBlob, 'audio.wav');
+  formData.append('model', 'whisper-1');
+  formData.append('response_format', 'verbose_json');
+
+  const res = await fetch('https://api.openai.com/v1/audio/transcriptions', {
+    method: 'POST',
+    headers: { 'Authorization': `Bearer ${key}` },
+    body: formData
+  });
+
+  if (!res.ok) {
+    const err = await res.text();
+    throw new Error(err);
+  }
+
+  const data = await res.json();
+  hideLoading();
+
+  // Parse segments
+  if (data.segments && data.segments.length > 0) {
+    subtitles = data.segments.map(seg => makeSubtitle(seg.start, seg.end, seg.text.trim()));
+  } else if (data.text) {
+    // Fallback: single subtitle
+    subtitles = [makeSubtitle(0, videoDuration || 10, data.text)];
+  }
+
+  rebuildTimeline();
+  showBanner(`Generated ${subtitles.length} subtitle(s) via Whisper`);
+}
+
+async function extractAudioBlob() {
+  return new Promise((resolve, reject) => {
+    try {
+      const audioCtx = new (window.AudioContext || window.webkitAudioContext)();
+      // Fetch the video blob
+      fetch(video.src)
+        .then(r => r.arrayBuffer())
+        .then(buf => audioCtx.decodeAudioData(buf))
+        .then(decoded => {
+          // Encode as WAV
+          const wav = audioBufferToWav(decoded);
+          resolve(new Blob([wav], { type: 'audio/wav' }));
+        })
+        .catch(reject);
+    } catch(e) { reject(e); }
+  });
+}
+
+// Simple WAV encoder
+function audioBufferToWav(buffer) {
+  const numChannels = Math.min(buffer.numberOfChannels, 2);
+  const sampleRate  = buffer.sampleRate;
+  const format      = 1; // PCM
+  const bitDepth    = 16;
+  const samples     = buffer.length;
+  const dataLen     = samples * numChannels * (bitDepth / 8);
+  const ab          = new ArrayBuffer(44 + dataLen);
+  const view        = new DataView(ab);
+
+  const writeStr = (off, str) => { for(let i=0;i<str.length;i++) view.setUint8(off+i, str.charCodeAt(i)); };
+  writeStr(0,  'RIFF');
+  view.setUint32(4,  36 + dataLen, true);
+  writeStr(8,  'WAVE');
+  writeStr(12, 'fmt ');
+  view.setUint32(16, 16, true);
+  view.setUint16(20, format, true);
+  view.setUint16(22, numChannels, true);
+  view.setUint32(24, sampleRate, true);
+  view.setUint32(28, sampleRate * numChannels * (bitDepth/8), true);
+  view.setUint16(32, numChannels * (bitDepth/8), true);
+  view.setUint16(34, bitDepth, true);
+  writeStr(36, 'data');
+  view.setUint32(40, dataLen, true);
+
+  const ch0 = buffer.getChannelData(0);
+  const ch1 = numChannels > 1 ? buffer.getChannelData(1) : ch0;
+  let offset = 44;
+  for(let i = 0; i < samples; i++) {
+    const s0 = Math.max(-1, Math.min(1, ch0[i]));
+    const s1 = Math.max(-1, Math.min(1, ch1[i]));
+    view.setInt16(offset, s0 < 0 ? s0 * 0x8000 : s0 * 0x7FFF, true); offset += 2;
+    if (numChannels > 1) { view.setInt16(offset, s1 < 0 ? s1 * 0x8000 : s1 * 0x7FFF, true); offset += 2; }
+  }
+  return ab;
+}
+
+// ─── Web Speech API ────────────────────────────────────────────
+let speechRec      = null;
+let speechActive   = false;
+let speechLang     = 'en-US';
+let sessionVidStart = 0;   // video.currentTime when current session began
+let sessionWallStart = 0;  // Date.now() when current session began
+let segPendingStart = 0;   // start time for the current final segment
+
+function openSpeechModal() {
+  if (!video.src) { showBanner('Load a video first'); return; }
+  document.getElementById('speech-modal').style.display = 'flex';
+}
+function closeSpeechModal(e) {
+  if (e && e.target !== document.getElementById('speech-modal')) return;
+  document.getElementById('speech-modal').style.display = 'none';
+}
+
+function confirmStartWebSpeech() {
+  closeSpeechModal();
+  speechLang = document.getElementById('speech-lang').value;
+  generateViaWebSpeech();
+}
+
+async function generateViaWebSpeech() {
+  const SR = window.SpeechRecognition || window.webkitSpeechRecognition;
+  if (!SR) { showBanner('Web Speech not supported on this browser'); return; }
+
+  // Request mic permission explicitly first
+  try {
+    const stream = await navigator.mediaDevices.getUserMedia({ audio: true });
+    stream.getTracks().forEach(t => t.stop()); // release immediately — just needed for permission
+  } catch(err) {
+    showBanner('Microphone permission denied — cannot use Web Speech');
+    return;
+  }
+
+  if (speechActive) stopWebSpeech();
+
+  subtitles = [];
+  rebuildTimeline();
+  speechActive = true;
+  setListeningUI(true);
+
+  // Start video playback so audio comes out of speakers
+  if (video.paused) video.play().catch(() => {});
+  document.getElementById('ico-play').style.display  = 'none';
+  document.getElementById('ico-pause').style.display = 'block';
+
+  video.addEventListener('ended', stopWebSpeech, { once: true });
+
+  _startSpeechSession(SR);
+}
+
+function _startSpeechSession(SR) {
+  if (!speechActive) return;
+
+  speechRec = new (window.SpeechRecognition || window.webkitSpeechRecognition)();
+  speechRec.continuous     = false;  // false = more reliable on iOS/Safari
+  speechRec.interimResults = true;
+  speechRec.lang           = speechLang;
+  speechRec.maxAlternatives = 1;
+
+  // Snap timestamps at the START of each session
+  sessionVidStart  = video.currentTime;
+  sessionWallStart = Date.now();
+  segPendingStart  = sessionVidStart;
+
+  speechRec.onresult = (evt) => {
+    // Estimate current video time using wall-clock elapsed since session start
+    const wallElapsed = (Date.now() - sessionWallStart) / 1000;
+    const estVidTime  = sessionVidStart + wallElapsed;
+
+    for (let i = evt.resultIndex; i < evt.results.length; i++) {
+      const res = evt.results[i];
+      const txt = res[0].transcript.trim();
+      if (!txt) continue;
+
+      if (res.isFinal) {
+        const segEnd   = Math.min(estVidTime, video.duration || 9999);
+        const segStart = Math.max(0, segPendingStart);
+        if (segEnd > segStart) {
+          subtitles.push(makeSubtitle(segStart, segEnd, txt));
+          subtitles.sort((a, b) => a.start - b.start);
+          rebuildTimeline();
+        }
+        segPendingStart = segEnd;
+        clearLiveCaption();
+      } else {
+        // Show live preview in overlay
+        showLiveCaption(txt);
+      }
+    }
+  };
+
+  speechRec.onerror = (e) => {
+    if (e.error === 'not-allowed' || e.error === 'service-not-allowed') {
+      showBanner('Microphone blocked — check browser permissions');
+      stopWebSpeech(); return;
+    }
+    // 'no-speech', 'audio-capture', network errors — just let onend restart
+    console.warn('Speech error:', e.error);
+  };
+
+  speechRec.onend = () => {
+    if (speechActive && !video.paused && !video.ended) {
+      // Auto-restart — this is the key fix for iOS/Safari
+      setTimeout(() => _startSpeechSession(SR), 80);
+    } else {
+      _finishWebSpeech();
+    }
+  };
+
+  try { speechRec.start(); } catch(e) { console.warn('speechRec.start failed:', e); }
+}
+
+function stopWebSpeech() {
+  speechActive = false;
+  try { speechRec && speechRec.stop(); } catch(e) {}
+  _finishWebSpeech();
+}
+
+function _finishWebSpeech() {
+  speechActive = false;
+  setListeningUI(false);
+  clearLiveCaption();
+  rebuildTimeline();
+  showBanner(subtitles.length
+    ? `✓ ${subtitles.length} subtitle(s) captured via Web Speech`
+    : 'No speech detected — try louder volume or a quieter room');
+}
+
+function setListeningUI(on) {
+  const bar = document.getElementById('speech-bar');
+  bar.style.display = on ? 'flex' : 'none';
+}
+
+function showLiveCaption(txt) {
+  const el = document.getElementById('subtitle-text');
+  el.textContent = txt;
+  el.style.opacity = '0.55';
+  el.style.fontFamily = `'${globalStyle.fontFamily}', sans-serif`;
+  el.style.fontSize   = `${globalStyle.fontSize}px`;
+  el.style.color      = globalStyle.color;
+}
+
+function clearLiveCaption() {
+  const el = document.getElementById('subtitle-text');
+  el.style.opacity = '1';
+}
+
+// ═══════════════════════════════════════════════════════════════
+//  EXPORT
+// ═══════════════════════════════════════════════════════════════
+function openExportModal() {
+  if (!subtitles.length) { showBanner('No subtitles to export'); return; }
+  document.getElementById('export-modal').classList.add('open');
+}
+function closeExportModal(e) {
+  if (e && e.target !== document.getElementById('export-modal')) return;
+  document.getElementById('export-modal').classList.remove('open');
+}
+
+function fmtSRTTime(s) {
+  const h   = Math.floor(s / 3600);
+  const m   = Math.floor((s % 3600) / 60);
+  const sec = Math.floor(s % 60);
+  const ms  = Math.round((s % 1) * 1000);
+  return `${String(h).padStart(2,'0')}:${String(m).padStart(2,'0')}:${String(sec).padStart(2,'0')},${String(ms).padStart(3,'0')}`;
+}
+
+function fmtVTTTime(s) {
+  return fmtSRTTime(s).replace(',', '.');
+}
+
+function toSRT() {
+  const sorted = [...subtitles].sort((a,b) => a.start - b.start);
+  return sorted.map((s, i) =>
+    `${i+1}\n${fmtSRTTime(s.start)} --> ${fmtSRTTime(s.end)}\n${s.text}\n`
+  ).join('\n');
+}
+
+function toVTT() {
+  const sorted = [...subtitles].sort((a,b) => a.start - b.start);
+  return 'WEBVTT\n\n' + sorted.map((s, i) =>
+    `${i+1}\n${fmtVTTTime(s.start)} --> ${fmtVTTTime(s.end)}\n${s.text}\n`
+  ).join('\n');
+}
+
+function downloadBlob(content, filename, mime) {
+  const blob = new Blob([content], { type: mime });
+  const url  = URL.createObjectURL(blob);
+  const a    = document.createElement('a');
+  a.href     = url;
+  a.download = filename;
+  a.click();
+  URL.revokeObjectURL(url);
+}
+
+function exportSRT() {
+  downloadBlob(toSRT(), 'caply-subtitles.srt', 'text/plain');
+  closeExportModal();
+}
+function exportVTT() {
+  downloadBlob(toVTT(), 'caply-subtitles.vtt', 'text/vtt');
+  closeExportModal();
+}
+
+// ═══════════════════════════════════════════════════════════════
+//  MODALS & UI HELPERS
+// ═══════════════════════════════════════════════════════════════
+function closeApiModal(e) {
+  if (e && e.target !== document.getElementById('api-modal')) return;
+  document.getElementById('api-modal').classList.remove('open');
+}
+
+function openMenu() {
+  document.getElementById('menu-overlay').style.display = 'flex';
+}
+function closeMenu(e) {
+  if (e && e.target !== document.getElementById('menu-overlay')) return;
+  document.getElementById('menu-overlay').style.display = 'none';
+}
+
+function clearAll() {
+  subtitles   = [];
+  selectedId  = null;
+  document.getElementById('sub-editor').classList.remove('visible');
+  rebuildTimeline();
+  showBanner('All subtitles cleared');
+}
+
+let bannerTimer = null;
+function showBanner(msg) {
+  const el = document.getElementById('banner');
+  el.textContent = msg;
+  el.classList.add('show');
+  clearTimeout(bannerTimer);
+  bannerTimer = setTimeout(() => el.classList.remove('show'), 2800);
+}
+
+function showLoading(msg) {
+  document.getElementById('loading-text').textContent = msg || 'Loading…';
+  document.getElementById('loading-overlay').classList.add('show');
+}
+function hideLoading() {
+  document.getElementById('loading-overlay').classList.remove('show');
+}
+
+// ═══════════════════════════════════════════════════════════════
+//  INIT
+// ═══════════════════════════════════════════════════════════════
+startRaf();
+rebuildTimeline();
+// Pre-fill API key if stored
+document.getElementById('api-key-inp').value = apiKey();
+</script>
+</body>
+</html>

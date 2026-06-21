@@ -1,0 +1,3312 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <title>Caply</title>
+
+  <!-- PWA / iPhone home screen -->
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+  <meta name="apple-mobile-web-app-title" content="Caply">
+  <meta name="mobile-web-app-capable" content="yes">
+  <meta name="theme-color" content="#0A0A0A">
+  <link rel="apple-touch-icon" href="data:image/png;base64,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">
+  <link rel="icon" href="data:image/png;base64,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">
+
+  <!-- Google Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Oswald:wght@400;600&family=Bebas+Neue&family=Montserrat:wght@400;700;800&family=Poppins:wght@400;700&family=Roboto+Condensed:wght@400;700&family=Anton&family=Playfair+Display:ital,wght@0,400;0,700;1,400&family=Raleway:wght@400;700&family=Nunito:wght@400;800&family=Space+Mono&family=Permanent+Marker&family=Pacifico&family=Cinzel:wght@400;700&family=Exo+2:wght@400;700&family=Orbitron:wght@400;700&display=swap" rel="stylesheet">
+
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --bg-primary:   #080810;
+      --bg-secondary: rgba(15,15,25,0.75);
+      --bg-card:      rgba(20,20,35,0.72);
+      --bg-elevated:  rgba(30,30,50,0.80);
+      --accent:       #00D4FF;
+      --accent-dim:   rgba(0,212,255,0.15);
+      --accent-glow:  0 0 20px rgba(0,212,255,0.4);
+      --glass-border: rgba(255,255,255,0.08);
+      --glass-blur:   blur(18px);
+      --text-primary: #F0F0F0;
+      --text-secondary:#888888;
+      --text-muted:   #444444;
+      --border:       rgba(255,255,255,0.08);
+      --danger:       #FF4757;
+      --success:      #2ED573;
+      --radius-sm:    6px;
+      --radius-md:    12px;
+      --radius-lg:    20px;
+      --font-ui:      'Inter', system-ui, sans-serif;
+      --transition:   0.2s cubic-bezier(0.4,0,0.2,1);
+      --safe-bottom:  env(safe-area-inset-bottom, 0px);
+      --safe-top:     env(safe-area-inset-top, 0px);
+      --safe-left:    env(safe-area-inset-left, 0px);
+      --safe-right:   env(safe-area-inset-right, 0px);
+      --app-pad-h:    max(10px, env(safe-area-inset-left, 10px));
+    }
+
+    html, body {
+      height: 100%;
+      height: 100dvh;
+      background: var(--bg-primary);
+      background-image:
+        radial-gradient(ellipse at 20% 10%, rgba(0,100,180,0.18) 0%, transparent 55%),
+        radial-gradient(ellipse at 80% 80%, rgba(80,0,180,0.14) 0%, transparent 55%),
+        radial-gradient(ellipse at 50% 50%, rgba(0,30,60,0.25) 0%, transparent 80%);
+      color: var(--text-primary);
+      font-family: var(--font-ui);
+      overflow: hidden;
+      -webkit-tap-highlight-color: transparent;
+      user-select: none;
+    }
+
+    #app { display: flex; flex-direction: column; height: 100%; height: 100dvh; padding-top: var(--safe-top); padding-left: var(--safe-left); padding-right: var(--safe-right); box-sizing: border-box; }
+
+    /* ─── Top Bar ─── */
+    #topbar {
+      display: flex; align-items: center; justify-content: space-between;
+      padding: 7px max(10px, var(--app-pad-h));
+      background: var(--bg-secondary);
+      backdrop-filter: var(--glass-blur);
+      -webkit-backdrop-filter: var(--glass-blur);
+      border-bottom: 1px solid var(--glass-border);
+      flex-shrink: 0; z-index: 10;
+    }
+    #topbar .title { font-size: 19.5px; font-weight: 700; color: var(--accent); letter-spacing: -0.5px; display: flex; align-items: center; gap: 6px; }
+    #topbar .title .title-icon { width: 22px; height: 22px; flex-shrink: 0; }
+    #topbar .tb-group { display: flex; align-items: center; gap: 2px; }
+    #btn-lock { transition: color var(--transition); }
+    #btn-lock.locked { color: var(--accent); }
+    #btn-lock.locked svg { filter: drop-shadow(0 0 4px rgba(0,212,255,0.5)); }
+    .btn-icon {
+      background: none; border: none; color: var(--text-secondary);
+      cursor: pointer; padding: 8px; border-radius: var(--radius-sm);
+      transition: color var(--transition), background var(--transition);
+      display: flex; align-items: center; justify-content: center;
+    }
+    .btn-icon:hover, .btn-icon:active { color: var(--accent); background: var(--accent-dim); }
+    .btn-icon svg { width: 21px; height: 21px; }
+    .btn-icon:disabled { opacity: 0.3; pointer-events: none; }
+
+    /* ─── Video ─── */
+    #video-wrap {
+      flex-shrink: 0; position: relative; background: #000;
+      width: 100%; aspect-ratio: 16/9; max-height: 30vh;
+      display: flex; align-items: center; justify-content: center;
+    }
+    #video-player { width: 100%; height: 100%; object-fit: contain; display: none; }
+    #upload-placeholder {
+      display: flex; flex-direction: column; align-items: center; gap: 12px;
+      color: var(--text-muted); cursor: pointer;
+    }
+    #upload-placeholder svg { width: 48px; height: 48px; opacity: 0.5; }
+    #upload-placeholder span { font-size: 14px; }
+    #upload-placeholder .upload-hint { font-size: 12px; color: var(--text-muted); }
+    #file-input, #sub-file-input { display: none; }
+
+    #subtitle-overlay {
+      position: absolute; bottom: 12%; left: 0; right: 0;
+      text-align: center; padding: 0 12px;
+      pointer-events: none; z-index: 5;
+    }
+    #subtitle-text {
+      display: inline-block; max-width: 92%;
+      padding: 4px 10px; border-radius: 4px;
+      line-height: 1.3;
+    }
+    .kw {
+      display: inline-block;
+      border-radius: 4px;
+      transition: color 0.06s linear, background 0.1s linear, transform 0.12s cubic-bezier(0.34,1.56,0.64,1), opacity 0.08s linear;
+    }
+
+    /* ─── Playback Controls ─── */
+    #controls {
+      display: flex; align-items: center; gap: 4px;
+      padding: 5px max(8px, var(--app-pad-h));
+      background: var(--bg-secondary);
+      backdrop-filter: var(--glass-blur);
+      -webkit-backdrop-filter: var(--glass-blur);
+      border-top: 1px solid var(--glass-border);
+      flex-shrink: 0;
+    }
+    .ctrl-btn { background: none; border: none; cursor: pointer; color: var(--text-primary); display: flex; padding: 4px; }
+    .ctrl-btn svg { width: 24px; height: 24px; }
+    .ctrl-btn.small svg { width: 18px; height: 18px; }
+    .ctrl-mini {
+      background: rgba(255,255,255,0.05); border: 1px solid rgba(255,255,255,0.1); color: var(--text-secondary);
+      font-family: var(--font-ui); font-size: 10px; font-weight: 700;
+      cursor: pointer; padding: 3px 7px; border-radius: 10px;
+      white-space: nowrap;
+    }
+    .ctrl-mini.active { color: var(--accent); border-color: var(--accent); background: var(--accent-dim); }
+    #scrub-bar {
+      flex: 1; min-width: 40px;
+      -webkit-appearance: none; appearance: none;
+      height: 4px; background: var(--border); border-radius: 2px;
+      outline: none; cursor: pointer;
+    }
+    #scrub-bar::-webkit-slider-thumb {
+      -webkit-appearance: none; width: 14px; height: 14px; border-radius: 50%;
+      background: var(--accent); box-shadow: var(--accent-glow); cursor: pointer;
+    }
+    #time-display { font-size: 10px; color: var(--text-secondary); white-space: nowrap; }
+
+    /* ─── Timeline ─── */
+    #timeline-wrap { flex-shrink: 0; background: var(--bg-secondary); backdrop-filter: var(--glass-blur); -webkit-backdrop-filter: var(--glass-blur); border-top: 1px solid var(--glass-border); padding: 3px 0 6px; }
+    #tl-tools { display: flex; align-items: center; justify-content: space-between; padding: 0 max(12px, var(--app-pad-h)) 4px; }
+    #tl-tools .tl-label { font-size: 10px; color: var(--text-muted); text-transform: uppercase; letter-spacing: 1px; }
+    #tl-tools .tl-zoom { display: flex; gap: 6px; }
+    #timeline-scroll { overflow-x: auto; overflow-y: hidden; padding: 0 max(12px, var(--app-pad-h)); -webkit-overflow-scrolling: touch; }
+    #timeline-scroll::-webkit-scrollbar { display: none; }
+    #timeline-inner { position: relative; height: 56px; min-width: 100%; touch-action: pan-x; }
+    .tl-ruler { position: absolute; top: 0; left: 0; right: 0; height: 14px; pointer-events: none; }
+    .tl-tick {
+      position: absolute; top: 0; height: 13px;
+      font-size: 8px; color: var(--text-muted);
+      border-left: 1px solid var(--border); padding-left: 3px;
+      white-space: nowrap;
+    }
+    #playhead {
+      position: absolute; top: 0; bottom: 0; width: 2px;
+      background: var(--accent); box-shadow: var(--accent-glow);
+      z-index: 5; pointer-events: none;
+    }
+    .tl-block {
+      position: absolute; top: 18px; bottom: 4px;
+      border-radius: var(--radius-sm);
+      background: rgba(255,255,255,0.12);
+      border: 1.5px solid rgba(255,255,255,0.25);
+      cursor: pointer; min-width: 18px;
+      overflow: visible;
+      display: flex; align-items: center;
+      touch-action: none;
+    }
+    .tl-block span {
+      font-size: 10px; color: var(--text-primary); padding: 0 6px;
+      white-space: nowrap; overflow: hidden; text-overflow: ellipsis;
+      pointer-events: none; flex: 1;
+    }
+    .tl-block.selected { background: var(--accent-dim); border-color: var(--accent); box-shadow: var(--accent-glow); }
+    .tl-handle { position: absolute; top: -2px; bottom: -2px; width: 14px; z-index: 3; display: none; touch-action: none; }
+    .tl-handle.l { left: -7px; cursor: ew-resize; }
+    .tl-handle.r { right: -7px; cursor: ew-resize; }
+    .tl-handle::after {
+      content: ''; position: absolute; top: 25%; bottom: 25%; left: 5px; width: 4px;
+      border-radius: 2px; background: var(--accent);
+    }
+    .tl-block.selected .tl-handle { display: block; }
+
+    /* ─── Action Buttons ─── */
+    #action-row {
+      display: flex; gap: 8px; padding: 7px max(12px, var(--app-pad-h));
+      background: var(--bg-secondary);
+      backdrop-filter: var(--glass-blur);
+      -webkit-backdrop-filter: var(--glass-blur);
+      border-top: 1px solid var(--glass-border);
+      flex-shrink: 0;
+    }
+    .btn {
+      flex: 1; padding: 9px 10px;
+      border-radius: var(--radius-lg);
+      border: 1px solid rgba(255,255,255,0.12);
+      background: rgba(255,255,255,0.07);
+      backdrop-filter: var(--glass-blur);
+      -webkit-backdrop-filter: var(--glass-blur);
+      color: var(--text-primary);
+      font-family: var(--font-ui); font-size: 13px; font-weight: 600;
+      cursor: pointer;
+      display: flex; align-items: center; justify-content: center; gap: 6px;
+      transition: all var(--transition);
+    }
+    .btn:active { transform: scale(0.97); }
+    .btn-accent { background: var(--accent); border-color: var(--accent); color: #000; backdrop-filter: none; -webkit-backdrop-filter: none; }
+    .btn-accent:hover { box-shadow: var(--accent-glow); }
+    .btn svg { width: 16px; height: 16px; }
+
+    /* ─── Bottom Area ─── */
+    #bottom-area {
+      flex: 1; overflow-y: auto; -webkit-overflow-scrolling: touch;
+      display: flex; flex-direction: column;
+      padding-bottom: calc(8px + var(--safe-bottom));
+      scrollbar-width: none;
+    }
+    #bottom-area::-webkit-scrollbar { display: none; }
+
+    /* ─── Presets Row ─── */
+    #presets-wrap { background: var(--bg-card); backdrop-filter: var(--glass-blur); -webkit-backdrop-filter: var(--glass-blur); border-top: 1px solid var(--glass-border); padding: 8px 0 6px; }
+    #presets-wrap .presets-title { font-size: 10px; color: var(--text-secondary); text-transform: uppercase; letter-spacing: 1px; padding: 0 14px 8px; }
+    #presets-row {
+      display: flex; gap: 8px; overflow-x: auto; padding: 0 12px 4px;
+      -webkit-overflow-scrolling: touch;
+    }
+    #presets-row::-webkit-scrollbar { display: none; }
+    .preset-chip {
+      flex-shrink: 0; width: 72px;
+      display: flex; flex-direction: column; align-items: center; gap: 4px;
+      cursor: pointer;
+    }
+    .preset-chip .pv {
+      width: 72px; height: 44px; border-radius: var(--radius-sm);
+      background: rgba(255,255,255,0.05);
+      border: 1px solid rgba(255,255,255,0.1);
+      backdrop-filter: var(--glass-blur);
+      -webkit-backdrop-filter: var(--glass-blur);
+      display: flex; align-items: center; justify-content: center;
+      font-size: 15px; overflow: hidden;
+      transition: border-color var(--transition);
+    }
+    .preset-chip.active .pv { border-color: var(--accent); box-shadow: var(--accent-glow); }
+    .preset-chip .pn { font-size: 9px; color: var(--text-secondary); white-space: nowrap; }
+    .preset-chip.active .pn { color: var(--accent); }
+
+    /* ─── Selected Subtitle Editor ─── */
+    #sub-editor {
+      background: var(--bg-card);
+      backdrop-filter: var(--glass-blur);
+      -webkit-backdrop-filter: var(--glass-blur);
+      border-top: 1px solid var(--glass-border);
+      padding: 10px 12px; display: none; flex-direction: column; gap: 8px;
+    }
+    #sub-editor.visible { display: flex; }
+    .sub-editor-header { display: flex; align-items: center; justify-content: space-between; }
+    .sub-time-label { font-size: 12px; color: var(--accent); font-weight: 600; }
+    .sub-actions { display: flex; gap: 4px; align-items: center; }
+    .sub-text-input {
+      width: 100%; background: rgba(255,255,255,0.05);
+      border: 1px solid rgba(255,255,255,0.1); border-radius: var(--radius-sm);
+      color: var(--text-primary); font-family: var(--font-ui); font-size: 14px;
+      padding: 8px 10px; resize: none; outline: none; min-height: 52px;
+      transition: border-color var(--transition);
+      user-select: text; -webkit-user-select: text;
+    }
+    .sub-text-input:focus { border-color: var(--accent); }
+    .time-inputs { display: flex; gap: 8px; align-items: flex-end; }
+    .time-input-group { display: flex; flex-direction: column; gap: 4px; flex: 1; }
+    .time-input-group label { font-size: 10px; color: var(--text-secondary); text-transform: uppercase; letter-spacing: 0.5px; }
+    .time-inp {
+      background: rgba(255,255,255,0.05); border: 1px solid rgba(255,255,255,0.1);
+      border-radius: var(--radius-sm); color: var(--text-primary);
+      font-family: var(--font-ui); font-size: 13px; padding: 6px 8px;
+      outline: none; width: 100%;
+      user-select: text; -webkit-user-select: text;
+    }
+    .time-inp:focus { border-color: var(--accent); }
+    .mini-btn {
+      background: rgba(255,255,255,0.06); border: 1px solid rgba(255,255,255,0.1);
+      border-radius: var(--radius-sm); color: var(--text-primary);
+      font-family: var(--font-ui); font-size: 11px; font-weight: 600;
+      padding: 7px 10px; cursor: pointer; white-space: nowrap;
+    }
+    .mini-btn:active { border-color: var(--accent); color: var(--accent); }
+    #sub-words { display: flex; flex-wrap: wrap; gap: 4px; }
+    .word-chip {
+      font-size: 11px; background: rgba(255,255,255,0.05);
+      border: 1px solid rgba(255,255,255,0.1); border-radius: 10px;
+      padding: 3px 8px; color: var(--text-secondary); cursor: pointer;
+    }
+    .word-chip.active { color: var(--accent); border-color: var(--accent); background: var(--accent-dim); }
+    .sub-style-row { display: flex; gap: 8px; align-items: center; flex-wrap: wrap; }
+    .sub-style-badge {
+      font-size: 10px; background: var(--accent-dim); color: var(--accent);
+      border-radius: 4px; padding: 2px 6px; display: none;
+    }
+    .sub-style-badge.visible { display: inline-block; }
+
+    /* ─── Style Panel (now a sheet trigger button) ─── */
+    #style-panel-btn {
+      display: flex; align-items: center; justify-content: center; gap: 8px;
+      margin: 6px max(12px, var(--app-pad-h)) 10px;
+      padding: 10px 16px;
+      background: var(--bg-card); backdrop-filter: var(--glass-blur); -webkit-backdrop-filter: var(--glass-blur);
+      border: 1px solid var(--glass-border); border-radius: var(--radius-lg);
+      color: var(--text-primary); font-family: var(--font-ui); font-size: 13px; font-weight: 600;
+      cursor: pointer; width: calc(100% - 2 * max(12px, var(--app-pad-h)));
+      transition: background var(--transition), border-color var(--transition);
+    }
+    #style-panel-btn:active { border-color: var(--accent); background: var(--accent-dim); }
+    #style-panel-btn svg { color: var(--accent); }
+    /* Style sheet body rows */
+    #style-body { display: flex; flex-direction: column; gap: 14px; }
+    .style-row { display: flex; align-items: center; gap: 10px; flex-wrap: wrap; }
+    .style-label { font-size: 11px; color: var(--text-secondary); text-transform: uppercase; letter-spacing: 0.5px; min-width: 52px; }
+    .style-select {
+      flex: 1; background: rgba(255,255,255,0.06);
+      border: 1px solid rgba(255,255,255,0.1); border-radius: var(--radius-sm);
+      color: var(--text-primary); font-family: var(--font-ui); font-size: 13px;
+      padding: 6px 8px; outline: none; min-width: 0;
+      appearance: none; -webkit-appearance: none; cursor: pointer;
+    }
+    .style-select:focus { border-color: var(--accent); }
+    .style-slider {
+      flex: 1; -webkit-appearance: none; appearance: none;
+      height: 4px; background: var(--border); border-radius: 2px;
+      outline: none; cursor: pointer; min-width: 60px;
+    }
+    .style-slider::-webkit-slider-thumb {
+      -webkit-appearance: none; width: 16px; height: 16px; border-radius: 50%;
+      background: var(--accent); box-shadow: var(--accent-glow); cursor: pointer;
+    }
+    .slider-val { font-size: 12px; color: var(--accent); min-width: 28px; text-align: right; }
+    .color-pick {
+      width: 32px; height: 32px; border-radius: 50%;
+      border: 2px solid var(--border); cursor: pointer; padding: 0;
+      background: none; overflow: hidden; flex-shrink: 0;
+    }
+    .color-pick::-webkit-color-swatch-wrapper { padding: 0; }
+    .color-pick::-webkit-color-swatch { border: none; border-radius: 50%; }
+    .toggle-group { display: flex; gap: 4px; flex-wrap: wrap; }
+    .toggle-btn {
+      background: rgba(255,255,255,0.05); border: 1px solid rgba(255,255,255,0.1);
+      border-radius: var(--radius-sm); color: var(--text-secondary);
+      font-family: var(--font-ui); font-size: 12px; font-weight: 600;
+      padding: 5px 10px; cursor: pointer; transition: all var(--transition);
+    }
+    .toggle-btn.active { background: var(--accent-dim); border-color: var(--accent); color: var(--accent); }
+
+    /* ─── Sheets (bottom modals) ─── */
+    .sheet {
+      display: none; position: fixed; inset: 0;
+      background: rgba(0,0,0,0.55);
+      backdrop-filter: blur(6px);
+      -webkit-backdrop-filter: blur(6px);
+      z-index: 100;
+      align-items: flex-end; justify-content: center;
+    }
+    .sheet.open { display: flex; }
+    .sheet-inner {
+      background: rgba(18,18,32,0.85);
+      backdrop-filter: var(--glass-blur);
+      -webkit-backdrop-filter: var(--glass-blur);
+      border: 1px solid rgba(255,255,255,0.10);
+      border-bottom: none;
+      border-radius: var(--radius-lg) var(--radius-lg) 0 0;
+      padding: 20px 20px calc(20px + var(--safe-bottom));
+      width: 100%; max-width: 480px;
+      display: flex; flex-direction: column; gap: 12px;
+      max-height: 85vh; overflow-y: auto;
+    }
+    .sheet-inner h3 { font-size: 17px; font-weight: 700; }
+    .sheet-inner p { font-size: 13px; color: var(--text-secondary); line-height: 1.55; }
+    .sheet-input {
+      width: 100%; background: rgba(255,255,255,0.06);
+      border: 1px solid rgba(255,255,255,0.12); border-radius: var(--radius-sm);
+      color: var(--text-primary); font-family: var(--font-ui); font-size: 14px;
+      padding: 10px 12px; outline: none;
+      user-select: text; -webkit-user-select: text;
+    }
+    .sheet-input:focus { border-color: var(--accent); }
+    .modal-btns { display: flex; gap: 10px; }
+    /* Font manager */
+    #font-dropzone:hover, #font-dropzone:focus-within { border-color: var(--accent); background: var(--accent-dim); }
+    .font-item {
+      display: flex; align-items: center; justify-content: space-between;
+      background: rgba(255,255,255,0.05); border: 1px solid rgba(255,255,255,0.1);
+      border-radius: 8px; padding: 10px 12px; gap: 10px;
+    }
+    .font-item-info { display: flex; flex-direction: column; gap: 3px; flex: 1; min-width: 0; }
+    .font-item-name { font-size: 13px; font-weight: 600; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+    .font-item-preview { font-size: 15px; color: var(--text-secondary); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+    .font-item-del { background: none; border: none; color: var(--danger); cursor: pointer; padding: 4px; border-radius: 6px; flex-shrink: 0; opacity: 0.7; transition: opacity 0.2s; }
+    .font-item-del:hover { opacity: 1; }
+
+    /* ─── Banner ─── */
+    #banner {
+      position: fixed; top: calc(56px + var(--safe-top)); left: 12px; right: 12px;
+      background: rgba(0,212,255,0.1);
+      backdrop-filter: var(--glass-blur);
+      -webkit-backdrop-filter: var(--glass-blur);
+      border: 1px solid rgba(0,212,255,0.35);
+      border-radius: var(--radius-md); color: var(--accent);
+      font-size: 13px; padding: 10px 14px; z-index: 150;
+      display: none; text-align: center;
+    }
+    #banner.show { display: block; }
+
+    /* ─── Loading / Progress Overlay ─── */
+    #loading-overlay {
+      display: none; position: fixed; inset: 0;
+      background: rgba(0,0,10,0.65);
+      backdrop-filter: blur(12px);
+      -webkit-backdrop-filter: blur(12px);
+      z-index: 90;
+      align-items: center; justify-content: center; flex-direction: column; gap: 16px;
+      padding: 0 30px; text-align: center;
+    }
+    #loading-overlay.show { display: flex; }
+    .spinner {
+      width: 40px; height: 40px;
+      border: 3px solid var(--border); border-top-color: var(--accent);
+      border-radius: 50%; animation: spin 0.7s linear infinite;
+    }
+    @keyframes spin { to { transform: rotate(360deg); } }
+    #loading-text { font-size: 14px; color: var(--text-primary); line-height: 1.5; }
+    #loading-sub { font-size: 12px; color: var(--text-secondary); }
+    .progress-track { width: 230px; height: 6px; background: var(--border); border-radius: 3px; overflow: hidden; display: none; }
+    .progress-track.show { display: block; }
+    .progress-fill { height: 100%; background: var(--accent); width: 0%; transition: width 0.2s; border-radius: 3px; }
+    #loading-cancel { display: none; }
+    #loading-cancel.show { display: flex; }
+
+    /* ─── Subtitle entry animations ─── */
+    @keyframes pulse { 0%,100% { opacity: 1; transform: scale(1); } 50% { opacity: 0.4; transform: scale(0.7); } }
+    @keyframes subtitleFade    { from { opacity: 0; } to { opacity: 1; } }
+    @keyframes subtitleSlideUp { from { opacity: 0; transform: translateY(12px); } to { opacity: 1; transform: translateY(0); } }
+    @keyframes subtitlePop     { from { opacity: 0; transform: scale(0.8); } to { opacity: 1; transform: scale(1); } }
+    @keyframes subtitleBounce  { 0% { opacity: 0; transform: scale(0.3); } 60% { transform: scale(1.12); } 100% { opacity: 1; transform: scale(1); } }
+    @keyframes subtitleZoom    { from { opacity: 0; transform: scale(1.7); } to { opacity: 1; transform: scale(1); } }
+    @keyframes subtitleShake   { 0%,100% { transform: translateX(0); } 20% { transform: translateX(-5px); } 40% { transform: translateX(5px); } 60% { transform: translateX(-3px); } 80% { transform: translateX(3px); } }
+
+    .empty-timeline {
+      display: flex; align-items: center; justify-content: center;
+      height: 44px; font-size: 12px; color: var(--text-muted);
+      position: absolute; inset: 0;
+    }
+
+    .gen-note { font-size: 11px; color: var(--text-secondary); line-height: 1.5; }
+    .gen-note b { color: var(--text-primary); }
+
+    /* ─── Video overlay buttons (fullscreen etc.) ─── */
+    .video-overlay-btn {
+      position: absolute; top: 8px; right: 8px;
+      background: rgba(0,0,0,0.55);
+      backdrop-filter: blur(6px); -webkit-backdrop-filter: blur(6px);
+      border: 1px solid rgba(255,255,255,0.18);
+      border-radius: 7px; color: #fff;
+      width: 34px; height: 34px;
+      display: flex; align-items: center; justify-content: center;
+      cursor: pointer; z-index: 6;
+      opacity: 0; transition: opacity var(--transition);
+      padding: 0;
+    }
+    .video-overlay-btn svg { width: 17px; height: 17px; }
+    #video-wrap:hover .video-overlay-btn { opacity: 1; }
+    /* always visible on touch devices */
+    @media (hover: none) { .video-overlay-btn { opacity: 0.7; } }
+    /* Fake fullscreen: cover entire viewport, keep overlay visible */
+    #video-wrap.fake-fullscreen {
+      position: fixed !important;
+      inset: 0 !important;
+      z-index: 300 !important;
+      max-height: 100dvh !important;
+      width: 100% !important;
+      aspect-ratio: unset !important;
+      background: #000;
+    }
+    #video-wrap.fake-fullscreen #subtitle-overlay { pointer-events: none; }
+    #video-wrap.fake-fullscreen .video-overlay-btn { opacity: 0.8 !important; }
+    /* Hide small expand button when in fake-fullscreen (exit button replaces it) */
+    #video-wrap.fake-fullscreen #btn-fullscreen { display: none; }
+    /* FS exit button — fixed outside video-wrap so iOS video layer can't block it */
+    #btn-fs-exit {
+      display: none;
+      position: fixed;
+      /* below notch + comfortable tap target */
+      top: calc(env(safe-area-inset-top, 0px) + 56px);
+      right: 18px;
+      z-index: 9999;
+      background: rgba(0,0,0,0.72);
+      backdrop-filter: blur(10px); -webkit-backdrop-filter: blur(10px);
+      border: 1.5px solid rgba(255,255,255,0.35);
+      border-radius: 50%;
+      color: #fff; width: 46px; height: 46px;
+      align-items: center; justify-content: center;
+      cursor: pointer; font-size: 22px; font-weight: 300; line-height: 1;
+      transition: background 0.15s, transform 0.1s;
+      -webkit-tap-highlight-color: transparent;
+      touch-action: manipulation;
+    }
+    #btn-fs-exit:active { background: rgba(220,50,50,0.8); transform: scale(0.92); }
+
+    /* ─── Settings key badge ─── */
+    .key-badge {
+      display: inline-flex; align-items: center; gap: 5px;
+      font-size: 11px; padding: 3px 8px; border-radius: 20px;
+      font-weight: 600;
+    }
+    .key-badge.set   { background: rgba(46,213,115,0.15); color: var(--success); }
+    .key-badge.unset { background: rgba(255,71,87,0.12);  color: var(--danger); }
+
+    /* ─── iPhone / small screen compact mode ─── */
+    @media (max-height: 760px) {
+      #video-wrap { max-height: 26vh; }
+      #topbar { padding: 5px 10px; }
+      #topbar .title { font-size: 17.5px; }
+      #controls { padding: 4px 6px; }
+      .ctrl-btn svg { width: 22px; height: 22px; }
+      #timeline-wrap { padding: 2px 0 5px; }
+      #timeline-inner { height: 50px; }
+      #action-row { padding: 6px 10px; gap: 6px; }
+      .btn { padding: 8px 8px; font-size: 12px; }
+      #presets-wrap { padding: 6px 0 4px; }
+      #sub-editor { padding: 8px 10px; gap: 6px; }
+      #style-body { gap: 10px; }
+    }
+    @media (max-height: 670px) {
+      #video-wrap { max-height: 22vh; }
+      #timeline-inner { height: 44px; }
+      .btn { padding: 7px 6px; font-size: 11px; }
+    }
+    @media (max-width: 390px) {
+      #topbar .title { font-size: 17.5px; }
+      .btn { font-size: 12px; padding: 9px 6px; }
+    }
+  </style>
+</head>
+<body>
+<div id="app">
+
+  <!-- Top Bar -->
+  <div id="topbar">
+    <div class="tb-group">
+      <button class="btn-icon" onclick="openMenu()" title="Menu">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="3" y1="6" x2="21" y2="6"/><line x1="3" y1="12" x2="21" y2="12"/><line x1="3" y1="18" x2="21" y2="18"/></svg>
+      </button>
+      <span class="title">
+        <!-- Clapperboard icon -->
+        <svg class="title-icon" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <rect x="2" y="7" width="20" height="14" rx="2.5" fill="rgba(0,212,255,0.12)" stroke="currentColor" stroke-width="1.6"/>
+          <path d="M2 11h20" stroke="currentColor" stroke-width="1.6"/>
+          <path d="M7 7V3" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/>
+          <path d="M12 7V3" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/>
+          <path d="M17 7V3" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/>
+          <path d="M4.5 3l2.5 4" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/>
+          <path d="M9.5 3l2.5 4" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/>
+          <path d="M14.5 3l2.5 4" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/>
+          <circle cx="12" cy="15.5" r="2.2" fill="currentColor" opacity="0.7"/>
+          <path d="M10 15.5h4" stroke="currentColor" stroke-width="1.2" stroke-linecap="round"/>
+        </svg>
+        Caply
+      </span>
+    </div>
+    <div class="tb-group">
+      <button class="btn-icon" id="btn-lock" onclick="toggleTimelineLock()" title="Lock captions (prevent accidental moves)">
+        <!-- Unlocked icon shown by default -->
+        <svg id="lock-icon-open" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="11" width="18" height="11" rx="2"/><path d="M7 11V7a5 5 0 0 1 9.9-1"/></svg>
+        <svg id="lock-icon-closed" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="display:none"><rect x="3" y="11" width="18" height="11" rx="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg>
+      </button>
+      <button class="btn-icon" id="btn-undo" onclick="undo()" title="Undo" disabled>
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 7v6h6"/><path d="M21 17a9 9 0 0 0-15-6.7L3 13"/></svg>
+      </button>
+      <button class="btn-icon" id="btn-redo" onclick="redo()" title="Redo" disabled>
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 7v6h-6"/><path d="M3 17a9 9 0 0 1 15-6.7L21 13"/></svg>
+      </button>
+      <button class="btn-icon" onclick="openExportModal()" title="Export">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
+      </button>
+    </div>
+  </div>
+
+  <!-- Video Player -->
+  <div id="video-wrap" onclick="handleVideoWrapClick(event)">
+    <div id="upload-placeholder">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+        <rect x="2" y="2" width="20" height="20" rx="3"/>
+        <polygon points="10 8 16 12 10 16 10 8"/>
+      </svg>
+      <span>Tap to load video</span>
+      <span class="upload-hint">MP4, MOV, WebM supported</span>
+    </div>
+    <video id="video-player" playsinline webkit-playsinline></video>
+    <div id="subtitle-overlay"><span id="subtitle-text"></span></div>
+    <button class="video-overlay-btn" id="btn-fullscreen" onclick="toggleFullscreen()" title="Fullscreen">
+      <svg id="fs-icon-expand" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M8 3H5a2 2 0 0 0-2 2v3m18 0V5a2 2 0 0 0-2-2h-3m0 18h3a2 2 0 0 0 2-2v-3M3 16v3a2 2 0 0 0 2 2h3"/></svg>
+      <svg id="fs-icon-shrink" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="display:none"><path d="M8 3v3a2 2 0 0 1-2 2H3m18 0h-3a2 2 0 0 1-2-2V3m0 18v-3a2 2 0 0 1 2-2h3M3 16h3a2 2 0 0 1 2 2v3"/></svg>
+    </button>
+    <input type="file" id="file-input" accept="video/*" onchange="handleVideoFile(event)">
+    <input type="file" id="sub-file-input" accept=".srt,.vtt,.txt" onchange="handleSubFile(event)">
+  </div>
+
+  <!-- Playback Controls -->
+  <div id="controls">
+    <button class="ctrl-btn small" onclick="prevCaption()" title="Previous caption">
+      <svg viewBox="0 0 24 24" fill="currentColor"><polygon points="19 20 9 12 19 4 19 20"/><rect x="5" y="4" width="2" height="16"/></svg>
+    </button>
+    <button class="ctrl-btn" id="ctrl-play" onclick="togglePlay()">
+      <svg id="ico-play" viewBox="0 0 24 24" fill="currentColor"><polygon points="5 3 19 12 5 21 5 3"/></svg>
+      <svg id="ico-pause" viewBox="0 0 24 24" fill="currentColor" style="display:none"><rect x="6" y="4" width="4" height="16"/><rect x="14" y="4" width="4" height="16"/></svg>
+    </button>
+    <button class="ctrl-btn small" onclick="nextCaption()" title="Next caption">
+      <svg viewBox="0 0 24 24" fill="currentColor"><polygon points="5 4 15 12 5 20 5 4"/><rect x="17" y="4" width="2" height="16"/></svg>
+    </button>
+    <input type="range" id="scrub-bar" min="0" max="1000" value="0" step="1"
+           oninput="scrubVideo(this.value)"
+           ontouchstart="scrubStart()" ontouchend="scrubEnd()"
+           onmousedown="scrubStart()" onmouseup="scrubEnd()">
+    <span id="time-display">0:00 / 0:00</span>
+    <button class="ctrl-mini" id="btn-speed" onclick="cycleSpeed()" title="Playback speed">1×</button>
+    <button class="ctrl-mini" id="btn-loop" onclick="toggleLoop()" title="Loop selected caption">⟳</button>
+  </div>
+
+  <!-- Timeline -->
+  <div id="timeline-wrap">
+    <div id="tl-tools">
+      <span class="tl-label">Timeline</span>
+      <div class="tl-zoom">
+        <button class="ctrl-mini" onclick="tlZoom(-1)">−</button>
+        <button class="ctrl-mini" onclick="tlZoom(1)">+</button>
+      </div>
+    </div>
+    <div id="timeline-scroll">
+      <div id="timeline-inner">
+        <div class="tl-ruler" id="tl-ruler"></div>
+        <div id="playhead"></div>
+        <div class="empty-timeline" id="tl-empty">No captions yet — tap Auto Captions</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Action Row -->
+  <div id="action-row">
+    <button class="btn btn-accent" onclick="startAutoGenerate()">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"/></svg>
+      Auto Captions
+    </button>
+    <button class="btn" onclick="addSubtitleNow()">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
+      Add
+    </button>
+    <button class="btn" onclick="openStylePanel()">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="3"/><path d="M19.07 4.93l-1.41 1.41M4.93 4.93l1.41 1.41M12 2v2M12 20v2M20 12h2M2 12h2M17.66 17.66l-1.41-1.41M6.34 17.66l1.41-1.41"/></svg>
+      Style
+    </button>
+  </div>
+
+  <!-- Scrollable Bottom Area -->
+  <div id="bottom-area">
+
+    <!-- Caption Templates (CapCut-style presets) -->
+    <div id="presets-wrap">
+      <div class="presets-title">Caption Templates</div>
+      <div id="presets-row"></div>
+    </div>
+
+    <!-- Selected Subtitle Editor -->
+    <div id="sub-editor">
+      <div class="sub-editor-header">
+        <span class="sub-time-label" id="sub-time-label">0:00 → 0:00</span>
+        <div class="sub-actions">
+          <span class="sub-style-badge" id="sub-style-badge">Customized</span>
+          <button class="btn-icon" title="Play this caption" onclick="playSelectedSub()">
+            <svg viewBox="0 0 24 24" fill="currentColor" style="width:16px;height:16px"><polygon points="5 3 19 12 5 21 5 3"/></svg>
+          </button>
+          <button class="btn-icon" title="Reset style" onclick="resetSubStyle()">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="width:16px;height:16px"><path d="M3 12a9 9 0 1 0 9-9 9.75 9.75 0 0 0-6.74 2.74L3 8"/><path d="M3 3v5h5"/></svg>
+          </button>
+          <button class="btn-icon" title="Delete" onclick="deleteSelectedSub()" style="color:var(--danger)">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="width:16px;height:16px"><polyline points="3 6 5 6 21 6"/><path d="M19 6l-1 14H6L5 6"/><path d="M10 11v6M14 11v6"/><path d="M9 6V4h6v2"/></svg>
+          </button>
+        </div>
+      </div>
+      <textarea class="sub-text-input" id="sub-text-input" placeholder="Caption text..."
+                onfocus="snapshotOnce('text')" oninput="updateSubText(this.value)"></textarea>
+      <div class="time-inputs">
+        <div class="time-input-group">
+          <label>Start (s)</label>
+          <input class="time-inp" id="sub-start-inp" type="text" placeholder="0.0"
+                 onchange="updateSubTime('start', this.value)">
+        </div>
+        <div class="time-input-group">
+          <label>End (s)</label>
+          <input class="time-inp" id="sub-end-inp" type="text" placeholder="0.0"
+                 onchange="updateSubTime('end', this.value)">
+        </div>
+        <button class="mini-btn" onclick="splitSelectedSub()" title="Split at playhead">✂ Split</button>
+        <button class="mini-btn" onclick="mergeWithNext()" title="Merge with next caption">⇤ Merge</button>
+      </div>
+      <div id="sub-words"></div>
+      <div class="sub-style-row">
+        <span class="style-label" style="font-size:10px">Override</span>
+        <input type="color" class="color-pick" id="sub-color" value="#FFFFFF" title="Text color"
+               oninput="setSubStyle('color', this.value)" style="width:26px;height:26px">
+        <select class="style-select" id="sub-anim" style="flex:0;min-width:96px;font-size:11px"
+                onchange="setSubStyle('animation', this.value || null)">
+          <option value="">Anim (global)</option>
+          <option value="none">None</option>
+          <option value="fade">Fade</option>
+          <option value="slideUp">Slide Up</option>
+          <option value="pop">Pop</option>
+          <option value="bounce">Bounce</option>
+          <option value="zoom">Zoom</option>
+          <option value="shake">Shake</option>
+          <option value="typewriter">Typewriter</option>
+        </select>
+        <button class="toggle-btn" id="sub-bold" onclick="toggleSubStyle('bold')">B</button>
+        <button class="toggle-btn" id="sub-italic" onclick="toggleSubStyle('italic')" style="font-style:italic">I</button>
+        <input type="range" class="style-slider" id="sub-size" min="12" max="56" value="20" style="max-width:90px"
+               oninput="setSubStyle('fontSize', +this.value)" title="Font size override">
+      </div>
+    </div>
+
+    <!-- Global Style Button -->
+    <button id="style-panel-btn" onclick="openSheet('style-sheet')">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="width:16px;height:16px"><circle cx="12" cy="12" r="3"/><path d="M19.07 4.93l-1.41 1.41M4.93 4.93l1.41 1.41M12 2v2M12 20v2M20 12h2M2 12h2M17.66 17.66l-1.41-1.41M6.34 17.66l1.41-1.41"/></svg>
+      Global Style
+    </button>
+
+  </div><!-- end #bottom-area -->
+</div><!-- end #app -->
+
+<!-- Global Style Sheet -->
+<div id="style-sheet" class="sheet" onclick="closeSheet(event,'style-sheet')">
+  <div class="sheet-inner">
+    <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:4px">
+      <h3>✦ Global Style</h3>
+      <button class="btn-icon" onclick="closeSheet(null,'style-sheet')" style="padding:4px">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="width:20px;height:20px"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
+      </button>
+    </div>
+
+    <div id="style-body">
+
+      <div class="style-row">
+        <span class="style-label">Font</span>
+        <select class="style-select" id="gs-font" onchange="updateGlobalStyle('fontFamily', this.value)">
+          <option value="Oswald">Oswald</option>
+          <option value="Bebas Neue">Bebas Neue</option>
+          <option value="Montserrat">Montserrat</option>
+          <option value="Poppins">Poppins</option>
+          <option value="Roboto Condensed">Roboto Condensed</option>
+          <option value="Anton">Anton</option>
+          <option value="Playfair Display">Playfair Display</option>
+          <option value="Raleway">Raleway</option>
+          <option value="Nunito">Nunito</option>
+          <option value="Space Mono">Space Mono</option>
+          <option value="Permanent Marker">Permanent Marker</option>
+          <option value="Pacifico">Pacifico</option>
+          <option value="Cinzel">Cinzel</option>
+          <option value="Exo 2">Exo 2</option>
+          <option value="Orbitron">Orbitron</option>
+        </select>
+        <button class="btn-icon" title="Add custom font" onclick="closeSheet(null,'style-sheet');openSheet('fonts-sheet')" style="color:var(--accent)">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 5v14M5 12h14"/></svg>
+        </button>
+      </div>
+
+      <div class="style-row">
+        <span class="style-label">Size</span>
+        <input type="range" class="style-slider" id="gs-size" min="12" max="56" value="20"
+               oninput="updateGlobalStyle('fontSize', +this.value); document.getElementById('gs-size-val').textContent=this.value">
+        <span class="slider-val" id="gs-size-val">20</span>
+      </div>
+
+      <div class="style-row">
+        <span class="style-label">Color</span>
+        <input type="color" class="color-pick" id="gs-color" value="#FFFFFF"
+               oninput="updateGlobalStyle('color', this.value)">
+        <span class="style-label" style="margin-left:8px">BG</span>
+        <input type="color" class="color-pick" id="gs-bgcolor" value="#000000"
+               oninput="updateGlobalStyle('bgColor', this.value)">
+        <span class="style-label" style="margin-left:8px">Opacity</span>
+        <input type="range" class="style-slider" id="gs-bgopacity" min="0" max="100" value="60"
+               oninput="updateGlobalStyle('bgOpacity', this.value/100); document.getElementById('gs-bgo-val').textContent=this.value+'%'">
+        <span class="slider-val" id="gs-bgo-val">60%</span>
+      </div>
+
+      <div class="style-row">
+        <span class="style-label">Outline</span>
+        <input type="color" class="color-pick" id="gs-outlinecolor" value="#000000"
+               oninput="updateGlobalStyle('outlineColor', this.value)">
+        <input type="range" class="style-slider" id="gs-outlinewidth" min="0" max="6" value="0" step="0.5"
+               oninput="updateGlobalStyle('outlineWidth', +this.value); document.getElementById('gs-ow-val').textContent=this.value">
+        <span class="slider-val" id="gs-ow-val">0</span>
+      </div>
+
+      <div class="style-row">
+        <span class="style-label">Karaoke</span>
+        <select class="style-select" id="gs-karaoke" onchange="updateGlobalStyle('karaoke', this.value)">
+          <option value="none">Off</option>
+          <option value="highlight">Highlight word</option>
+          <option value="fill">Fill words</option>
+          <option value="box">Box on word</option>
+          <option value="bounce">Bounce word</option>
+        </select>
+        <input type="color" class="color-pick" id="gs-karaokecolor" value="#FFE600"
+               oninput="updateGlobalStyle('karaokeColor', this.value)">
+      </div>
+
+      <div class="style-row">
+        <span class="style-label">BG Style</span>
+        <select class="style-select" id="gs-bgstyle" onchange="updateGlobalStyle('bgStyle', this.value)">
+          <option value="none">None</option>
+          <option value="tight" selected>Tight Box</option>
+          <option value="fullbar">Full-width Bar</option>
+          <option value="frosted">Frosted Glass</option>
+        </select>
+      </div>
+
+      <div class="style-row">
+        <span class="style-label">Align</span>
+        <div class="toggle-group">
+          <button class="toggle-btn" id="gs-align-left" onclick="setAlign('left')">⬅</button>
+          <button class="toggle-btn active" id="gs-align-center" onclick="setAlign('center')">↔</button>
+          <button class="toggle-btn" id="gs-align-right" onclick="setAlign('right')">➡</button>
+        </div>
+      </div>
+
+      <div class="style-row">
+        <span class="style-label">Position</span>
+        <div class="toggle-group">
+          <button class="toggle-btn" id="gs-pos-top" onclick="setPosition('top')">Top</button>
+          <button class="toggle-btn" id="gs-pos-mid" onclick="setPosition('middle')">Mid</button>
+          <button class="toggle-btn active" id="gs-pos-bot" onclick="setPosition('bottom')">Bot</button>
+        </div>
+        <input type="range" class="style-slider" id="gs-posoffset" min="0" max="40" value="10"
+               oninput="updateGlobalStyle('positionOffset', +this.value)">
+      </div>
+
+      <div class="style-row">
+        <span class="style-label">Style</span>
+        <div class="toggle-group">
+          <button class="toggle-btn" id="gs-bold" onclick="toggleGlobal('bold')" style="font-weight:700">B</button>
+          <button class="toggle-btn" id="gs-italic" onclick="toggleGlobal('italic')" style="font-style:italic">I</button>
+          <button class="toggle-btn" id="gs-underline" onclick="toggleGlobal('underline')" style="text-decoration:underline">U</button>
+          <button class="toggle-btn" id="gs-allcaps" onclick="toggleGlobal('allCaps')">AA</button>
+        </div>
+      </div>
+
+      <div class="style-row">
+        <span class="style-label">Shadow</span>
+        <select class="style-select" id="gs-shadow" onchange="updateGlobalStyle('shadow', this.value)">
+          <option value="none">None</option>
+          <option value="soft" selected>Soft</option>
+          <option value="hard">Hard</option>
+          <option value="glow">Glow</option>
+        </select>
+      </div>
+
+      <div class="style-row">
+        <span class="style-label">Spacing</span>
+        <input type="range" class="style-slider" id="gs-spacing" min="-2" max="10" value="0" step="0.5"
+               oninput="updateGlobalStyle('letterSpacing', +this.value); document.getElementById('gs-spacing-val').textContent=this.value">
+        <span class="slider-val" id="gs-spacing-val">0</span>
+      </div>
+
+      <div class="style-row">
+        <span class="style-label">Anim</span>
+        <select class="style-select" id="gs-anim" onchange="updateGlobalStyle('animation', this.value)">
+          <option value="none">None</option>
+          <option value="fade" selected>Fade</option>
+          <option value="slideUp">Slide Up</option>
+          <option value="pop">Pop</option>
+          <option value="bounce">Bounce</option>
+          <option value="zoom">Zoom</option>
+          <option value="shake">Shake</option>
+          <option value="typewriter">Typewriter</option>
+        </select>
+      </div>
+
+    </div><!-- end #style-body -->
+  </div>
+</div>
+
+<!-- Auto Captions Sheet -->
+<div id="gen-sheet" class="sheet" onclick="closeSheet(event,'gen-sheet')">
+  <div class="sheet-inner">
+    <h3>✦ Auto Captions</h3>
+    <div class="style-row">
+      <span class="style-label">Engine</span>
+      <select class="style-select" id="gen-engine" onchange="genEngineChanged()">
+        <option value="groq">☁️ Groq Cloud AI — fast &amp; accurate</option>
+        <option value="ai">📱 On-device AI (Whisper) — free</option>
+        <option value="webspeech">🎙️ Web Speech (mic) — free</option>
+      </select>
+    </div>
+    <div class="style-row" id="gen-groq-row" style="display:none">
+      <span class="style-label">API Key</span>
+      <span id="gen-groq-badge" class="key-badge unset">Not set</span>
+      <button class="mini-btn" onclick="closeSheet(null,'gen-sheet');openSheet('settings-sheet')" style="margin-left:auto">Set Key</button>
+    </div>
+    <div class="style-row" id="gen-model-row">
+      <span class="style-label">Quality</span>
+      <select class="style-select" id="gen-model">
+        <option value="tiny">Fast (Tiny · ~40 MB)</option>
+        <option value="base" selected>Balanced (Base · ~80 MB)</option>
+        <option value="small">Best (Small · ~250 MB)</option>
+      </select>
+    </div>
+    <div class="style-row">
+      <span class="style-label">Language</span>
+      <select class="style-select" id="gen-lang">
+        <option value="auto">Auto-detect</option>
+        <option value="en">English</option>
+        <option value="hi">Hindi</option>
+        <option value="es">Spanish</option>
+        <option value="fr">French</option>
+        <option value="de">German</option>
+        <option value="pt">Portuguese</option>
+        <option value="it">Italian</option>
+        <option value="ja">Japanese</option>
+        <option value="ko">Korean</option>
+        <option value="zh">Chinese</option>
+        <option value="ru">Russian</option>
+        <option value="ar">Arabic</option>
+      </select>
+    </div>
+    <div class="style-row">
+      <span class="style-label">Words/line</span>
+      <input type="range" class="style-slider" id="gen-maxwords" min="1" max="8" value="4"
+             oninput="document.getElementById('gen-mw-val').textContent=this.value">
+      <span class="slider-val" id="gen-mw-val">4</span>
+    </div>
+    <p class="gen-note" id="gen-note">
+      Runs <b>100% on your device</b> — free, private, no API key. The AI model downloads once
+      on first use and is cached for offline use. Word-level timestamps enable karaoke captions.
+    </p>
+    <button class="btn btn-accent" onclick="genGo()" style="padding:13px">Generate Captions</button>
+    <button class="btn" onclick="closeSheet(null,'gen-sheet')" style="color:var(--text-secondary)">Cancel</button>
+  </div>
+</div>
+
+<!-- Export Sheet -->
+<div id="export-modal" class="sheet" onclick="closeSheet(event,'export-modal')">
+  <div class="sheet-inner">
+    <h3>Export</h3>
+    <button class="btn btn-accent" onclick="exportVideoBurnIn()" style="padding:13px">🎬 Video with Captions</button>
+    <div class="modal-btns">
+      <button class="btn" onclick="exportSRT()">SRT</button>
+      <button class="btn" onclick="exportVTT()">VTT</button>
+      <button class="btn" onclick="exportTXT()">TXT</button>
+      <button class="btn" onclick="exportJSON()">JSON</button>
+    </div>
+    <button class="btn" onclick="closeSheet(null,'export-modal')" style="color:var(--text-secondary)">Cancel</button>
+  </div>
+</div>
+
+<!-- Shift Timings Sheet -->
+<div id="shift-sheet" class="sheet" onclick="closeSheet(event,'shift-sheet')">
+  <div class="sheet-inner">
+    <h3>Shift All Timings</h3>
+    <p>Move every caption earlier (−) or later (+) by this many seconds.</p>
+    <input type="number" class="sheet-input" id="shift-amount" step="0.1" value="0.5" inputmode="decimal">
+    <div class="modal-btns">
+      <button class="btn" onclick="applyShift(-1)">− Earlier</button>
+      <button class="btn btn-accent" onclick="applyShift(1)">+ Later</button>
+    </div>
+    <button class="btn" onclick="closeSheet(null,'shift-sheet')" style="color:var(--text-secondary)">Cancel</button>
+  </div>
+</div>
+
+<!-- Find & Replace Sheet -->
+<div id="findrep-sheet" class="sheet" onclick="closeSheet(event,'findrep-sheet')">
+  <div class="sheet-inner">
+    <h3>Find &amp; Replace</h3>
+    <input type="text" class="sheet-input" id="fr-find" placeholder="Find…">
+    <input type="text" class="sheet-input" id="fr-replace" placeholder="Replace with…">
+    <button class="btn btn-accent" onclick="applyFindReplace()">Replace All</button>
+    <button class="btn" onclick="closeSheet(null,'findrep-sheet')" style="color:var(--text-secondary)">Cancel</button>
+  </div>
+</div>
+
+<!-- Web Speech Instructions -->
+<div id="speech-modal" class="sheet" onclick="closeSheet(event,'speech-modal')">
+  <div class="sheet-inner">
+    <h3>Web Speech Captioning</h3>
+    <p>
+      Web Speech listens through your <strong style="color:var(--text-primary)">microphone</strong>. For best results:
+    </p>
+    <ul style="font-size:13px;color:var(--text-secondary);line-height:1.9;padding-left:18px">
+      <li>Turn up your device volume</li>
+      <li>Stay in a quiet room</li>
+      <li>Tap <strong style="color:var(--text-primary)">Start</strong> — the video will begin playing</li>
+      <li>Tap <strong style="color:var(--text-primary)">Stop</strong> when done</li>
+    </ul>
+    <button class="btn btn-accent" onclick="confirmStartWebSpeech()">Start Listening</button>
+    <button class="btn" onclick="closeSheet(null,'speech-modal')" style="color:var(--text-secondary)">Cancel</button>
+  </div>
+</div>
+
+<!-- Speech Listening Indicator -->
+<div id="speech-bar" style="position:fixed;top:calc(56px + var(--safe-top));left:0;right:0;background:rgba(255,50,50,0.92);z-index:60;padding:8px 16px;display:none;align-items:center;justify-content:space-between;gap:10px">
+  <div style="display:flex;align-items:center;gap:8px">
+    <div style="width:10px;height:10px;border-radius:50%;background:#fff;animation:pulse 1s ease-in-out infinite"></div>
+    <span style="font-size:13px;font-weight:600;color:#fff">Listening… play video with sound</span>
+  </div>
+  <button onclick="stopWebSpeech()" style="background:rgba(255,255,255,0.25);border:none;border-radius:20px;color:#fff;font-size:12px;font-weight:700;padding:4px 12px;cursor:pointer">Stop</button>
+</div>
+
+<!-- Loading / Progress Overlay -->
+<div id="loading-overlay">
+  <div class="spinner"></div>
+  <span id="loading-text">Working…</span>
+  <div class="progress-track" id="progress-track"><div class="progress-fill" id="progress-fill"></div></div>
+  <span id="loading-sub"></span>
+  <button class="btn" id="loading-cancel" onclick="cancelCurrentJob()" style="flex:0;padding:8px 24px">Cancel</button>
+</div>
+
+<!-- Banner -->
+<div id="banner"></div>
+
+<!-- Menu -->
+<div id="menu-overlay" class="sheet" onclick="closeSheet(event,'menu-overlay')">
+  <div class="sheet-inner">
+    <div style="font-size:17px;font-weight:700;margin-bottom:4px">Caply</div>
+    <button class="btn" onclick="document.getElementById('file-input').click();closeSheet(null,'menu-overlay')">📂 Load New Video</button>
+    <button class="btn" onclick="document.getElementById('sub-file-input').click();closeSheet(null,'menu-overlay')">📥 Import Subtitles (SRT/VTT)</button>
+    <button class="btn" onclick="openSheet('shift-sheet');closeSheet(null,'menu-overlay')">⏱ Shift All Timings</button>
+    <button class="btn" onclick="openSheet('findrep-sheet');closeSheet(null,'menu-overlay')">🔍 Find &amp; Replace</button>
+    <button class="btn" onclick="openSheet('fonts-sheet');closeSheet(null,'menu-overlay')">🔤 Manage Fonts</button>
+    <button class="btn" onclick="openSheet('settings-sheet');closeSheet(null,'menu-overlay')">⚙️ Settings</button>
+    <button class="btn" onclick="clearAll();closeSheet(null,'menu-overlay')" style="color:var(--danger)">🗑 Clear All Captions</button>
+    <button class="btn" onclick="closeSheet(null,'menu-overlay')" style="color:var(--text-secondary)">Close</button>
+  </div>
+</div>
+
+<!-- Fonts Sheet -->
+<div id="fonts-sheet" class="sheet" onclick="closeSheet(event,'fonts-sheet')">
+  <div class="sheet-inner">
+    <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:4px">
+      <h3>🔤 Custom Fonts</h3>
+      <button class="btn-icon" onclick="closeSheet(null,'fonts-sheet')" style="padding:4px">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="width:20px;height:20px"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
+      </button>
+    </div>
+    <p style="font-size:12px;color:var(--text-secondary);margin:0 0 8px">Upload TTF, OTF, WOFF, or WOFF2 files. Fonts are saved on this device.</p>
+
+    <!-- Drop zone / upload trigger -->
+    <label id="font-dropzone" style="
+      display:flex;flex-direction:column;align-items:center;justify-content:center;gap:8px;
+      border:2px dashed rgba(255,255,255,0.15);border-radius:12px;padding:22px 16px;
+      cursor:pointer;transition:border-color 0.2s,background 0.2s;text-align:center;
+    ">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" style="width:32px;height:32px;color:var(--accent)">
+        <path d="M4 7V4a2 2 0 0 1 2-2h8l6 6v12a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2v-3"/>
+        <polyline points="14 2 14 8 20 8"/>
+        <line x1="3" y1="15" x2="11" y2="15"/>
+        <polyline points="8 12 11 15 8 18"/>
+      </svg>
+      <div>
+        <div style="font-size:14px;font-weight:600;color:var(--text-primary)">Tap to upload fonts</div>
+        <div style="font-size:11px;color:var(--text-secondary);margin-top:2px">TTF · OTF · WOFF · WOFF2</div>
+      </div>
+      <input type="file" id="font-file-input" accept=".ttf,.otf,.woff,.woff2" multiple style="display:none" onchange="handleFontUpload(event)">
+    </label>
+
+    <!-- List of loaded custom fonts -->
+    <div id="font-list" style="display:flex;flex-direction:column;gap:6px;margin-top:4px"></div>
+
+    <p style="font-size:11px;color:var(--text-muted);margin:8px 0 0;text-align:center">Built-in fonts are always available in Global Style → Font</p>
+  </div>
+</div>
+
+<!-- Settings Sheet -->
+<div id="settings-sheet" class="sheet" onclick="closeSheet(event,'settings-sheet')">
+  <div class="sheet-inner">
+    <h3>⚙️ Settings</h3>
+
+    <div style="display:flex;flex-direction:column;gap:8px">
+      <div style="display:flex;align-items:center;justify-content:space-between">
+        <span style="font-size:13px;font-weight:600">Groq API Key</span>
+        <span id="settings-groq-badge" class="key-badge unset">Not set</span>
+      </div>
+      <input type="password" class="sheet-input" id="settings-groq-input" placeholder="gsk_…" autocomplete="off" spellcheck="false">
+      <p style="font-size:11px;color:var(--text-secondary);line-height:1.6;margin:0">
+        Free account at <a href="https://console.groq.com" target="_blank" style="color:var(--accent);text-decoration:none">console.groq.com</a>.
+        Enables <b style="color:var(--text-primary)">Groq Cloud Whisper</b> — CapCut-level accuracy in seconds.
+        Your key is stored only on this device and sent only to Groq.
+      </p>
+      <div style="display:flex;gap:8px">
+        <button class="btn btn-accent" onclick="saveGroqKey()" style="flex:1;padding:10px">Save Key</button>
+        <button class="btn" onclick="clearGroqKey()" style="flex:0;padding:10px 14px;color:var(--danger)">Clear</button>
+      </div>
+    </div>
+
+    <button class="btn" onclick="closeSheet(null,'settings-sheet')" style="color:var(--text-secondary);margin-top:4px">Done</button>
+  </div>
+</div>
+
+<!-- Hidden canvas for video export -->
+<canvas id="export-canvas" style="display:none"></canvas>
+<script>
+// ═══════════════════════════════════════════════════════════════
+//  STATE
+// ═══════════════════════════════════════════════════════════════
+const store = {
+  get(k){ try { return localStorage.getItem(k); } catch(e){ return null; } },
+  set(k,v){ try { localStorage.setItem(k,v); } catch(e){} },
+  del(k){ try { localStorage.removeItem(k); } catch(e){} }
+};
+let subtitles = [];   // [{id,start,end,text,words:[{text,start,end}]|null,style:{...}}]
+let selectedId = null;
+let videoDuration = 0;
+let isScrubbing = false;
+let rafId = null;
+let subIdCounter = 0;
+let styleVersion = 0;       // bump to force overlay re-render
+let pxPerSec = 80;          // timeline zoom
+let loopCaption = false;
+let jobCancelled = false;
+
+const SPEEDS = [1, 1.25, 1.5, 2, 0.5, 0.75];
+let speedIdx = 0;
+
+const settings = Object.assign(
+  { engine: 'ai', model: 'base', language: 'en', maxWords: 4 },
+  JSON.parse(store.get('caply_settings') || '{}')
+);
+function saveSettings() { store.set('caply_settings', JSON.stringify(settings)); }
+
+const isIOS = /iPad|iPhone|iPod/.test(navigator.userAgent)
+  || (navigator.platform === 'MacIntel' && navigator.maxTouchPoints > 1);
+// iPhones have tight per-tab memory limits — larger Whisper models can crash
+// the page. Default iOS to the Tiny model (applied once; user can override).
+if (isIOS && !store.get('caply_ios_tiny')) {
+  settings.model = 'tiny';
+  saveSettings();
+  store.set('caply_ios_tiny', '1');
+}
+
+// ─── IndexedDB: persist the loaded video so it survives page reloads ───
+function idbOpen() {
+  return new Promise((res, rej) => {
+    const rq = indexedDB.open('caply', 1);
+    rq.onupgradeneeded = () => rq.result.createObjectStore('kv');
+    rq.onsuccess = () => res(rq.result);
+    rq.onerror = () => rej(rq.error);
+  });
+}
+async function idbSet(key, val) {
+  try {
+    const db = await idbOpen();
+    await new Promise((res, rej) => {
+      const tx = db.transaction('kv', 'readwrite');
+      tx.objectStore('kv').put(val, key);
+      tx.oncomplete = res;
+      tx.onerror = () => rej(tx.error);
+    });
+    db.close();
+  } catch (e) { console.warn('idbSet failed:', e); }
+}
+async function idbGet(key) {
+  try {
+    const db = await idbOpen();
+    const v = await new Promise((res, rej) => {
+      const rq = db.transaction('kv').objectStore('kv').get(key);
+      rq.onsuccess = () => res(rq.result);
+      rq.onerror = () => rej(rq.error);
+    });
+    db.close();
+    return v;
+  } catch (e) { return null; }
+}
+
+const globalStyle = {
+  fontFamily:     'Oswald',
+  fontSize:       20,
+  color:          '#FFFFFF',
+  bgColor:        '#000000',
+  bgOpacity:      0.6,
+  bgStyle:        'tight',
+  alignment:      'center',
+  position:       'bottom',
+  positionOffset: 10,
+  bold:           false,
+  italic:         false,
+  underline:      false,
+  shadow:         'soft',
+  letterSpacing:  0,
+  allCaps:        false,
+  animation:      'fade',
+  outlineColor:   '#000000',
+  outlineWidth:   0,
+  karaoke:        'none',
+  karaokeColor:   '#FFE600'
+};
+
+const STYLE_KEYS = Object.keys(globalStyle);
+
+function esc(s) {
+  return String(s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;');
+}
+
+// ═══════════════════════════════════════════════════════════════
+//  UNDO / REDO
+// ═══════════════════════════════════════════════════════════════
+let undoStack = [], redoStack = [];
+let snapshotOnceFlag = null;
+
+function snapshot() {
+  undoStack.push(JSON.stringify(subtitles));
+  if (undoStack.length > 60) undoStack.shift();
+  redoStack = [];
+  updateUndoBtns();
+}
+function snapshotOnce(tag) {
+  if (snapshotOnceFlag === tag + ':' + selectedId) return;
+  snapshotOnceFlag = tag + ':' + selectedId;
+  snapshot();
+}
+function undo() {
+  if (!undoStack.length) return;
+  redoStack.push(JSON.stringify(subtitles));
+  subtitles = JSON.parse(undoStack.pop());
+  afterHistoryRestore();
+}
+function redo() {
+  if (!redoStack.length) return;
+  undoStack.push(JSON.stringify(subtitles));
+  subtitles = JSON.parse(redoStack.pop());
+  afterHistoryRestore();
+}
+function afterHistoryRestore() {
+  if (selectedId && !subtitles.find(s => s.id === selectedId)) selectedId = null;
+  styleVersion++;
+  rebuildTimeline();
+  updateSubEditorUI();
+  updateUndoBtns();
+  scheduleSave();
+}
+function updateUndoBtns() {
+  document.getElementById('btn-undo').disabled = !undoStack.length;
+  document.getElementById('btn-redo').disabled = !redoStack.length;
+}
+
+// ═══════════════════════════════════════════════════════════════
+//  PROJECT AUTOSAVE
+// ═══════════════════════════════════════════════════════════════
+let saveTimer = null;
+function scheduleSave() {
+  clearTimeout(saveTimer);
+  saveTimer = setTimeout(() => {
+    try {
+      store.set('caply_project', JSON.stringify({ subtitles, globalStyle, subIdCounter }));
+    } catch (e) { /* storage full — ignore */ }
+  }, 700);
+}
+function restoreProject() {
+  try {
+    const raw = store.get('caply_project');
+    if (!raw) return;
+    const p = JSON.parse(raw);
+    if (p.subtitles && p.subtitles.length) {
+      subtitles = p.subtitles;
+      subIdCounter = p.subIdCounter || subtitles.length;
+      if (p.globalStyle) Object.assign(globalStyle, p.globalStyle);
+      syncStyleUI();
+      rebuildTimeline();
+      showBanner(`Restored ${subtitles.length} caption(s) from last session`);
+    }
+  } catch (e) {}
+}
+
+// ═══════════════════════════════════════════════════════════════
+//  VIDEO
+// ═══════════════════════════════════════════════════════════════
+const video = document.getElementById('video-player');
+const scrubBar = document.getElementById('scrub-bar');
+
+function handleVideoWrapClick(e) {
+  if (video.style.display === 'block') { togglePlay(); return; }
+  document.getElementById('file-input').click();
+}
+
+function handleVideoFile(evt) {
+  const file = evt.target.files[0];
+  if (!file) return;
+  loadVideoBlob(file);
+  idbSet('video', file); // survive page reloads
+}
+
+function loadVideoBlob(blob) {
+  const url = URL.createObjectURL(blob);
+  video.src = url;
+  video.style.display = 'block';
+  document.getElementById('upload-placeholder').style.display = 'none';
+  video.load();
+  video.addEventListener('loadedmetadata', () => {
+    videoDuration = video.duration;
+    updateTimeDisplay();
+    rebuildTimeline();
+  }, { once: true });
+  startRaf();
+}
+
+function togglePlay() {
+  if (!video.src) return;
+  if (video.paused) { video.play(); setPlayIcon(true); }
+  else { video.pause(); setPlayIcon(false); }
+}
+function setPlayIcon(playing) {
+  document.getElementById('ico-play').style.display  = playing ? 'none' : 'block';
+  document.getElementById('ico-pause').style.display = playing ? 'block' : 'none';
+}
+video.addEventListener('ended', () => setPlayIcon(false));
+video.addEventListener('pause', () => setPlayIcon(false));
+video.addEventListener('play',  () => setPlayIcon(true));
+
+let scrubPaused = false;
+function scrubStart() { isScrubbing = true; scrubPaused = !video.paused; if (!video.paused) video.pause(); }
+function scrubEnd()   { isScrubbing = false; if (scrubPaused) video.play(); }
+function scrubVideo(val) {
+  if (!video.duration) return;
+  video.currentTime = (val / 1000) * video.duration;
+}
+
+function cycleSpeed() {
+  speedIdx = (speedIdx + 1) % SPEEDS.length;
+  video.playbackRate = SPEEDS[speedIdx];
+  const b = document.getElementById('btn-speed');
+  b.textContent = SPEEDS[speedIdx] + '×';
+  b.classList.toggle('active', SPEEDS[speedIdx] !== 1);
+}
+
+function toggleLoop() {
+  loopCaption = !loopCaption;
+  document.getElementById('btn-loop').classList.toggle('active', loopCaption);
+  showBanner(loopCaption ? 'Looping selected caption' : 'Loop off');
+}
+
+function sortedSubs() { return [...subtitles].sort((a,b) => a.start - b.start); }
+
+function prevCaption() {
+  const t = video.currentTime;
+  const list = sortedSubs().filter(s => s.start < t - 0.3);
+  const target = list[list.length - 1];
+  if (target) { video.currentTime = target.start + 0.01; selectSub(target.id); }
+  else video.currentTime = 0;
+}
+function nextCaption() {
+  const t = video.currentTime;
+  const target = sortedSubs().find(s => s.start > t + 0.05);
+  if (target) { video.currentTime = target.start + 0.01; selectSub(target.id); }
+}
+
+function playSelectedSub() {
+  const sub = subtitles.find(s => s.id === selectedId);
+  if (!sub) return;
+  video.currentTime = sub.start + 0.01;
+  video.play();
+}
+
+function updateTimeDisplay() {
+  const cur = video.currentTime || 0;
+  const dur = video.duration || 0;
+  document.getElementById('time-display').textContent = `${fmtTime(cur)} / ${fmtTime(dur)}`;
+  if (!isScrubbing) scrubBar.value = dur ? Math.round((cur / dur) * 1000) : 0;
+}
+
+function fmtTime(s) {
+  const m = Math.floor(s / 60), sec = Math.floor(s % 60);
+  return `${m}:${String(sec).padStart(2,'0')}`;
+}
+
+// ═══════════════════════════════════════════════════════════════
+//  RAF LOOP
+// ═══════════════════════════════════════════════════════════════
+function startRaf() {
+  if (rafId) return;
+  function loop() {
+    updateTimeDisplay();
+    syncSubtitleOverlay();
+    syncPlayhead();
+    handleLoopCaption();
+    rafId = requestAnimationFrame(loop);
+  }
+  rafId = requestAnimationFrame(loop);
+}
+function handleLoopCaption() {
+  if (!loopCaption || !selectedId || video.paused) return;
+  const sub = subtitles.find(s => s.id === selectedId);
+  if (sub && video.currentTime > sub.end) video.currentTime = sub.start + 0.01;
+}
+
+// ═══════════════════════════════════════════════════════════════
+//  STYLE RESOLUTION & WORDS
+// ═══════════════════════════════════════════════════════════════
+function resolveStyle(sub) {
+  const out = {};
+  const st = sub.style || {};
+  for (const k of STYLE_KEYS) out[k] = (st[k] != null) ? st[k] : globalStyle[k];
+  return out;
+}
+
+// Words for karaoke: real word timestamps if present, else even distribution
+function getWords(sub) {
+  if (sub.words && sub.words.length) return sub.words;
+  const parts = sub.text.split(/\s+/).filter(Boolean);
+  if (!parts.length) return [];
+  const dur = Math.max(0.001, sub.end - sub.start);
+  const per = dur / parts.length;
+  return parts.map((w, i) => ({ text: w, start: sub.start + i * per, end: sub.start + (i + 1) * per }));
+}
+
+// Re-sync word timings after a text edit
+function syncWordsToText(sub) {
+  if (!sub.words || !sub.words.length) return;
+  const parts = sub.text.split(/\s+/).filter(Boolean);
+  if (parts.length === sub.words.length) {
+    sub.words.forEach((w, i) => w.text = parts[i]);
+  } else {
+    sub.words = null; // word count changed — fall back to even distribution
+  }
+}
+
+// ═══════════════════════════════════════════════════════════════
+//  SUBTITLE OVERLAY (live preview renderer)
+// ═══════════════════════════════════════════════════════════════
+const overlayEl = document.getElementById('subtitle-overlay');
+const subTextEl = document.getElementById('subtitle-text');
+let lastRenderKey = '';
+let lastSubId = null;
+
+function syncSubtitleOverlay() {
+  const t = video.currentTime;
+  const active = subtitles.find(s => t >= s.start && t <= s.end);
+
+  if (!active) {
+    if (lastRenderKey !== '') {
+      subTextEl.innerHTML = '';
+      subTextEl.style.background = 'transparent';
+      subTextEl.style.backdropFilter = '';
+      subTextEl.style.webkitBackdropFilter = '';
+      lastRenderKey = '';
+      lastSubId = null;
+    }
+    return;
+  }
+
+  const st = resolveStyle(active);
+  const key = active.id + '|' + active.text + '|' + styleVersion;
+  if (key !== lastRenderKey) {
+    buildOverlay(active, st);
+    lastRenderKey = key;
+    if (lastSubId !== active.id) {
+      applySubtitleAnimation(subTextEl, st.animation);
+      lastSubId = active.id;
+    }
+  }
+  updateOverlayFrame(active, st, t);
+}
+
+function buildOverlay(sub, st) {
+  // Position
+  overlayEl.style.top = ''; overlayEl.style.bottom = '';
+  if (st.position === 'top')         overlayEl.style.top = st.positionOffset + '%';
+  else if (st.position === 'middle') overlayEl.style.top = '45%';
+  else                               overlayEl.style.bottom = st.positionOffset + '%';
+  overlayEl.style.textAlign = st.alignment;
+
+  const el = subTextEl;
+  el.style.fontFamily     = `'${st.fontFamily}', sans-serif`;
+  el.style.fontSize       = st.fontSize + 'px';
+  el.style.color          = st.color;
+  el.style.fontWeight     = st.bold ? '800' : '400';
+  el.style.fontStyle      = st.italic ? 'italic' : 'normal';
+  el.style.textDecoration = st.underline ? 'underline' : 'none';
+  el.style.letterSpacing  = st.letterSpacing + 'px';
+  el.style.webkitTextStroke = st.outlineWidth > 0 ? `${st.outlineWidth}px ${st.outlineColor}` : '';
+  el.style.paintOrder     = 'stroke fill';
+
+  const shadows = {
+    none: 'none',
+    soft: '0 1px 4px rgba(0,0,0,0.8)',
+    hard: '2px 2px 0 rgba(0,0,0,1)',
+    glow: `0 0 12px ${st.color}, 0 0 24px ${st.color}`
+  };
+  el.style.textShadow = shadows[st.shadow] || 'none';
+
+  // Background
+  const hexToRgb = h => {
+    const r = parseInt(h.slice(1,3),16), g = parseInt(h.slice(3,5),16), b = parseInt(h.slice(5,7),16);
+    return `${r},${g},${b}`;
+  };
+  el.style.backdropFilter = ''; el.style.webkitBackdropFilter = '';
+  el.style.display = 'inline-block';
+  if (st.bgStyle === 'none') {
+    el.style.background = 'transparent'; el.style.padding = '2px 4px'; el.style.borderRadius = '0';
+  } else if (st.bgStyle === 'tight') {
+    el.style.background = `rgba(${hexToRgb(st.bgColor)},${st.bgOpacity})`;
+    el.style.padding = '4px 10px'; el.style.borderRadius = '6px';
+  } else if (st.bgStyle === 'fullbar') {
+    el.style.background = `rgba(${hexToRgb(st.bgColor)},${st.bgOpacity})`;
+    el.style.padding = '6px 12px'; el.style.borderRadius = '0';
+    el.style.display = 'block';
+  } else if (st.bgStyle === 'frosted') {
+    el.style.background = `rgba(${hexToRgb(st.bgColor)},${Math.min(st.bgOpacity, 0.4)})`;
+    el.style.backdropFilter = 'blur(12px)'; el.style.webkitBackdropFilter = 'blur(12px)';
+    el.style.padding = '5px 12px'; el.style.borderRadius = '8px';
+  }
+
+  // Content: word spans for karaoke, plain text otherwise
+  const txt = st.allCaps ? sub.text.toUpperCase() : sub.text;
+  el.dataset.full = txt;
+  if (st.karaoke !== 'none') {
+    const words = getWords(sub);
+    el.innerHTML = words.map((w, i) =>
+      `<span class="kw" data-i="${i}">${esc(st.allCaps ? w.text.toUpperCase() : w.text)}</span>`
+    ).join(' ');
+  } else {
+    el.textContent = txt;
+  }
+}
+
+// Per-frame: karaoke word states + typewriter reveal
+function updateOverlayFrame(sub, st, t) {
+  const el = subTextEl;
+
+  if (st.karaoke === 'none') {
+    if (st.animation === 'typewriter') {
+      const full = el.dataset.full || '';
+      const frac = Math.min(1, Math.max(0, (t - sub.start) / 0.7));
+      const n = Math.ceil(full.length * frac);
+      if (el.textContent.length !== n) el.textContent = full.slice(0, n);
+    }
+    return;
+  }
+
+  const words = getWords(sub);
+  if (!words.length || !el.children.length) return;
+  let idx = -1;
+  for (let i = 0; i < words.length; i++) {
+    if (t >= words[i].start - 0.02) idx = i; else break;
+  }
+
+  const spans = el.children;
+  for (let i = 0; i < spans.length; i++) {
+    const sp = spans[i];
+    // reset
+    sp.style.background = ''; sp.style.padding = ''; sp.style.transform = '';
+    sp.style.opacity = ''; sp.style.color = '';
+    if (st.karaoke === 'highlight') {
+      if (i === idx) sp.style.color = st.karaokeColor;
+    } else if (st.karaoke === 'fill') {
+      if (i <= idx) sp.style.color = st.karaokeColor;
+      else sp.style.opacity = '0.55';
+    } else if (st.karaoke === 'box') {
+      if (i === idx) {
+        sp.style.background = st.karaokeColor; sp.style.color = '#000';
+        sp.style.padding = '0 5px';
+      }
+    } else if (st.karaoke === 'bounce') {
+      if (i === idx) { sp.style.transform = 'scale(1.22)'; sp.style.color = st.karaokeColor; }
+    }
+  }
+}
+
+function applySubtitleAnimation(el, animation) {
+  el.style.animation = 'none';
+  void el.offsetHeight;
+  const map = {
+    fade:      'subtitleFade 0.3s ease',
+    slideUp:   'subtitleSlideUp 0.3s ease',
+    pop:       'subtitlePop 0.25s cubic-bezier(0.34,1.56,0.64,1)',
+    bounce:    'subtitleBounce 0.4s cubic-bezier(0.34,1.56,0.64,1)',
+    zoom:      'subtitleZoom 0.3s ease',
+    shake:     'subtitleShake 0.4s ease'
+  };
+  el.style.animation = map[animation] || 'none';
+}
+
+// ═══════════════════════════════════════════════════════════════
+//  TIMELINE (zoom, ruler, drag-move, edge-resize, tap-to-seek)
+// ═══════════════════════════════════════════════════════════════
+const tlInner = document.getElementById('timeline-inner');
+
+function tlZoom(dir) {
+  pxPerSec = Math.min(300, Math.max(20, pxPerSec * (dir > 0 ? 1.4 : 1/1.4)));
+  rebuildTimeline();
+}
+
+function rebuildTimeline() {
+  const empty = document.getElementById('tl-empty');
+  tlInner.querySelectorAll('.tl-block').forEach(b => b.remove());
+  buildRuler();
+
+  if (subtitles.length === 0) {
+    empty.style.display = 'flex';
+  } else {
+    empty.style.display = 'none';
+  }
+
+  const totalDur = Math.max(videoDuration || 60, subtitles.reduce((m,s) => Math.max(m, s.end), 0));
+  tlInner.style.width = Math.max(320, totalDur * pxPerSec) + 'px';
+
+  subtitles.forEach(sub => {
+    const block = document.createElement('div');
+    block.className = 'tl-block' + (sub.id === selectedId ? ' selected' : '');
+    block.dataset.id = sub.id;
+    block.style.left  = (sub.start * pxPerSec) + 'px';
+    block.style.width = Math.max(18, (sub.end - sub.start) * pxPerSec) + 'px';
+    const label = document.createElement('span');
+    label.textContent = sub.text || '…';
+    block.appendChild(label);
+    ['l','r'].forEach(side => {
+      const h = document.createElement('div');
+      h.className = 'tl-handle ' + side;
+      h.dataset.side = side;
+      block.appendChild(h);
+    });
+    block.addEventListener('pointerdown', tlPointerDown);
+    tlInner.appendChild(block);
+  });
+  scheduleSave();
+}
+
+function buildRuler() {
+  const ruler = document.getElementById('tl-ruler');
+  ruler.innerHTML = '';
+  const totalDur = Math.max(videoDuration || 60, subtitles.reduce((m,s) => Math.max(m, s.end), 0));
+  const step = pxPerSec < 40 ? 5 : (pxPerSec < 100 ? 2 : 1);
+  for (let s = 0; s <= totalDur; s += step) {
+    const tick = document.createElement('div');
+    tick.className = 'tl-tick';
+    tick.style.left = (s * pxPerSec) + 'px';
+    tick.textContent = fmtTime(s);
+    ruler.appendChild(tick);
+  }
+}
+
+function syncPlayhead() {
+  const ph = document.getElementById('playhead');
+  const x = video.currentTime * pxPerSec;
+  ph.style.left = x + 'px';
+  // Auto-scroll timeline so playhead stays visible while playing
+  if (!video.paused && !isScrubbing) {
+    const scroller = document.getElementById('timeline-scroll');
+    if (!scroller) return;
+    const sw = scroller.clientWidth;
+    const sl = scroller.scrollLeft;
+    const margin = sw * 0.25;          // keep playhead in middle 50%
+    if (x < sl + margin) {
+      scroller.scrollLeft = Math.max(0, x - margin);
+    } else if (x > sl + sw - margin) {
+      scroller.scrollLeft = x - sw + margin;
+    }
+  }
+}
+
+// Tap empty timeline → seek
+tlInner.addEventListener('pointerdown', (e) => {
+  if (e.target !== tlInner && !e.target.classList.contains('tl-ruler') && e.target.id !== 'tl-empty') return;
+  const rect = tlInner.getBoundingClientRect();
+  const x = e.clientX - rect.left;
+  if (video.duration) video.currentTime = Math.min(video.duration, Math.max(0, x / pxPerSec));
+});
+
+// ─── Timeline lock (prevent accidental caption moves) ───
+let timelineLocked = false;
+function toggleTimelineLock() {
+  timelineLocked = !timelineLocked;
+  const btn = document.getElementById('btn-lock');
+  btn.classList.toggle('locked', timelineLocked);
+  document.getElementById('lock-icon-open').style.display = timelineLocked ? 'none' : '';
+  document.getElementById('lock-icon-closed').style.display = timelineLocked ? '' : 'none';
+  showBanner(timelineLocked ? '🔒 Captions locked — timeline scroll only' : '🔓 Captions unlocked');
+}
+
+// Block drag / resize via pointer events
+let tlDrag = null;
+
+function tlPointerDown(e) {
+  if (timelineLocked) return; // lock active — ignore drag
+  const block = e.currentTarget;
+  const id = block.dataset.id;
+  const sub = subtitles.find(s => s.id === id);
+  if (!sub) return;
+  e.stopPropagation();
+
+  const side = e.target.classList?.contains('tl-handle') ? e.target.dataset.side : null;
+  tlDrag = {
+    sub, block,
+    mode: side ? ('resize-' + side) : 'move',
+    startX: e.clientX,
+    origStart: sub.start,
+    origEnd: sub.end,
+    moved: false,
+    preState: JSON.stringify(subtitles)
+  };
+  block.setPointerCapture(e.pointerId);
+  block.addEventListener('pointermove', tlPointerMove);
+  block.addEventListener('pointerup', tlPointerUp);
+  block.addEventListener('pointercancel', tlPointerUp);
+}
+
+function tlPointerMove(e) {
+  if (!tlDrag) return;
+  const dx = e.clientX - tlDrag.startX;
+  if (Math.abs(dx) > 4) tlDrag.moved = true;
+  if (!tlDrag.moved) return;
+  const dt = dx / pxPerSec;
+  const s = tlDrag.sub;
+  const minDur = 0.2;
+
+  if (tlDrag.mode === 'move') {
+    const dur = tlDrag.origEnd - tlDrag.origStart;
+    const ns = Math.max(0, tlDrag.origStart + dt);
+    shiftSubWords(s, ns - s.start);
+    s.start = ns; s.end = ns + dur;
+  } else if (tlDrag.mode === 'resize-l') {
+    s.start = Math.max(0, Math.min(tlDrag.origEnd - minDur, tlDrag.origStart + dt));
+  } else if (tlDrag.mode === 'resize-r') {
+    s.end = Math.max(tlDrag.origStart + minDur, tlDrag.origEnd + dt);
+  }
+
+  tlDrag.block.style.left  = (s.start * pxPerSec) + 'px';
+  tlDrag.block.style.width = Math.max(18, (s.end - s.start) * pxPerSec) + 'px';
+}
+
+function shiftSubWords(sub, dt) {
+  if (!sub.words) return;
+  sub.words.forEach(w => { w.start += dt; w.end += dt; });
+}
+
+function tlPointerUp(e) {
+  const block = e.currentTarget;
+  block.removeEventListener('pointermove', tlPointerMove);
+  block.removeEventListener('pointerup', tlPointerUp);
+  block.removeEventListener('pointercancel', tlPointerUp);
+  if (!tlDrag) return;
+  const { sub, moved, preState } = tlDrag;
+  tlDrag = null;
+  if (moved) {
+    undoStack.push(preState);
+    if (undoStack.length > 60) undoStack.shift();
+    redoStack = [];
+    updateUndoBtns();
+    subtitles.sort((a,b) => a.start - b.start);
+    rebuildTimeline();
+    updateSubEditorUI();
+  } else {
+    selectSub(sub.id);
+    video.currentTime = sub.start + 0.01;
+  }
+}
+
+// ═══════════════════════════════════════════════════════════════
+//  SUBTITLE MANAGEMENT
+// ═══════════════════════════════════════════════════════════════
+function emptyStyle() {
+  const st = {};
+  for (const k of STYLE_KEYS) st[k] = null;
+  return st;
+}
+
+function makeSubtitle(start, end, text, words) {
+  return {
+    id: 'sub_' + (++subIdCounter).toString().padStart(3,'0'),
+    start, end, text,
+    words: words || null,
+    style: emptyStyle()
+  };
+}
+
+function addSubtitleNow() {
+  snapshot();
+  const t = video.currentTime || 0;
+  const sub = makeSubtitle(t, Math.min(t + 2.5, (videoDuration || t + 2.5)), 'New caption');
+  subtitles.push(sub);
+  subtitles.sort((a,b) => a.start - b.start);
+  rebuildTimeline();
+  selectSub(sub.id);
+  showBanner('Caption added at ' + fmtTime(t));
+}
+
+function deleteSelectedSub() {
+  if (!selectedId) return;
+  snapshot();
+  subtitles = subtitles.filter(s => s.id !== selectedId);
+  selectedId = null;
+  document.getElementById('sub-editor').classList.remove('visible');
+  rebuildTimeline();
+}
+
+function selectSub(id) {
+  selectedId = id;
+  snapshotOnceFlag = null;
+  rebuildTimeline();
+  updateSubEditorUI();
+}
+
+function updateSubEditorUI() {
+  const sub = subtitles.find(s => s.id === selectedId);
+  const editor = document.getElementById('sub-editor');
+  if (!sub) { editor.classList.remove('visible'); return; }
+  editor.classList.add('visible');
+
+  document.getElementById('sub-time-label').textContent = fmtTime(sub.start) + ' → ' + fmtTime(sub.end);
+  if (document.activeElement !== document.getElementById('sub-text-input'))
+    document.getElementById('sub-text-input').value = sub.text;
+  document.getElementById('sub-start-inp').value = sub.start.toFixed(2);
+  document.getElementById('sub-end-inp').value   = sub.end.toFixed(2);
+
+  const hasOverride = Object.values(sub.style).some(v => v != null);
+  document.getElementById('sub-style-badge').classList.toggle('visible', hasOverride);
+
+  document.getElementById('sub-color').value = sub.style.color || globalStyle.color;
+  document.getElementById('sub-anim').value  = sub.style.animation || '';
+  document.getElementById('sub-size').value  = sub.style.fontSize || globalStyle.fontSize;
+  document.getElementById('sub-bold').classList.toggle('active',
+    sub.style.bold != null ? sub.style.bold : globalStyle.bold);
+  document.getElementById('sub-italic').classList.toggle('active',
+    sub.style.italic != null ? sub.style.italic : globalStyle.italic);
+
+  renderWordChips(sub);
+}
+
+function renderWordChips(sub) {
+  const wrap = document.getElementById('sub-words');
+  wrap.innerHTML = '';
+  if (!sub.words || !sub.words.length) return;
+  sub.words.forEach((w, i) => {
+    const chip = document.createElement('button');
+    chip.className = 'word-chip';
+    chip.textContent = w.text;
+    chip.title = w.start.toFixed(2) + 's';
+    chip.onclick = () => { video.currentTime = w.start + 0.01; };
+    wrap.appendChild(chip);
+  });
+}
+
+function updateSubText(val) {
+  const sub = subtitles.find(s => s.id === selectedId);
+  if (!sub) return;
+  sub.text = val;
+  syncWordsToText(sub);
+  styleVersion++;
+  // light update: only block label
+  const block = tlInner.querySelector(`.tl-block[data-id="${sub.id}"] span`);
+  if (block) block.textContent = val || '…';
+  scheduleSave();
+}
+
+function updateSubTime(field, val) {
+  const sub = subtitles.find(s => s.id === selectedId);
+  if (!sub) return;
+  const n = parseFloat(val);
+  if (isNaN(n)) return;
+  snapshot();
+  sub[field] = Math.max(0, n);
+  if (sub.end <= sub.start) sub.end = sub.start + 0.5;
+  subtitles.sort((a,b) => a.start - b.start);
+  rebuildTimeline();
+  updateSubEditorUI();
+}
+
+function setSubStyle(key, val) {
+  const sub = subtitles.find(s => s.id === selectedId);
+  if (!sub) return;
+  sub.style[key] = val;
+  styleVersion++;
+  updateSubEditorUI();
+  scheduleSave();
+}
+
+function toggleSubStyle(key) {
+  const sub = subtitles.find(s => s.id === selectedId);
+  if (!sub) return;
+  const cur = sub.style[key] != null ? sub.style[key] : globalStyle[key];
+  sub.style[key] = !cur;
+  styleVersion++;
+  updateSubEditorUI();
+  scheduleSave();
+}
+
+function resetSubStyle() {
+  const sub = subtitles.find(s => s.id === selectedId);
+  if (!sub) return;
+  sub.style = emptyStyle();
+  styleVersion++;
+  updateSubEditorUI();
+  scheduleSave();
+  showBanner('Style reset to global');
+}
+
+// Split selected caption at playhead
+function splitSelectedSub() {
+  const sub = subtitles.find(s => s.id === selectedId);
+  if (!sub) return;
+  const t = video.currentTime;
+  if (t <= sub.start + 0.1 || t >= sub.end - 0.1) {
+    showBanner('Move playhead inside this caption to split'); return;
+  }
+  snapshot();
+  let w1 = null, w2 = null, t1, t2;
+  const words = getWords(sub);
+  const before = words.filter(w => (w.start + w.end) / 2 < t);
+  const after  = words.filter(w => (w.start + w.end) / 2 >= t);
+  if (!before.length || !after.length) { showBanner('Nothing to split here'); undoStack.pop(); updateUndoBtns(); return; }
+  t1 = before.map(w => w.text).join(' ');
+  t2 = after.map(w => w.text).join(' ');
+  if (sub.words) { w1 = before; w2 = after; }
+  const second = makeSubtitle(t, sub.end, t2, w2);
+  second.style = JSON.parse(JSON.stringify(sub.style));
+  sub.end = t; sub.text = t1; sub.words = w1;
+  subtitles.push(second);
+  subtitles.sort((a,b) => a.start - b.start);
+  styleVersion++;
+  rebuildTimeline();
+  selectSub(second.id);
+  showBanner('Caption split');
+}
+
+function mergeWithNext() {
+  const sub = subtitles.find(s => s.id === selectedId);
+  if (!sub) return;
+  const sorted = sortedSubs();
+  const idx = sorted.findIndex(s => s.id === sub.id);
+  const next = sorted[idx + 1];
+  if (!next) { showBanner('No caption after this one'); return; }
+  snapshot();
+  sub.text = sub.text + ' ' + next.text;
+  sub.end = next.end;
+  if (sub.words && next.words) sub.words = sub.words.concat(next.words);
+  else sub.words = null;
+  subtitles = subtitles.filter(s => s.id !== next.id);
+  styleVersion++;
+  rebuildTimeline();
+  updateSubEditorUI();
+  showBanner('Captions merged');
+}
+
+// ═══════════════════════════════════════════════════════════════
+//  GLOBAL STYLE & PRESETS
+// ═══════════════════════════════════════════════════════════════
+function updateGlobalStyle(key, val) {
+  globalStyle[key] = val;
+  styleVersion++;
+  markPresetActive(-1);
+  scheduleSave();
+}
+
+function toggleGlobal(key) {
+  globalStyle[key] = !globalStyle[key];
+  styleVersion++;
+  const map = { bold: 'gs-bold', italic: 'gs-italic', underline: 'gs-underline', allCaps: 'gs-allcaps' };
+  document.getElementById(map[key])?.classList.toggle('active', globalStyle[key]);
+  scheduleSave();
+}
+
+function setAlign(val) {
+  globalStyle.alignment = val; styleVersion++;
+  ['left','center','right'].forEach(a =>
+    document.getElementById('gs-align-'+a)?.classList.toggle('active', a === val));
+  scheduleSave();
+}
+
+function setPosition(val) {
+  globalStyle.position = val; styleVersion++;
+  ['top','mid','bot'].forEach(p => {
+    const match = (p === 'mid' ? 'middle' : (p === 'bot' ? 'bottom' : 'top'));
+    document.getElementById('gs-pos-'+p)?.classList.toggle('active', match === val);
+  });
+  scheduleSave();
+}
+
+function openStylePanel() {
+  openSheet('style-sheet');
+}
+function toggleStylePanel() {
+  openSheet('style-sheet');
+}
+
+function syncStyleUI() {
+  const g = globalStyle;
+  const set = (id, v) => { const el = document.getElementById(id); if (el) el.value = v; };
+  set('gs-font', g.fontFamily);
+  set('gs-size', g.fontSize); document.getElementById('gs-size-val').textContent = g.fontSize;
+  set('gs-color', g.color);
+  set('gs-bgcolor', g.bgColor);
+  set('gs-bgopacity', Math.round(g.bgOpacity * 100));
+  document.getElementById('gs-bgo-val').textContent = Math.round(g.bgOpacity * 100) + '%';
+  set('gs-outlinecolor', g.outlineColor);
+  set('gs-outlinewidth', g.outlineWidth); document.getElementById('gs-ow-val').textContent = g.outlineWidth;
+  set('gs-karaoke', g.karaoke);
+  set('gs-karaokecolor', g.karaokeColor);
+  set('gs-bgstyle', g.bgStyle);
+  set('gs-shadow', g.shadow);
+  set('gs-spacing', g.letterSpacing); document.getElementById('gs-spacing-val').textContent = g.letterSpacing;
+  set('gs-anim', g.animation);
+  ['left','center','right'].forEach(a =>
+    document.getElementById('gs-align-'+a)?.classList.toggle('active', a === g.alignment));
+  ['top','mid','bot'].forEach(p => {
+    const match = (p === 'mid' ? 'middle' : (p === 'bot' ? 'bottom' : 'top'));
+    document.getElementById('gs-pos-'+p)?.classList.toggle('active', match === g.position);
+  });
+  document.getElementById('gs-bold').classList.toggle('active', g.bold);
+  document.getElementById('gs-italic').classList.toggle('active', g.italic);
+  document.getElementById('gs-underline').classList.toggle('active', g.underline);
+  document.getElementById('gs-allcaps').classList.toggle('active', g.allCaps);
+  set('gs-posoffset', g.positionOffset);
+}
+
+// ─── CapCut-style caption templates ───
+const PRESETS = [
+  { name: 'Classic',    s: { fontFamily:'Oswald', fontSize:20, color:'#FFFFFF', bgStyle:'tight', bgColor:'#000000', bgOpacity:0.6, bold:false, italic:false, allCaps:false, outlineWidth:0, shadow:'soft', animation:'fade', karaoke:'none', letterSpacing:0 } },
+  { name: 'Beast',      s: { fontFamily:'Anton', fontSize:28, color:'#FFE600', bgStyle:'none', bold:false, italic:false, allCaps:true, outlineWidth:2.5, outlineColor:'#000000', shadow:'hard', animation:'pop', karaoke:'none', letterSpacing:1 } },
+  { name: 'Hormozi',    s: { fontFamily:'Montserrat', fontSize:24, color:'#FFFFFF', bgStyle:'none', bold:true, italic:false, allCaps:true, outlineWidth:2, outlineColor:'#000000', shadow:'hard', animation:'pop', karaoke:'highlight', karaokeColor:'#2ED573', letterSpacing:0.5 } },
+  { name: 'Karaoke',    s: { fontFamily:'Poppins', fontSize:22, color:'#FFFFFF', bgStyle:'tight', bgColor:'#000000', bgOpacity:0.55, bold:true, italic:false, allCaps:false, outlineWidth:0, shadow:'soft', animation:'fade', karaoke:'fill', karaokeColor:'#00D4FF', letterSpacing:0 } },
+  { name: 'Pop Word',   s: { fontFamily:'Nunito', fontSize:24, color:'#FFFFFF', bgStyle:'none', bold:true, italic:false, allCaps:true, outlineWidth:2, outlineColor:'#000000', shadow:'soft', animation:'bounce', karaoke:'bounce', karaokeColor:'#FF4757', letterSpacing:0 } },
+  { name: 'Box Word',   s: { fontFamily:'Montserrat', fontSize:22, color:'#FFFFFF', bgStyle:'none', bold:true, italic:false, allCaps:true, outlineWidth:1.5, outlineColor:'#000000', shadow:'none', animation:'fade', karaoke:'box', karaokeColor:'#FFE600', letterSpacing:0.5 } },
+  { name: 'Neon',       s: { fontFamily:'Orbitron', fontSize:22, color:'#00FFEE', bgStyle:'none', bold:true, italic:false, allCaps:false, outlineWidth:0, shadow:'glow', animation:'fade', karaoke:'none', letterSpacing:2 } },
+  { name: 'News Bar',   s: { fontFamily:'Roboto Condensed', fontSize:18, color:'#FFFFFF', bgStyle:'fullbar', bgColor:'#B71540', bgOpacity:0.88, bold:true, italic:false, allCaps:true, outlineWidth:0, shadow:'none', animation:'none', karaoke:'none', letterSpacing:1, position:'bottom', positionOffset:4 } },
+  { name: 'Comic',      s: { fontFamily:'Permanent Marker', fontSize:24, color:'#FFFFFF', bgStyle:'none', bold:false, italic:false, allCaps:false, outlineWidth:2, outlineColor:'#000000', shadow:'hard', animation:'bounce', karaoke:'none', letterSpacing:0 } },
+  { name: 'Elegant',    s: { fontFamily:'Playfair Display', fontSize:21, color:'#FFFFFF', bgStyle:'frosted', bgColor:'#000000', bgOpacity:0.35, bold:false, italic:true, allCaps:false, outlineWidth:0, shadow:'soft', animation:'fade', karaoke:'none', letterSpacing:0.5 } },
+  { name: 'Typewriter', s: { fontFamily:'Space Mono', fontSize:18, color:'#EAEAEA', bgStyle:'tight', bgColor:'#000000', bgOpacity:0.7, bold:false, italic:false, allCaps:false, outlineWidth:0, shadow:'none', animation:'typewriter', karaoke:'none', letterSpacing:0 } },
+  { name: 'Retro',      s: { fontFamily:'Bebas Neue', fontSize:26, color:'#FFD32A', bgStyle:'none', bold:false, italic:false, allCaps:true, outlineWidth:1.5, outlineColor:'#3D0000', shadow:'hard', animation:'slideUp', karaoke:'none', letterSpacing:2 } }
+];
+
+function renderPresets() {
+  const row = document.getElementById('presets-row');
+  row.innerHTML = '';
+  PRESETS.forEach((p, i) => {
+    const chip = document.createElement('div');
+    chip.className = 'preset-chip';
+    chip.dataset.i = i;
+    const pv = document.createElement('div');
+    pv.className = 'pv';
+    const txt = document.createElement('span');
+    txt.textContent = p.s.allCaps ? 'AA' : 'Aa';
+    txt.style.fontFamily = `'${p.s.fontFamily}', sans-serif`;
+    txt.style.color = p.s.karaoke !== 'none' && p.s.karaoke !== 'box' ? p.s.karaokeColor : p.s.color;
+    txt.style.fontWeight = p.s.bold ? '800' : '400';
+    txt.style.fontStyle = p.s.italic ? 'italic' : 'normal';
+    if (p.s.outlineWidth > 0) txt.style.webkitTextStroke = `1px ${p.s.outlineColor}`;
+    if (p.s.shadow === 'glow') txt.style.textShadow = `0 0 8px ${p.s.color}`;
+    if (p.s.bgStyle === 'tight' || p.s.bgStyle === 'fullbar') {
+      txt.style.background = p.s.bgColor; txt.style.padding = '1px 6px'; txt.style.borderRadius = '3px';
+    }
+    if (p.s.karaoke === 'box') {
+      txt.style.background = p.s.karaokeColor; txt.style.color = '#000'; txt.style.padding = '1px 6px'; txt.style.borderRadius = '3px';
+    }
+    pv.appendChild(txt);
+    const pn = document.createElement('div');
+    pn.className = 'pn';
+    pn.textContent = p.name;
+    chip.appendChild(pv); chip.appendChild(pn);
+    chip.onclick = () => applyPreset(i);
+    row.appendChild(chip);
+  });
+}
+
+function applyPreset(i) {
+  Object.assign(globalStyle, PRESETS[i].s);
+  styleVersion++;
+  syncStyleUI();
+  markPresetActive(i);
+  scheduleSave();
+  showBanner(`Template "${PRESETS[i].name}" applied`);
+}
+
+function markPresetActive(i) {
+  document.querySelectorAll('.preset-chip').forEach(c =>
+    c.classList.toggle('active', +c.dataset.i === i));
+}
+
+// ═══════════════════════════════════════════════════════════════
+//  CUSTOM FONT
+// ═══════════════════════════════════════════════════════════════
+// ═══════════════════════════════════════════════════════════════
+//  FONT MANAGER
+// ═══════════════════════════════════════════════════════════════
+const FONT_STORE_KEY = 'caply_custom_fonts_v1';
+let customFonts = []; // [{name, dataUrl, ext}]
+
+async function loadFontFromDataUrl(name, dataUrl) {
+  const font = new FontFace(name, `url(${dataUrl})`);
+  await font.load();
+  document.fonts.add(font);
+}
+
+function saveFontsToStorage() {
+  try { store.set(FONT_STORE_KEY, JSON.stringify(customFonts.map(f => ({name:f.name,dataUrl:f.dataUrl,ext:f.ext})))); } catch(e) {}
+}
+
+function addFontToSelector(name) {
+  const sel = document.getElementById('gs-font');
+  if (!sel) return;
+  if ([...sel.options].some(o => o.value === name)) return; // already there
+  const opt = document.createElement('option');
+  opt.value = name; opt.textContent = name + ' ✦';
+  sel.appendChild(opt);
+}
+
+function removeFontFromSelector(name) {
+  const sel = document.getElementById('gs-font');
+  if (!sel) return;
+  const opt = [...sel.options].find(o => o.value === name);
+  if (opt) opt.remove();
+  if (sel.value === name) { sel.value = sel.options[0]?.value || ''; updateGlobalStyle('fontFamily', sel.value); }
+}
+
+function renderFontList() {
+  const list = document.getElementById('font-list');
+  if (!list) return;
+  list.innerHTML = '';
+  if (!customFonts.length) {
+    list.innerHTML = '<p style="font-size:12px;color:var(--text-muted);text-align:center;margin:8px 0">No custom fonts loaded yet</p>';
+    return;
+  }
+  customFonts.forEach(f => {
+    const item = document.createElement('div');
+    item.className = 'font-item';
+    item.innerHTML = `
+      <div class="font-item-info">
+        <div class="font-item-name">${f.name}</div>
+        <div class="font-item-preview" style="font-family:'${f.name}',sans-serif">The quick brown fox</div>
+      </div>
+      <button class="font-item-del" title="Remove font" onclick="removeCustomFont('${f.name.replace(/'/g,"\\'")}')">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="width:18px;height:18px"><polyline points="3 6 5 6 21 6"/><path d="M19 6l-1 14H6L5 6"/><path d="M10 11v6M14 11v6"/><path d="M9 6V4h6v2"/></svg>
+      </button>`;
+    list.appendChild(item);
+  });
+}
+
+function removeCustomFont(name) {
+  customFonts = customFonts.filter(f => f.name !== name);
+  removeFontFromSelector(name);
+  saveFontsToStorage();
+  renderFontList();
+  showBanner(`Font "${name}" removed`);
+}
+
+async function handleFontUpload(evt) {
+  const files = [...evt.target.files];
+  if (!files.length) return;
+  let loaded = 0, failed = 0;
+  for (const file of files) {
+    try {
+      const dataUrl = await new Promise((res, rej) => {
+        const reader = new FileReader();
+        reader.onload = () => res(reader.result);
+        reader.onerror = rej;
+        reader.readAsDataURL(file);
+      });
+      const name = file.name.replace(/\.[^.]+$/, '');
+      const ext  = file.name.split('.').pop().toLowerCase();
+      await loadFontFromDataUrl(name, dataUrl);
+      // Remove duplicate if re-uploading
+      customFonts = customFonts.filter(f => f.name !== name);
+      customFonts.push({ name, dataUrl, ext });
+      addFontToSelector(name);
+      loaded++;
+    } catch(e) {
+      failed++;
+      console.warn('Font load failed', e);
+    }
+  }
+  saveFontsToStorage();
+  renderFontList();
+  evt.target.value = ''; // allow re-upload of same file
+  if (loaded) showBanner(loaded === 1 ? `Font loaded ✓` : `${loaded} fonts loaded ✓`);
+  if (failed) showBanner(`${failed} font(s) failed to load`);
+}
+
+async function restoreCustomFonts() {
+  try {
+    const raw = store.get(FONT_STORE_KEY);
+    if (!raw) return;
+    const saved = JSON.parse(raw);
+    for (const f of saved) {
+      try {
+        await loadFontFromDataUrl(f.name, f.dataUrl);
+        customFonts.push(f);
+        addFontToSelector(f.name);
+      } catch(e) { /* skip broken entries */ }
+    }
+    renderFontList();
+  } catch(e) {}
+}
+</script>
+<script>
+// ═══════════════════════════════════════════════════════════════
+//  AUTO CAPTIONS — sheet + dispatch
+// ═══════════════════════════════════════════════════════════════
+function startAutoGenerate() {
+  if (!video.src) { showBanner('Load a video first'); return; }
+  document.getElementById('gen-engine').value = settings.engine;
+  document.getElementById('gen-model').value = settings.model;
+  document.getElementById('gen-lang').value = settings.language;
+  document.getElementById('gen-maxwords').value = settings.maxWords;
+  document.getElementById('gen-mw-val').textContent = settings.maxWords;
+  genEngineChanged();
+  openSheet('gen-sheet');
+}
+
+function genEngineChanged() {
+  const eng = document.getElementById('gen-engine').value;
+  document.getElementById('gen-model-row').style.display = eng === 'ai' ? 'flex' : 'none';
+  document.getElementById('gen-groq-row').style.display  = eng === 'groq' ? 'flex' : 'none';
+  if (eng === 'groq') refreshGroqBadge();
+
+  let note;
+  if (eng === 'groq') {
+    const hasKey = !!(store.get('caply_groq_key'));
+    note = hasKey
+      ? '☁️ <b>Groq Cloud Whisper</b> — whisper-large-v3-turbo. Fast, highly accurate, word-level timestamps. Requires internet.'
+      : '⚠️ <b>No Groq API key set.</b> Tap <b>Set Key</b> above, or get a free key at <a href="https://console.groq.com" target="_blank" style="color:var(--accent)">console.groq.com</a>.';
+  } else if (eng === 'ai') {
+    note = 'Runs <b>100% on your device</b> — free, private, no API key. The AI model downloads once on first use and is cached for offline use. Word-level timestamps enable karaoke captions.';
+    if (isIOS) note += '<br><b>📱 iPhone tip:</b> use <b>Fast (Tiny)</b> quality — larger models can run out of memory and reload the page.';
+    if (location.protocol === 'file:') note += '<br><span style="color:var(--danger)">⚠ You opened this file directly — the AI engine needs the app served over http(s).</span>';
+  } else {
+    note = 'Uses your <b>microphone</b> to listen to the video audio in real time. Free, but less accurate than the on-device AI. Play in a quiet room with volume up.';
+  }
+  document.getElementById('gen-note').innerHTML = note;
+}
+
+function genGo() {
+  settings.engine   = document.getElementById('gen-engine').value;
+  settings.model    = document.getElementById('gen-model').value;
+  settings.language = document.getElementById('gen-lang').value;
+  settings.maxWords = +document.getElementById('gen-maxwords').value;
+  saveSettings();
+  closeSheet(null, 'gen-sheet');
+  if (settings.engine === 'groq')      generateViaGroq();
+  else if (settings.engine === 'ai')   generateViaLocalAI();
+  else                                 openSheet('speech-modal');
+}
+
+// ═══════════════════════════════════════════════════════════════
+//  SETTINGS — Groq API key
+// ═══════════════════════════════════════════════════════════════
+function refreshGroqBadge() {
+  const has = !!(store.get('caply_groq_key'));
+  ['settings-groq-badge','gen-groq-badge'].forEach(id => {
+    const el = document.getElementById(id);
+    if (!el) return;
+    el.className = 'key-badge ' + (has ? 'set' : 'unset');
+    el.textContent = has ? '✓ Set' : 'Not set';
+  });
+}
+function saveGroqKey() {
+  const val = (document.getElementById('settings-groq-input').value || '').trim();
+  if (!val) { showBanner('Paste your Groq API key first'); return; }
+  store.set('caply_groq_key', val);
+  document.getElementById('settings-groq-input').value = '';
+  refreshGroqBadge();
+  showBanner('Groq API key saved ✓');
+}
+function clearGroqKey() {
+  store.del('caply_groq_key');
+  document.getElementById('settings-groq-input').value = '';
+  refreshGroqBadge();
+  showBanner('Groq key cleared');
+}
+// Pre-fill masked placeholder if key exists
+document.getElementById('settings-sheet').addEventListener('transitionend', () => {});
+(function initSettingsSheet() {
+  const sheet = document.getElementById('settings-sheet');
+  // Refresh badge whenever sheet opens
+  const obs = new MutationObserver(() => refreshGroqBadge());
+  obs.observe(sheet, { attributes: true, attributeFilter: ['class'] });
+  refreshGroqBadge();
+})();
+
+// ═══════════════════════════════════════════════════════════════
+//  GROQ CLOUD WHISPER
+// ═══════════════════════════════════════════════════════════════
+async function generateViaGroq() {
+  jobCancelled = false;
+  const groqKey = store.get('caply_groq_key') || '';
+  if (!groqKey) {
+    showBanner('Add your Groq API key in Settings first');
+    openSheet('settings-sheet');
+    return;
+  }
+  try {
+    showLoading('Reading audio…', { cancel: true });
+    const audio = await extractAudio16k();
+    if (jobCancelled) return hideLoading();
+
+    setLoading('Sending to Groq…', null, 'Cloud Whisper — fast & accurate');
+
+    // Encode PCM Float32 → WAV blob (Groq accepts WAV)
+    const wavBuf = pcmToWav(audio, 16000);
+    const blob   = new Blob([wavBuf], { type: 'audio/wav' });
+
+    const fd = new FormData();
+    fd.append('file', blob, 'audio.wav');
+    fd.append('model', 'whisper-large-v3-turbo');
+    fd.append('response_format', 'verbose_json');
+    fd.append('timestamp_granularities[]', 'word');
+    if (settings.language !== 'auto') fd.append('language', settings.language);
+
+    const resp = await fetch('https://api.groq.com/openai/v1/audio/transcriptions', {
+      method: 'POST',
+      headers: { 'Authorization': 'Bearer ' + groqKey },
+      body: fd
+    });
+    if (!resp.ok) {
+      const err = await resp.json().catch(() => ({}));
+      throw new Error(err.error?.message || 'Groq API error ' + resp.status);
+    }
+    const data = await resp.json();
+    if (jobCancelled) return hideLoading();
+    hideLoading();
+
+    // Word-level → cues
+    const wordChunks = (data.words || []).map(w => ({
+      text: w.word, timestamp: [w.start, w.end]
+    }));
+    let cues = wordChunks.length ? wordsToCues(wordChunks) : null;
+
+    // Fall back to segment-level
+    if (!cues || !cues.length) {
+      const segChunks = (data.segments || []).map(s => ({
+        text: s.text, timestamp: [s.start, s.end]
+      }));
+      cues = segChunks.length ? segmentsToCues(segChunks) : null;
+    }
+    // Last resort: whole text as one cue
+    if (!cues || !cues.length) {
+      if (data.text && data.text.trim()) {
+        cues = [{ start: 0, end: videoDuration || 10, text: data.text.trim(), words: null }];
+      } else {
+        showBanner('No speech detected'); return;
+      }
+    }
+
+    snapshot();
+    subtitles = cues.map(c => makeSubtitle(c.start, c.end, c.text, c.words));
+    selectedId = null; styleVersion++;
+    subtitles.sort((a,b) => a.start - b.start);
+    rebuildTimeline();
+    showBanner(`${subtitles.length} captions via Groq ✓`);
+  } catch(e) {
+    hideLoading();
+    showBanner('Groq error: ' + (e.message || e));
+    console.error('Groq ASR error', e);
+  }
+}
+
+// Encode Float32 PCM → WAV ArrayBuffer
+function pcmToWav(samples, sampleRate) {
+  const numCh = 1, bps = 16;
+  const dataSize = samples.length * 2;
+  const buf  = new ArrayBuffer(44 + dataSize);
+  const view = new DataView(buf);
+  const str  = (off, s) => { for (let i = 0; i < s.length; i++) view.setUint8(off+i, s.charCodeAt(i)); };
+  str(0,'RIFF'); view.setUint32(4, 36+dataSize, true); str(8,'WAVE');
+  str(12,'fmt '); view.setUint32(16,16,true); view.setUint16(20,1,true);
+  view.setUint16(22,numCh,true); view.setUint32(24,sampleRate,true);
+  view.setUint32(28,sampleRate*numCh*bps/8,true); view.setUint16(32,numCh*bps/8,true);
+  view.setUint16(34,bps,true); str(36,'data'); view.setUint32(40,dataSize,true);
+  let off = 44;
+  for (let i = 0; i < samples.length; i++, off+=2) {
+    const s = Math.max(-1, Math.min(1, samples[i]));
+    view.setInt16(off, s < 0 ? s*0x8000 : s*0x7FFF, true);
+  }
+  return buf;
+}
+
+// ═══════════════════════════════════════════════════════════════
+//  ON-DEVICE WHISPER (transformers.js — free, no API key)
+// ═══════════════════════════════════════════════════════════════
+let asrPipe = null, asrModelId = '', asrDevice = '';
+let transformersMod = null;
+
+// Load transformers.js with CDN fallback
+async function loadTransformers() {
+  if (transformersMod) return transformersMod;
+  const cdns = [
+    'https://cdn.jsdelivr.net/npm/@huggingface/transformers@3.5.2',
+    'https://unpkg.com/@huggingface/transformers@3.5.2'
+  ];
+  let lastErr;
+  for (const url of cdns) {
+    try { transformersMod = await import(url); break; }
+    catch (e) { lastErr = e; }
+  }
+  if (!transformersMod) throw new Error('Could not load AI engine — check internet connection. (' + (lastErr && lastErr.message) + ')');
+  // Always fetch models from the HuggingFace Hub, never from a local /models/ path
+  try {
+    transformersMod.env.allowLocalModels = false;
+    transformersMod.env.allowRemoteModels = true;
+    if (location.protocol === 'file:') transformersMod.env.useBrowserCache = false;
+  } catch (e) {}
+  return transformersMod;
+}
+
+async function buildAsrPipe(pipeline, modelId, device, progressCb) {
+  return pipeline('automatic-speech-recognition', modelId, {
+    dtype: 'q8', device, progress_callback: progressCb
+  });
+}
+
+async function generateViaLocalAI() {
+  jobCancelled = false;
+  try {
+    showLoading('Reading audio…', { cancel: true });
+
+    // Read audio FIRST — on iPhone the realtime fallback must start
+    // while the tap gesture is still fresh
+    const audio = await extractAudio16k();
+    if (jobCancelled) return hideLoading();
+
+    setLoading('Loading AI engine…', null, '');
+    const { pipeline } = await loadTransformers();
+    if (jobCancelled) return hideLoading();
+
+    const progressCb = (p) => {
+      if (p.status === 'progress' && p.total) {
+        const pct = Math.round((p.loaded / p.total) * 100);
+        setLoading(`Downloading AI model (one-time)…`, pct, p.file || '');
+      }
+    };
+
+    // For English, use the English-only model (.en suffix) — language is baked in,
+    // no forced-language tokens needed. For other languages, use the multilingual
+    // model and pass language/task at inference time.
+    const useEnModel = (settings.language === 'en');
+    const modelSuffix = settings.model + (useEnModel ? '.en' : '');
+    const repos = [
+      'onnx-community/whisper-' + modelSuffix + '_timestamped',
+      'onnx-community/whisper-' + modelSuffix,
+      'Xenova/whisper-' + modelSuffix,
+      // fallback to multilingual if .en variant not found
+      ...(useEnModel ? [
+        'onnx-community/whisper-' + settings.model + '_timestamped',
+        'Xenova/whisper-' + settings.model
+      ] : [])
+    ];
+    let wantGpu = false;
+    try { wantGpu = !!navigator.gpu; } catch (e) {}
+    const devices = wantGpu ? ['webgpu', 'wasm'] : ['wasm'];
+
+    const ensurePipe = async () => {
+      setLoading('Preparing AI model…', null, 'First use downloads the model, then it is cached');
+      const lk = settings.language !== 'auto' ? settings.language : 'auto';
+      let lastErr;
+      for (const repo of repos) {
+        for (const device of devices) {
+          const id = repo + '|' + device + '|lang:' + lk;
+          if (asrPipe && asrModelId === id) return;
+          try {
+            asrPipe = await buildAsrPipe(pipeline, repo, device, progressCb);
+            asrModelId = id;
+            asrDevice = device;
+            return;
+          } catch (e) { lastErr = e; console.warn('pipe failed', repo, device, e); }
+        }
+      }
+      throw lastErr || new Error('Could not load any Whisper model');
+    };
+
+    // Reset pipeline if model size or language changed
+    const langKey = settings.language !== 'auto' ? settings.language : 'auto';
+    if (asrPipe && (!asrModelId.includes('whisper-' + modelSuffix) || !asrModelId.includes('lang:' + langKey))) {
+      asrPipe = null; asrModelId = '';
+    }
+    if (!asrPipe) await ensurePipe();
+    if (jobCancelled) return hideLoading();
+
+    setLoading('Transcribing with AI…', null, 'This runs entirely on your device');
+    const opts = { chunk_length_s: 30, stride_length_s: 5, return_timestamps: 'word' };
+    // For non-English multilingual, pass language/task as top-level options
+    if (!useEnModel && settings.language !== 'auto') {
+      opts.language = settings.language;
+      opts.task = 'transcribe';
+    }
+
+    let out, wordLevel = true;
+    // Run transcription; if the model lacks cross-attentions for word-level
+    // timestamps, gracefully fall back to segment-level timestamps.
+    const runASR = async () => {
+      try {
+        return await asrPipe(audio, opts);
+      } catch (e) {
+        if (/cross.?attention/i.test(e && e.message || '')) {
+          console.warn('No word-level timestamps for this model — using segment timestamps');
+          wordLevel = false;
+          const segOpts = Object.assign({}, opts, { return_timestamps: true });
+          return await asrPipe(audio, segOpts);
+        }
+        throw e;
+      }
+    };
+    try {
+      out = await runASR();
+    } catch (e) {
+      // Inference failed (often WebGPU) — rebuild on WASM and retry once
+      console.warn('Transcription failed on', asrDevice, '— retrying on WASM', e);
+      if (asrDevice !== 'wasm') {
+        setLoading('Retrying on CPU…', null, '');
+        const repo = asrModelId.split('|')[0];
+        const lk2 = settings.language !== 'auto' ? settings.language : 'auto';
+        asrPipe = await buildAsrPipe(pipeline, repo, 'wasm', progressCb);
+        asrModelId = repo + '|wasm|lang:' + lk2; asrDevice = 'wasm';
+        out = await runASR();
+      } else throw e;
+    }
+    if (jobCancelled) return hideLoading();
+
+    const cues = wordLevel ? wordsToCues(out.chunks || []) : segmentsToCues(out.chunks || []);
+    hideLoading();
+
+    if (!cues.length && out.text && out.text.trim()) {
+      snapshot();
+      subtitles = [makeSubtitle(0, videoDuration || 10, out.text.trim())];
+    } else if (cues.length) {
+      snapshot();
+      subtitles = cues.map(c => makeSubtitle(c.start, c.end, c.text, c.words));
+    } else {
+      showBanner('No speech detected in this video');
+      return;
+    }
+    selectedId = null;
+    styleVersion++;
+    subtitles.sort((a,b) => a.start - b.start);
+    rebuildTimeline();
+    updateSubEditorUI();
+    showBanner(`✓ ${subtitles.length} caption(s) generated on-device`);
+  } catch (err) {
+    console.error('Local AI failed:', err);
+    hideLoading();
+    const msg = (err && err.message) ? String(err.message).slice(0, 120) : 'unknown error';
+    if (location.protocol === 'file:') {
+      showBanner('AI failed: open Caply via http:// or https:// (not by double-clicking the file). ' + msg);
+    } else {
+      showBanner('AI failed: ' + msg);
+    }
+  }
+}
+
+// Group word timestamps into CapCut-style short cues
+function wordsToCues(chunks) {
+  const words = chunks
+    .map(c => ({
+      text: (c.text || '').trim(),
+      start: (c.timestamp && c.timestamp[0] != null) ? c.timestamp[0] : 0,
+      end:   (c.timestamp && c.timestamp[1] != null) ? c.timestamp[1] : null
+    }))
+    .filter(w => w.text);
+  // Fix missing end timestamps
+  words.forEach((w, i) => {
+    if (w.end == null) w.end = (words[i+1] ? words[i+1].start : w.start + 0.4);
+    if (w.end <= w.start) w.end = w.start + 0.15;
+  });
+
+  const MAXW = settings.maxWords, MAXC = 38, GAP = 0.7;
+  const cues = [];
+  let cur = null;
+  for (const w of words) {
+    const endsSentence = cur && /[.!?…。！？]$/.test(cur.words[cur.words.length-1].text);
+    const tooLong = cur && (cur.text + ' ' + w.text).length > MAXC;
+    const bigGap = cur && (w.start - cur.end) > GAP;
+    if (!cur || cur.words.length >= MAXW || tooLong || bigGap || endsSentence) {
+      if (cur) cues.push(cur);
+      cur = { start: w.start, end: w.end, text: w.text, words: [{...w}] };
+    } else {
+      cur.words.push({...w});
+      cur.end = w.end;
+      cur.text += ' ' + w.text;
+    }
+  }
+  if (cur) cues.push(cur);
+  // small tail padding, but never overlap the next cue
+  cues.forEach((c, i) => {
+    const next = cues[i+1];
+    c.end = next ? Math.min(c.end + 0.15, next.start) : c.end + 0.15;
+  });
+  return cues;
+}
+
+// Segment-level timestamps → cues (fallback when word timestamps unavailable).
+// Word timings are distributed evenly inside each segment so karaoke still works.
+function segmentsToCues(chunks) {
+  const cues = [];
+  for (const c of chunks) {
+    const text = (c.text || '').trim();
+    if (!text) continue;
+    let s = (c.timestamp && c.timestamp[0] != null) ? c.timestamp[0] : 0;
+    let e = (c.timestamp && c.timestamp[1] != null) ? c.timestamp[1] : null;
+    const parts = text.split(/\s+/);
+    if (e == null || e <= s) e = s + Math.max(0.8, parts.length * 0.35);
+    const per = (e - s) / parts.length;
+    const words = parts.map((w, i) => ({ text: w, start: s + i * per, end: s + (i + 1) * per }));
+    for (let i = 0; i < words.length; i += settings.maxWords) {
+      const g = words.slice(i, i + settings.maxWords);
+      cues.push({
+        start: g[0].start, end: g[g.length - 1].end,
+        text: g.map(w => w.text).join(' '), words: g
+      });
+    }
+  }
+  return cues;
+}
+
+// Video audio → mono 16 kHz Float32Array (Whisper input).
+// Fast path: decodeAudioData. iPhone Safari often can't decode audio from a
+// video container ("decoding failed") — fall back to playing the video once
+// silently and capturing its audio in real time.
+async function extractAudio16k() {
+  try {
+    return await extractAudioOffline();
+  } catch (e) {
+    console.warn('decodeAudioData failed → realtime capture fallback:', e);
+    setLoading('Capturing audio…', null, 'Playing the video once (silently) to read its audio');
+    return await extractAudioRealtime();
+  }
+}
+
+async function extractAudioOffline() {
+  const buf = await (await fetch(video.src)).arrayBuffer();
+  const AC = window.AudioContext || window.webkitAudioContext;
+  const ac = new AC();
+  try {
+    // callback form — better Safari compatibility than the promise form
+    const decoded = await new Promise((res, rej) => {
+      const p = ac.decodeAudioData(buf, res, rej);
+      if (p && p.catch) p.catch(rej);
+    });
+    const len = decoded.length, chs = decoded.numberOfChannels;
+    const mono = new Float32Array(len);
+    for (let c = 0; c < chs; c++) {
+      const d = decoded.getChannelData(c);
+      for (let i = 0; i < len; i++) mono[i] += d[i] / chs;
+    }
+    return resampleTo16k(mono, decoded.sampleRate);
+  } finally {
+    try { ac.close(); } catch (e) {}
+  }
+}
+
+function resampleTo16k(samples, srcRate) {
+  if (srcRate === 16000) return samples;
+  const ratio = srcRate / 16000;
+  const outLen = Math.floor(samples.length / ratio);
+  const out = new Float32Array(outLen);
+  for (let i = 0; i < outLen; i++) {
+    const pos = i * ratio;
+    const i0 = Math.floor(pos);
+    const frac = pos - i0;
+    const a = samples[i0] || 0, b = samples[i0 + 1] !== undefined ? samples[i0 + 1] : a;
+    out[i] = a + (b - a) * frac;
+  }
+  return out;
+}
+
+// Realtime capture: route the <video> through WebAudio, gain 0 (silent),
+// record samples with a ScriptProcessor while the video plays once.
+async function extractAudioRealtime() {
+  const { ac, src, gain } = getAudioGraph();
+  await ac.resume();
+
+  const proc = ac.createScriptProcessor(4096, 1, 1);
+  const chunks = [];
+  proc.onaudioprocess = (e) => {
+    chunks.push(new Float32Array(e.inputBuffer.getChannelData(0)));
+  };
+  const silent = ac.createGain();
+  silent.gain.value = 0;
+  src.connect(proc);
+  proc.connect(silent);
+  silent.connect(ac.destination);
+  gain.gain.value = 0; // mute speakers during capture
+
+  const prevTime = video.currentTime, prevRate = video.playbackRate;
+  video.playbackRate = 1;
+  video.currentTime = 0;
+  await new Promise(r => video.addEventListener('seeked', r, { once: true }));
+
+  try {
+    try {
+      await video.play();
+    } catch (e) {
+      // Autoplay blocked (gesture expired) — ask the user to tap play
+      showBanner('Tap ▶ to start audio capture');
+      await new Promise(res => video.addEventListener('play', res, { once: true }));
+    }
+    await new Promise((res) => {
+      video.addEventListener('ended', res, { once: true });
+      const iv = setInterval(() => {
+        if (jobCancelled) { clearInterval(iv); res(); }
+      }, 200);
+      video.addEventListener('ended', () => clearInterval(iv), { once: true });
+    });
+  } finally {
+    video.pause();
+    try { src.disconnect(proc); proc.disconnect(); silent.disconnect(); } catch (e) {}
+    gain.gain.value = 1;
+    video.playbackRate = prevRate;
+    video.currentTime = prevTime;
+  }
+
+  const total = chunks.reduce((n, c) => n + c.length, 0);
+  if (!total) throw new Error('No audio captured — does the video have sound?');
+  const all = new Float32Array(total);
+  let off = 0;
+  for (const c of chunks) { all.set(c, off); off += c.length; }
+  return resampleTo16k(all, ac.sampleRate);
+}
+
+// ═══════════════════════════════════════════════════════════════
+//  WEB SPEECH (free fallback)
+// ═══════════════════════════════════════════════════════════════
+const SPEECH_LANG_MAP = {
+  auto: 'en-US', en: 'en-US', hi: 'hi-IN', es: 'es-ES', fr: 'fr-FR',
+  de: 'de-DE', pt: 'pt-BR', it: 'it-IT', ja: 'ja-JP',
+  ko: 'ko-KR', zh: 'zh-CN', ru: 'ru-RU', ar: 'ar-SA'
+};
+
+let speechRec = null;
+let speechActive = false;
+let sessionVidStart = 0, sessionWallStart = 0, segPendingStart = 0;
+
+function confirmStartWebSpeech() {
+  closeSheet(null, 'speech-modal');
+  generateViaWebSpeech();
+}
+
+async function generateViaWebSpeech() {
+  const SR = window.SpeechRecognition || window.webkitSpeechRecognition;
+  if (!SR) { showBanner('Web Speech not supported on this browser'); return; }
+
+  try {
+    const stream = await navigator.mediaDevices.getUserMedia({ audio: true });
+    stream.getTracks().forEach(t => t.stop());
+  } catch(err) {
+    showBanner('Microphone permission denied — cannot use Web Speech');
+    return;
+  }
+
+  if (speechActive) stopWebSpeech();
+
+  snapshot();
+  subtitles = [];
+  rebuildTimeline();
+  speechActive = true;
+  setListeningUI(true);
+
+  if (video.paused) video.play().catch(() => {});
+  video.addEventListener('ended', stopWebSpeech, { once: true });
+  _startSpeechSession(SR);
+}
+
+function _startSpeechSession(SR) {
+  if (!speechActive) return;
+  speechRec = new (window.SpeechRecognition || window.webkitSpeechRecognition)();
+  speechRec.continuous = false;
+  speechRec.interimResults = true;
+  speechRec.lang = SPEECH_LANG_MAP[settings.language] || 'en-US';
+  speechRec.maxAlternatives = 1;
+
+  sessionVidStart  = video.currentTime;
+  sessionWallStart = Date.now();
+  segPendingStart  = sessionVidStart;
+
+  speechRec.onresult = (evt) => {
+    const wallElapsed = (Date.now() - sessionWallStart) / 1000;
+    const estVidTime  = sessionVidStart + wallElapsed;
+    for (let i = evt.resultIndex; i < evt.results.length; i++) {
+      const res = evt.results[i];
+      const txt = res[0].transcript.trim();
+      if (!txt) continue;
+      if (res.isFinal) {
+        const segEnd   = Math.min(estVidTime, video.duration || 9999);
+        const segStart = Math.max(0, segPendingStart);
+        if (segEnd > segStart) {
+          subtitles.push(makeSubtitle(segStart, segEnd, txt));
+          subtitles.sort((a, b) => a.start - b.start);
+          rebuildTimeline();
+        }
+        segPendingStart = segEnd;
+        clearLiveCaption();
+      } else {
+        showLiveCaption(txt);
+      }
+    }
+  };
+
+  speechRec.onerror = (e) => {
+    if (e.error === 'not-allowed' || e.error === 'service-not-allowed') {
+      showBanner('Microphone blocked — check browser permissions');
+      stopWebSpeech(); return;
+    }
+    console.warn('Speech error:', e.error);
+  };
+
+  speechRec.onend = () => {
+    if (speechActive && !video.paused && !video.ended) {
+      setTimeout(() => _startSpeechSession(SR), 80);
+    } else {
+      _finishWebSpeech();
+    }
+  };
+
+  try { speechRec.start(); } catch(e) { console.warn('speechRec.start failed:', e); }
+}
+
+function stopWebSpeech() {
+  speechActive = false;
+  try { speechRec && speechRec.stop(); } catch(e) {}
+  _finishWebSpeech();
+}
+
+function _finishWebSpeech() {
+  speechActive = false;
+  setListeningUI(false);
+  clearLiveCaption();
+  rebuildTimeline();
+  showBanner(subtitles.length
+    ? `✓ ${subtitles.length} caption(s) captured via Web Speech`
+    : 'No speech detected — try louder volume or a quieter room');
+}
+
+function setListeningUI(on) {
+  document.getElementById('speech-bar').style.display = on ? 'flex' : 'none';
+}
+function showLiveCaption(txt) {
+  subTextEl.textContent = txt;
+  subTextEl.style.opacity = '0.55';
+  subTextEl.style.fontFamily = `'${globalStyle.fontFamily}', sans-serif`;
+  subTextEl.style.fontSize   = `${globalStyle.fontSize}px`;
+  subTextEl.style.color      = globalStyle.color;
+  lastRenderKey = 'live';
+}
+function clearLiveCaption() {
+  subTextEl.style.opacity = '1';
+  lastRenderKey = '';
+}
+
+// ═══════════════════════════════════════════════════════════════
+//  IMPORT (SRT / VTT)
+// ═══════════════════════════════════════════════════════════════
+function handleSubFile(evt) {
+  const file = evt.target.files[0];
+  if (!file) return;
+  const reader = new FileReader();
+  reader.onload = () => {
+    const text = reader.result;
+    const cues = /^\s*WEBVTT/.test(text) ? parseVTT(text) : parseSRT(text);
+    if (!cues.length) { showBanner('Could not parse any captions from that file'); return; }
+    snapshot();
+    subtitles = cues.map(c => makeSubtitle(c.start, c.end, c.text));
+    selectedId = null;
+    styleVersion++;
+    rebuildTimeline();
+    updateSubEditorUI();
+    showBanner(`Imported ${subtitles.length} caption(s)`);
+  };
+  reader.readAsText(file);
+  evt.target.value = '';
+}
+
+function parseTimecode(tc) {
+  const m = tc.trim().match(/(?:(\d+):)?(\d+):(\d+)[.,](\d+)/);
+  if (!m) return null;
+  const h = m[1] ? +m[1] : 0;
+  return h * 3600 + (+m[2]) * 60 + (+m[3]) + (+m[4]) / Math.pow(10, m[4].length);
+}
+
+function parseSRT(text) {
+  const cues = [];
+  const blocks = text.replace(/\r/g, '').split(/\n\n+/);
+  for (const block of blocks) {
+    const lines = block.split('\n').filter(l => l.trim());
+    const tIdx = lines.findIndex(l => l.includes('-->'));
+    if (tIdx === -1) continue;
+    const [a, b] = lines[tIdx].split('-->');
+    const start = parseTimecode(a), end = parseTimecode(b);
+    if (start == null || end == null) continue;
+    const textLines = lines.slice(tIdx + 1).join(' ').replace(/<[^>]+>/g, '').trim();
+    if (textLines) cues.push({ start, end, text: textLines });
+  }
+  return cues;
+}
+const parseVTT = parseSRT; // same cue structure once header lines fail the --> test
+
+// ═══════════════════════════════════════════════════════════════
+//  TOOLS — shift timings, find & replace
+// ═══════════════════════════════════════════════════════════════
+function applyShift(dir) {
+  const amt = parseFloat(document.getElementById('shift-amount').value);
+  if (isNaN(amt) || !subtitles.length) { closeSheet(null,'shift-sheet'); return; }
+  snapshot();
+  const off = dir * Math.abs(amt);
+  subtitles.forEach(s => {
+    s.start = Math.max(0, s.start + off);
+    s.end   = Math.max(s.start + 0.2, s.end + off);
+    if (s.words) s.words.forEach(w => { w.start = Math.max(0, w.start + off); w.end = Math.max(0, w.end + off); });
+  });
+  styleVersion++;
+  rebuildTimeline();
+  updateSubEditorUI();
+  closeSheet(null, 'shift-sheet');
+  showBanner(`All captions shifted ${off > 0 ? '+' : ''}${off.toFixed(1)}s`);
+}
+
+function applyFindReplace() {
+  const find = document.getElementById('fr-find').value;
+  const rep  = document.getElementById('fr-replace').value;
+  if (!find) { closeSheet(null,'findrep-sheet'); return; }
+  const rx = new RegExp(find.replace(/[.*+?^${}()|[\]\\]/g, '\\$&'), 'gi');
+  let count = 0;
+  snapshot();
+  subtitles.forEach(s => {
+    const matches = s.text.match(rx);
+    if (matches) {
+      count += matches.length;
+      s.text = s.text.replace(rx, rep);
+      syncWordsToText(s);
+    }
+  });
+  styleVersion++;
+  rebuildTimeline();
+  updateSubEditorUI();
+  closeSheet(null, 'findrep-sheet');
+  showBanner(count ? `Replaced ${count} occurrence(s)` : 'No matches found');
+}
+
+// ═══════════════════════════════════════════════════════════════
+//  EXPORT — SRT / VTT / TXT / JSON
+// ═══════════════════════════════════════════════════════════════
+function openExportModal() {
+  if (!subtitles.length) { showBanner('No captions to export'); return; }
+  openSheet('export-modal');
+}
+
+function fmtSRTTime(s) {
+  const h = Math.floor(s / 3600), m = Math.floor((s % 3600) / 60);
+  const sec = Math.floor(s % 60), ms = Math.round((s % 1) * 1000);
+  return `${String(h).padStart(2,'0')}:${String(m).padStart(2,'0')}:${String(sec).padStart(2,'0')},${String(ms).padStart(3,'0')}`;
+}
+function fmtVTTTime(s) { return fmtSRTTime(s).replace(',', '.'); }
+
+function toSRT() {
+  return sortedSubs().map((s, i) =>
+    `${i+1}\n${fmtSRTTime(s.start)} --> ${fmtSRTTime(s.end)}\n${s.text}\n`).join('\n');
+}
+function toVTT() {
+  return 'WEBVTT\n\n' + sortedSubs().map((s, i) =>
+    `${i+1}\n${fmtVTTTime(s.start)} --> ${fmtVTTTime(s.end)}\n${s.text}\n`).join('\n');
+}
+
+function downloadBlob(content, filename, mime) {
+  const blob = content instanceof Blob ? content : new Blob([content], { type: mime });
+  const url  = URL.createObjectURL(blob);
+  const a    = document.createElement('a');
+  a.href = url; a.download = filename;
+  document.body.appendChild(a);
+  a.click();
+  a.remove();
+  setTimeout(() => URL.revokeObjectURL(url), 4000);
+}
+
+function exportSRT() { downloadBlob(toSRT(), 'caply-captions.srt', 'text/plain'); closeSheet(null,'export-modal'); }
+function exportVTT() { downloadBlob(toVTT(), 'caply-captions.vtt', 'text/vtt');  closeSheet(null,'export-modal'); }
+function exportTXT() {
+  downloadBlob(sortedSubs().map(s => s.text).join('\n'), 'caply-transcript.txt', 'text/plain');
+  closeSheet(null,'export-modal');
+}
+function exportJSON() {
+  downloadBlob(JSON.stringify({ subtitles: sortedSubs(), globalStyle }, null, 2), 'caply-project.json', 'application/json');
+  closeSheet(null,'export-modal');
+}
+
+// ═══════════════════════════════════════════════════════════════
+//  EXPORT — VIDEO WITH BURNED-IN CAPTIONS (canvas + MediaRecorder)
+// ═══════════════════════════════════════════════════════════════
+let exportAC = null, exportSrcNode = null, exportGain = null;
+let exportRunning = false;
+
+// Shared WebAudio graph for the <video> element.
+// createMediaElementSource can only ever be called ONCE per element,
+// so both audio capture and video export share this graph.
+function getAudioGraph() {
+  if (!exportAC) {
+    exportAC = new (window.AudioContext || window.webkitAudioContext)();
+    exportSrcNode = exportAC.createMediaElementSource(video);
+    exportGain = exportAC.createGain();
+    exportSrcNode.connect(exportGain);
+    exportGain.connect(exportAC.destination);
+  }
+  return { ac: exportAC, src: exportSrcNode, gain: exportGain };
+}
+
+async function exportVideoBurnIn() {
+  if (!video.src) { showBanner('Load a video first'); return; }
+  if (!window.MediaRecorder) { showBanner('Video export not supported on this browser'); return; }
+  if (!subtitles.length) { showBanner('No captions to burn in'); return; }
+  if (exportRunning) return;
+  closeSheet(null, 'export-modal');
+  exportRunning = true;
+  try {
+    const canvas = document.getElementById('export-canvas');
+    canvas.width  = video.videoWidth  || 1280;
+    canvas.height = video.videoHeight || 720;
+    const ctx = canvas.getContext('2d');
+    const { ac, gain } = getAudioGraph();
+    await ac.resume();
+    const audioDest = ac.createMediaStreamDestination();
+    gain.connect(audioDest);
+    const fps = 30;
+    const videoStream = canvas.captureStream(fps);
+    const combined = new MediaStream([
+      ...videoStream.getVideoTracks(),
+      ...audioDest.stream.getAudioTracks()
+    ]);
+    // Prefer MP4 (supported in Chrome 108+ and newer Safari); fall back to WebM
+    const mimeType = [
+      'video/mp4;codecs=avc1,mp4a.40.2',
+      'video/mp4',
+      'video/webm;codecs=vp9,opus',
+      'video/webm;codecs=vp8,opus',
+      'video/webm'
+    ].find(t => MediaRecorder.isTypeSupported(t)) || 'video/webm';
+    const isMP4 = mimeType.startsWith('video/mp4');
+    const recorder = new MediaRecorder(combined, { mimeType });
+    const chunks = [];
+    recorder.ondataavailable = e => { if (e.data.size > 0) chunks.push(e.data); };
+    recorder.start(100);
+    video.currentTime = 0;
+    await new Promise(r => setTimeout(r, 150));
+    showLoading('Exporting video…', null, 'Keep the screen on until done');
+    video.muted = false;
+    video.play();
+    await new Promise((resolve, reject) => {
+      const hexToRgb = h => {
+        const r = parseInt(h.slice(1,3),16), g = parseInt(h.slice(3,5),16), b = parseInt(h.slice(5,7),16);
+        return `rgba(${r},${g},${b}`;
+      };
+      const draw = () => {
+        ctx.drawImage(video, 0, 0, canvas.width, canvas.height);
+        const t = video.currentTime;
+        const sub = subtitles.find(s => t >= s.start && t <= s.end);
+        if (sub) {
+          const st = resolveStyle(sub);
+          const fs = Math.round((st.fontSize / 20) * (canvas.height / 20)); // scale to canvas
+          const scaledFs = Math.max(24, Math.min(120, (st.fontSize / 20) * (canvas.height * 0.07)));
+          ctx.save();
+          ctx.font = `${st.bold ? '800' : '400'} ${scaledFs}px '${st.fontFamily}', sans-serif`;
+          ctx.textAlign = st.alignment || 'center';
+          const x = st.alignment === 'left' ? canvas.width * 0.05 :
+                    st.alignment === 'right' ? canvas.width * 0.95 :
+                    canvas.width / 2;
+          let y;
+          if (st.position === 'top')    y = canvas.height * (0.05 + (st.positionOffset||10)/100);
+          else if (st.position === 'middle') y = canvas.height * 0.5;
+          else                          y = canvas.height * (1 - 0.04 - (st.positionOffset||10)/100);
+
+          const txt = st.allCaps ? sub.text.toUpperCase() : sub.text;
+          const m = ctx.measureText(txt);
+          const tw = m.width;
+
+          // Background
+          if (st.bgStyle === 'tight') {
+            ctx.fillStyle = `${hexToRgb(st.bgColor)},${st.bgOpacity})`;
+            const pad = scaledFs * 0.25;
+            ctx.fillRect(x - tw/2 - pad, y - scaledFs - pad/2, tw + pad*2, scaledFs + pad);
+          } else if (st.bgStyle === 'fullbar') {
+            ctx.fillStyle = `${hexToRgb(st.bgColor)},${st.bgOpacity})`;
+            ctx.fillRect(0, y - scaledFs * 1.3, canvas.width, scaledFs * 1.6);
+          }
+
+          // Shadow / outline
+          if (st.shadow === 'hard')    { ctx.shadowColor='rgba(0,0,0,1)'; ctx.shadowOffsetX=2; ctx.shadowOffsetY=2; ctx.shadowBlur=0; }
+          else if (st.shadow === 'soft') { ctx.shadowColor='rgba(0,0,0,0.8)'; ctx.shadowBlur=6; ctx.shadowOffsetX=0; ctx.shadowOffsetY=1; }
+          else if (st.shadow === 'glow') { ctx.shadowColor=st.color; ctx.shadowBlur=18; }
+
+          if (st.outlineWidth > 0) {
+            ctx.strokeStyle = st.outlineColor;
+            ctx.lineWidth = st.outlineWidth * 2;
+            ctx.strokeText(txt, x, y);
+          }
+          ctx.fillStyle = st.color;
+          ctx.fillText(txt, x, y);
+          ctx.restore();
+        }
+        const pct = videoDuration ? Math.round((t / videoDuration) * 100) : null;
+        setLoading('Exporting video…', pct, `${fmtTime(t)} / ${fmtTime(videoDuration || 0)}`);
+        if (!video.ended && !video.paused) requestAnimationFrame(draw);
+        else resolve();
+      };
+      video.onended = resolve;
+      video.onerror = reject;
+      requestAnimationFrame(draw);
+    });
+    recorder.stop();
+    try { gain.disconnect(audioDest); } catch(e2) {}
+    hideLoading();
+    exportRunning = false;
+    await new Promise(r => { recorder.onstop = r; });
+    const ext = isMP4 ? 'mp4' : 'webm';
+    const blob = new Blob(chunks, { type: mimeType });
+    const filename = `caply-video.${ext}`;
+    if (navigator.canShare && navigator.canShare({ files: [new File([blob], filename, { type: mimeType })] })) {
+      try {
+        await navigator.share({ files: [new File([blob], filename, { type: mimeType })], title: 'Caply Video' });
+        showBanner('Shared! Save to Camera Roll from the share sheet.');
+        return;
+      } catch(shareErr) {
+        if (shareErr.name !== 'AbortError') console.warn('Share failed', shareErr);
+      }
+    }
+    downloadBlob(blob, filename, mimeType);
+    showBanner(`Video exported as ${ext.toUpperCase()}!`);
+  } catch(e) {
+    hideLoading();
+    exportRunning = false;
+    showBanner('Export failed: ' + (e.message || e));
+    console.error('Export error', e);
+  }
+}
+
+// ═══════════════════════════════════════════════════════════════
+//  SHEETS / MODALS
+// ═══════════════════════════════════════════════════════════════
+function openSheet(id) {
+  document.getElementById(id).classList.add('open');
+}
+function closeSheet(e, id) {
+  if (e && e.target !== document.getElementById(id)) return;
+  document.getElementById(id).classList.remove('open');
+}
+function openMenu() { openSheet('menu-overlay'); }
+
+function clearAll() {
+  if (!subtitles.length) { showBanner('No captions to clear'); return; }
+  snapshot();
+  subtitles = [];
+  selectedId = null;
+  styleVersion++;
+  document.getElementById('sub-editor').classList.remove('visible');
+  rebuildTimeline();
+  scheduleSave();
+  showBanner('All captions cleared');
+}
+
+// ═══════════════════════════════════════════════════════════════
+//  BANNER
+// ═══════════════════════════════════════════════════════════════
+let bannerTimer = null;
+function showBanner(msg) {
+  const el = document.getElementById('banner');
+  el.textContent = msg;
+  el.classList.add('show');
+  clearTimeout(bannerTimer);
+  bannerTimer = setTimeout(() => el.classList.remove('show'), 2800);
+}
+
+// ═══════════════════════════════════════════════════════════════
+//  LOADING OVERLAY
+// ═══════════════════════════════════════════════════════════════
+function showLoading(msg, opts, sub) {
+  const overlay = document.getElementById('loading-overlay');
+  document.getElementById('loading-text').innerHTML = msg || 'Working…';
+  document.getElementById('loading-sub').textContent = sub || '';
+  const track = document.getElementById('progress-track');
+  track.classList.remove('show');
+  document.getElementById('progress-fill').style.width = '0%';
+  const cancelBtn = document.getElementById('loading-cancel');
+  if (opts && opts.cancel) cancelBtn.classList.add('show');
+  else cancelBtn.classList.remove('show');
+  overlay.classList.add('show');
+}
+function setLoading(msg, pct, sub) {
+  if (msg != null) document.getElementById('loading-text').innerHTML = msg;
+  if (sub != null) document.getElementById('loading-sub').textContent = sub;
+  if (pct != null) {
+    const track = document.getElementById('progress-track');
+    track.classList.add('show');
+    document.getElementById('progress-fill').style.width = pct + '%';
+  }
+}
+function hideLoading() {
+  document.getElementById('loading-overlay').classList.remove('show');
+}
+
+// ═══════════════════════════════════════════════════════════════
+//  FULLSCREEN
+// ═══════════════════════════════════════════════════════════════
+function toggleFullscreen() {
+  const wrap = document.getElementById('video-wrap');
+  if (document.fullscreenElement || document.webkitFullscreenElement) {
+    (document.exitFullscreen || document.webkitExitFullscreen).call(document);
+    return;
+  }
+  if (wrap.classList.contains('fake-fullscreen')) {
+    wrap.classList.remove('fake-fullscreen');
+    _setFsIcons(false);
+    return;
+  }
+  const req = wrap.requestFullscreen || wrap.webkitRequestFullscreen;
+  if (req) {
+    req.call(wrap).catch(() => { wrap.classList.add('fake-fullscreen'); _setFsIcons(true); });
+  } else {
+    wrap.classList.add('fake-fullscreen');
+    _setFsIcons(true);
+  }
+}
+function _setFsIcons(isFs) {
+  document.getElementById('fs-icon-expand').style.display = isFs ? 'none' : '';
+  document.getElementById('fs-icon-shrink').style.display = isFs ? '' : 'none';
+  document.getElementById('btn-fullscreen').title = isFs ? 'Exit Fullscreen' : 'Fullscreen';
+  // Show/hide the external fixed exit button (outside video-wrap, above iOS video layer)
+  const exitBtn = document.getElementById('btn-fs-exit');
+  if (exitBtn) exitBtn.style.display = isFs ? 'flex' : 'none';
+}
+function _onFullscreenChange() {
+  const isFs = !!(document.fullscreenElement || document.webkitFullscreenElement);
+  _setFsIcons(isFs);
+  if (!isFs) document.getElementById('video-wrap').classList.remove('fake-fullscreen');
+}
+document.addEventListener('fullscreenchange', _onFullscreenChange);
+document.addEventListener('webkitfullscreenchange', _onFullscreenChange);
+
+// ─── Touch gestures on video: pinch = font size, drag = position ───
+(function() {
+  const wrap = document.getElementById('video-wrap');
+  let touches = {};
+  let pinchStartDist = 0, pinchStartSize = 0, dragStartY = 0, dragStartOffset = 0, gestureMode = null;
+
+  function dist(t) {
+    const ids = Object.keys(t);
+    if (ids.length < 2) return 0;
+    const a = t[ids[0]], b = t[ids[1]];
+    return Math.sqrt((a.x-b.x)**2 + (a.y-b.y)**2);
+  }
+  wrap.addEventListener('touchstart', function(e) {
+    Array.from(e.changedTouches).forEach(t => { touches[t.identifier] = {x:t.clientX, y:t.clientY}; });
+    const count = Object.keys(touches).length;
+    if (count === 2) {
+      gestureMode = 'pinch'; pinchStartDist = dist(touches); pinchStartSize = globalStyle.fontSize;
+      e.preventDefault();
+    } else if (count === 1) {
+      gestureMode = 'drag'; dragStartY = Object.values(touches)[0].y; dragStartOffset = globalStyle.positionOffset;
+    }
+  }, {passive:false});
+  wrap.addEventListener('touchmove', function(e) {
+    Array.from(e.changedTouches).forEach(t => { touches[t.identifier] = {x:t.clientX, y:t.clientY}; });
+    if (gestureMode === 'pinch' && Object.keys(touches).length >= 2) {
+      const scale = dist(touches) / (pinchStartDist || 1);
+      const newSize = Math.round(Math.min(56, Math.max(12, pinchStartSize * scale)));
+      updateGlobalStyle('fontSize', newSize);
+      const el = document.getElementById('gs-size');
+      if (el) { el.value = newSize; document.getElementById('gs-size-val').textContent = newSize; }
+      e.preventDefault();
+    } else if (gestureMode === 'drag' && Object.keys(touches).length === 1) {
+      const dy = dragStartY - Object.values(touches)[0].y;
+      const newOffset = Math.round(Math.min(40, Math.max(0, dragStartOffset + (dy / (wrap.offsetHeight||200)) * 40)));
+      updateGlobalStyle('positionOffset', newOffset);
+      const el = document.getElementById('gs-posoffset');
+      if (el) el.value = newOffset;
+      e.preventDefault();
+    }
+  }, {passive:false});
+  wrap.addEventListener('touchend', function(e) {
+    Array.from(e.changedTouches).forEach(t => { delete touches[t.identifier]; });
+    if (Object.keys(touches).length === 0) gestureMode = null;
+  });
+  wrap.addEventListener('touchcancel', function() { touches = {}; gestureMode = null; });
+})();
+
+
+// ═══════════════════════════════════════════════════════════════
+//  INIT
+// ═══════════════════════════════════════════════════════════════
+startRaf();
+rebuildTimeline();
+restoreProject();
+refreshGroqBadge();
+renderPresets();
+restoreCustomFonts();
+</script>
+<button id="btn-fs-exit" onclick="toggleFullscreen()" title="Exit fullscreen" aria-label="Exit fullscreen">✕</button>
+</body>
+</html>
